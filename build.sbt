@@ -4,7 +4,7 @@ import sbt.Keys.localStaging
  * Global settings
  */
 val basicSettings = {
-  val scala213 = "2.13.15"
+  val scala213 = "2.13.16"
   val supportedScalaVersions = List(scala213)
 
   Seq(
@@ -132,7 +132,7 @@ val service = (project in file("service"))
     Docker / version := "latest",
     Docker / maintainer := """Cafienne <info@cafienne.io>""",
     Docker / defaultLinuxInstallLocation := "/opt/cafienne",
-    dockerBaseImage := "eclipse-temurin:21.0.4_7-jre-jammy",
+    dockerBaseImage := "eclipse-temurin:21.0.7_6-jre-jammy",
     dockerExposedPorts := Seq(2027, 9999),
     bashScriptDefines / scriptClasspath := Seq("../lib_ext/*") ++ (bashScriptDefines / scriptClasspath).value,
     bashScriptExtraDefines += s"""addJava "-Dlogback.configurationFile=$${app_home}/../conf/logback.xml"""",
