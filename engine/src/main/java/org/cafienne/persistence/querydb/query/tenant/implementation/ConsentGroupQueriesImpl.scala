@@ -2,12 +2,12 @@ package org.cafienne.persistence.querydb.query.tenant.implementation
 
 import com.typesafe.scalalogging.LazyLogging
 import org.cafienne.actormodel.identity._
-import org.cafienne.consentgroup.actorapi.{ConsentGroup, ConsentGroupMember}
 import org.cafienne.persistence.querydb.query.QueryDBReader
 import org.cafienne.persistence.querydb.query.exception._
 import org.cafienne.persistence.querydb.query.tenant.ConsentGroupQueries
 import org.cafienne.persistence.querydb.record.ConsentGroupMemberRecord
 import org.cafienne.persistence.querydb.schema.QueryDB
+import org.cafienne.userregistration.consentgroup.actorapi.{ConsentGroup, ConsentGroupMember}
 
 import scala.concurrent.{ExecutionContext, Future}
 
