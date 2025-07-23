@@ -18,6 +18,7 @@
 package org.cafienne.service.storage.actormodel
 
 import org.cafienne.actormodel.ActorType
+import org.cafienne.engine.actorapi.RootIdentifier
 import org.cafienne.engine.cmmn.instance.Path
 import org.cafienne.infrastructure.serialization.{Fields, JacksonSerializable}
 import org.cafienne.json.{CafienneJson, Value, ValueList, ValueMap}
@@ -37,6 +38,8 @@ case class ActorMetadata(user: StorageUser, actorType: ActorType, actorId: Strin
   val hasParent: Boolean = parent != null
 
   val isRoot: Boolean = !hasParent
+
+  def root: RootIdentifier = if (hasParent) parent.root else RootIdentifier(actorId)
 
   override def toString: String = s"$actorType[$actorId]"
 

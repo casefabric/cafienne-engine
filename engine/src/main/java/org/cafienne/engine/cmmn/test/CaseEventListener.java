@@ -21,6 +21,7 @@ import org.apache.pekko.actor.ActorRef;
 import org.apache.pekko.actor.ActorSystem;
 import org.apache.pekko.actor.Props;
 import org.cafienne.actormodel.message.event.ModelEvent;
+import org.cafienne.engine.actorapi.RootIdentifier;
 import org.cafienne.engine.actorapi.command.CaseEngineCommand;
 import org.cafienne.engine.cmmn.actorapi.event.CaseModified;
 import org.cafienne.engine.cmmn.actorapi.event.plan.CasePlanEvent;
@@ -69,7 +70,7 @@ public class CaseEventListener {
 
     void sendCommand(CaseEngineCommand command) {
         newEvents = new ArrayList<>();
-        caseMessageRouter.inform(command, responseHandlingActor);
+        caseMessageRouter.inform(new RootIdentifier(command.actorId()), command, responseHandlingActor);
     }
 
     void handle(Object object) {

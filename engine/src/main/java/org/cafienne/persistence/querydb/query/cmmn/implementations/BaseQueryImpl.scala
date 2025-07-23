@@ -19,6 +19,7 @@ package org.cafienne.persistence.querydb.query.cmmn.implementations
 
 import com.typesafe.scalalogging.LazyLogging
 import org.cafienne.actormodel.identity.{ConsentGroupMembership, Origin, UserIdentity}
+import org.cafienne.engine.actorapi.RootIdentifier
 import org.cafienne.persistence.querydb.query.cmmn.authorization.CaseMembership
 import org.cafienne.persistence.querydb.query.cmmn.implementations.basequeries.{IdentifierFilterQuery, TaskAccessHelper, TenantRegistrationQueries}
 import org.cafienne.persistence.querydb.record._
@@ -58,7 +59,7 @@ class BaseQueryImpl(val queryDB: QueryDB) extends TenantRegistrationQueries with
             .filter(_.userId === user.id)
             .filter(_.role_name === "")
             .map(user => (user.userId, user.tenant)))
-          .on(_.tenant === _._2).map(join => (join._1.id, join._1.tenant, join._2))
+          .on(_.tenant === _._2).map(join => (join._1.id, join._1.tenant, join._2, join._1.rootCaseId))
       val platformUser = TableQuery[UserRoleTable].filter(_.userId === user.id).filter(_.role_name === "").map(_.userId).take(1)
 
       tenantUser.joinFull(platformUser)
@@ -107,6 +108,7 @@ class BaseQueryImpl(val queryDB: QueryDB) extends TenantRegistrationQueries with
         fail // Again, case apparently does not exist (then why do we have a head in the first place ??? Perhaps it is filled with all NULL values???
       }
 
+      val caseFamily = RootIdentifier(originRecords.head._1.get._4)
       val caseId = originRecords.head._1.get._1
       val tenantId = originRecords.head._1.get._2
 //      println(" Case id: " + caseId)
@@ -148,7 +150,7 @@ class BaseQueryImpl(val queryDB: QueryDB) extends TenantRegistrationQueries with
         fail
       }
 
-      new CaseMembership(id = user.id, origin = origin, tenantRoles = userTenantRoles, groups = groupBasedMembership, caseInstanceId = caseId, tenant = tenantId)
+      new CaseMembership(id = user.id, origin = origin, tenantRoles = userTenantRoles, groups = groupBasedMembership, caseInstanceId = caseId, tenant = tenantId, caseFamily = caseFamily)
 
     })
   }

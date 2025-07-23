@@ -19,6 +19,8 @@ package org.cafienne.actormodel.message.event;
 
 import org.cafienne.actormodel.ModelActor;
 import org.cafienne.actormodel.message.UserMessage;
+import org.cafienne.engine.actorapi.RootIdentifier;
+import org.cafienne.json.ValueMap;
 
 import java.time.Instant;
 import java.util.Set;
@@ -44,4 +46,6 @@ public interface ModelEvent extends UserMessage {
     String tenant();
 
     Instant getTimestamp();
+
+    RootIdentifier root();
 }

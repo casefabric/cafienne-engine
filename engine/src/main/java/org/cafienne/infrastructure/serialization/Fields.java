@@ -24,6 +24,11 @@ public enum Fields {
     correlationId,
     actor,
     actorId,
+    parentActorId,
+    rootActorId,
+    targetActorId,
+    sourceActorId,
+    root,
     user,
 
     lastModified,
@@ -77,10 +82,6 @@ public enum Fields {
     taskId,
     taskOutput,
 
-    parentActorId,
-    rootActorId,
-    targetActorId,
-    sourceActorId,
     inputParameters,
     definition,
     debugMode,

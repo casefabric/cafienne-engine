@@ -24,10 +24,12 @@ import org.apache.pekko.http.scaladsl.server.Route
 import org.cafienne.actormodel.ActorType
 import org.cafienne.actormodel.message.command.ModelCommand
 import org.cafienne.actormodel.message.response._
+import org.cafienne.engine.actorapi.RootIdentifier
 import org.cafienne.engine.cmmn.actorapi.command.CaseCommand
 import org.cafienne.engine.cmmn.actorapi.response.{CaseNotModifiedResponse, CaseResponse}
 import org.cafienne.engine.humantask.actorapi.response.HumanTaskResponse
 import org.cafienne.persistence.infrastructure.lastmodified.Headers
+import org.cafienne.persistence.querydb.query.cmmn.authorization.CaseMembership
 import org.cafienne.persistence.querydb.query.exception._
 import org.cafienne.userregistration.actorapi.command.UserRegistrationCommand
 import org.cafienne.userregistration.consentgroup.actorapi.response.{ConsentGroupCreatedResponse, ConsentGroupResponse}
@@ -37,7 +39,9 @@ import scala.concurrent.Future
 import scala.util.{Failure, Success}
 
 trait CommandRoute extends AuthenticatedRoute {
-  def askCaseEngine(command: CaseCommand): Route = CommandRouteExecutor.askModelActor(command, caseSystem.engine.request(command))
+  def askCaseEngine(user: CaseMembership, command: CaseCommand): Route = CommandRouteExecutor.askModelActor(command, caseSystem.engine.request(user.caseFamily, command))
+
+  def askCaseEngine(command: CaseCommand): Route = CommandRouteExecutor.askModelActor(command, caseSystem.engine.request(RootIdentifier(command.actorId), command))
 
   def askUserRegistration(command: UserRegistrationCommand): Route = CommandRouteExecutor.askModelActor(command, caseSystem.userRegistration.request(command))
 }

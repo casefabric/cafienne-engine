@@ -19,6 +19,7 @@ package org.cafienne.engine.cmmn.test;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import org.cafienne.actormodel.identity.CaseUserIdentity;
+import org.cafienne.engine.actorapi.RootIdentifier;
 import org.cafienne.infrastructure.serialization.CafienneSerializer;
 import org.cafienne.infrastructure.serialization.Manifest;
 import org.cafienne.json.ValueMap;
@@ -45,7 +46,7 @@ public class ForceTermination extends TestScriptCommand {
 
     @Override
     public void beforeSendCommand(TestScript testScript) {
-        testScript.getCaseSystem().engine().terminate(getActorId());
+        testScript.getCaseSystem().engine().terminate(new RootIdentifier(getActorId()), getActorId());
     }
 
     @Override

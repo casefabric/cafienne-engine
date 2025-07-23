@@ -20,6 +20,7 @@ package org.cafienne.actormodel.message.event;
 import com.fasterxml.jackson.core.JsonGenerator;
 import org.cafienne.actormodel.ModelActor;
 import org.cafienne.actormodel.identity.UserIdentity;
+import org.cafienne.engine.actorapi.RootIdentifier;
 import org.cafienne.infrastructure.serialization.Fields;
 import org.cafienne.json.ValueMap;
 
@@ -35,6 +36,7 @@ public abstract class BaseModelEvent<M extends ModelActor> implements ModelEvent
     private final UserIdentity user;
     private final Instant timestamp;
     private final String correlationId;
+    private final RootIdentifier root;
 
     protected BaseModelEvent(M actor) {
         this.json = new ValueMap();
@@ -43,6 +45,7 @@ public abstract class BaseModelEvent<M extends ModelActor> implements ModelEvent
         this.user = actor.getCurrentTransaction().getMessage().getUser();
         this.timestamp = actor.getTransactionTimestamp();
         this.correlationId = actor.getCurrentTransaction().getMessage().getCorrelationId();
+        this.root = new RootIdentifier(actor.getRootActorId());
     }
 
     protected BaseModelEvent(ValueMap json) {
@@ -53,6 +56,7 @@ public abstract class BaseModelEvent<M extends ModelActor> implements ModelEvent
         this.timestamp = modelEventJson.readInstant(Fields.timestamp);
         this.user = modelEventJson.readObject(Fields.user, UserIdentity::deserialize);
         this.correlationId = modelEventJson.readString(Fields.correlationId);
+        this.root = modelEventJson.readObject(Fields.root, RootIdentifier::deserialize);
     }
 
     @Override
@@ -69,6 +73,7 @@ public abstract class BaseModelEvent<M extends ModelActor> implements ModelEvent
      * Returns the raw json used to (de)serialize this event
      * This method cannot be invoked upon first event creation.
      */
+    @Override
     public final ValueMap rawJson() {
         return this.json;
     }
@@ -77,8 +82,14 @@ public abstract class BaseModelEvent<M extends ModelActor> implements ModelEvent
      * Returns the identifier of the ModelActor that generated this event.
      * Is the same as the persistence id of the underlying Actor.
      */
+    @Override
     public final String getActorId() {
         return this.actorId;
+    }
+
+    @Override
+    public final RootIdentifier root() {
+        return this.root;
     }
 
     /**
@@ -114,6 +125,7 @@ public abstract class BaseModelEvent<M extends ModelActor> implements ModelEvent
         writeField(generator, Fields.tenant, this.tenant);
         writeField(generator, Fields.timestamp, this.timestamp);
         writeField(generator, Fields.user, user);
+        writeField(generator, Fields.root, root);
         generator.writeEndObject();
     }
 
