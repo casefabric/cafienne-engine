@@ -1,6 +1,7 @@
 package org.cafienne.actormodel.communication;
 
 import com.fasterxml.jackson.core.JsonGenerator;
+import org.cafienne.actormodel.ActorType;
 import org.cafienne.actormodel.ModelActor;
 import org.cafienne.actormodel.command.BaseModelCommand;
 import org.cafienne.actormodel.command.ModelCommand;
@@ -34,8 +35,8 @@ public abstract class CaseSystemCommunicationCommand extends BaseModelCommand<Mo
     }
 
     @Override
-    public Class<?> actorClass() {
-        return command.actorClass();
+    public ActorType actorType() {
+        return command.actorType();
     }
 
     @Override

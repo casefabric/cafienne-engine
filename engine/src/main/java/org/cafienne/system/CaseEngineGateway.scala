@@ -64,7 +64,7 @@ class CaseEngineGateway(caseSystem: CaseSystem) {
   private def getRouter(message: ModelCommand): ActorRef = {
     message match {
       case command: ModelCommand =>
-        val actorClass = command.actorClass()
+        val actorClass = command.actorType.actorClass
         // Unfortunately for some reason we cannot use scala matching on the actor class.
         // Unclear why (most probably lack of scala knowledge ;))
         if (actorClass == classOf[Case]) return caseService

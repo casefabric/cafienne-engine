@@ -17,6 +17,7 @@
 
 package org.cafienne.consentgroup.actorapi;
 
+import org.cafienne.actormodel.ActorType;
 import org.cafienne.actormodel.message.UserMessage;
 import org.cafienne.consentgroup.ConsentGroupActor;
 
@@ -25,7 +26,7 @@ import org.cafienne.consentgroup.ConsentGroupActor;
  */
 public interface ConsentGroupMessage extends UserMessage {
     @Override
-    default Class<ConsentGroupActor> actorClass() {
-        return ConsentGroupActor.class;
+    default ActorType actorType() {
+        return ActorType.Group;
     }
 }
