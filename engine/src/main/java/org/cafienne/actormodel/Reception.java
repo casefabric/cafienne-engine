@@ -168,7 +168,7 @@ class Reception {
     void reportInvalidRecoveryEvent(ModelEvent event) {
         if (event.isBootstrapMessage()) {
             // Wrong type of ModelActor. Probably someone tries to re-use the same actor id for another type of ModelActor.
-            hideFrontDoor("Recovery event " + event.getClass().getSimpleName() + " requires an actor of type " + event.actorClass().getSimpleName());
+            hideFrontDoor("Recovery event " + event.getClass().getSimpleName() + " requires an actor of type " + event.actorType().actorClass.getSimpleName());
         } else if (event instanceof StorageEvent storageEvent) {
             // Someone is archiving or deleting this actor
             hideFrontDoor("Actor is in storage processing");

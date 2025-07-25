@@ -69,7 +69,7 @@ class LocalRouter(caseSystem: CaseSystem, actors: mutable.Map[String, ActorRef],
     */
   private def createActorRef(m: ModelCommand): ActorRef = {
     // Note: we create the ModelActor as a child to our context
-    val ref = context.actorOf(Props.create(m.actorClass, caseSystem), m.actorId)
+    val ref = context.actorOf(Props.create(m.actorType.actorClass, caseSystem), m.actorId)
     // Also start watching the lifecycle of the model actor
     context.watch(ref)
     ref

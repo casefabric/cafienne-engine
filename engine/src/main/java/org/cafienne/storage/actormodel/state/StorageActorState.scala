@@ -47,7 +47,7 @@ trait StorageActorState extends ModelEventCollection with LazyLogging {
   def actualModelActorType: String = events
     .filter(_.isBootstrapMessage)
     .map(_.asBootstrapMessage())
-    .map(_.actorClass.getName)
+    .map(_.actorType.actorClass.getName)
     .headOption // Take the actor class of the bootstrap message found, or else just give a message with the event types that are found.
     .getOrElse(s"Bootstrap message is missing; found ${events.length} events of types: [${events.map(_.getClass.getName).toSet.mkString(",")}]")
 
