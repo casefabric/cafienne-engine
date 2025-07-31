@@ -7,8 +7,8 @@ import org.cafienne.persistence.eventdb.schema.EventDBSchema
 import org.cafienne.persistence.eventdb.schema.h2.H2EventDBSchema
 import org.cafienne.persistence.eventdb.schema.postgres.PostgresEventDBSchema
 import org.cafienne.persistence.eventdb.schema.sqlserver.SQLServerEventDBSchema
-import org.flywaydb.core.Flyway
-import org.flywaydb.core.api.resolver.MigrationResolver
+import slick.migration.api.flyway.SlickFlyway
+
 
 class EventDB(config: PersistenceConfig) extends LazyLogging {
   if (config.initializeDatabaseSchemas && config.eventDB.isJDBC) {
@@ -24,16 +24,13 @@ class EventDB(config: PersistenceConfig) extends LazyLogging {
     }
 
     logger.info("Running event database migrations")
-
-    // Create configuration
-    val flywayConfiguration = Flyway
-      .configure()
-      .dataSource(jdbcConfig.url, jdbcConfig.user, jdbcConfig.password)
-      .baselineOnMigrate(true)
-      .baselineVersion("0.0.0")
-      .baselineDescription("CaseFabric EventDB")
-      .table(flywayTableName)
-      .resolvers((_: MigrationResolver.Context) => schema.migrationScripts(tablePrefix))
+    lazy val db = config.eventDB.databaseConfig.db
+    val flywayConfiguration = SlickFlyway(db)(schema.migrationScripts(tablePrefix))
+        .baselineOnMigrate(true)
+        .baselineDescription("CaseFabric EventDB")
+        .baselineVersion("0.0.0")
+        .table(flywayTableName)
+        .outOfOrder(true)
 
     // Create a connection and run migration
     val flyway = flywayConfiguration.load()

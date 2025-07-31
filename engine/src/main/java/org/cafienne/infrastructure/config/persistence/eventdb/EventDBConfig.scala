@@ -20,6 +20,8 @@ package org.cafienne.infrastructure.config.persistence.eventdb
 import com.typesafe.config.Config
 import org.cafienne.infrastructure.config.persistence.PersistenceConfig
 import org.cafienne.infrastructure.config.util.ChildConfigReader
+import slick.basic.DatabaseConfig
+import slick.jdbc.JdbcProfile
 
 class EventDBConfig(val parent: PersistenceConfig, val systemConfig: Config) extends ChildConfigReader {
   def path = "event-db"
@@ -37,6 +39,8 @@ class EventDBConfig(val parent: PersistenceConfig, val systemConfig: Config) ext
   }
 
   lazy val jdbcConfig: JDBCConfig = new JDBCConfig(parent, systemConfig, journal)
+  private lazy val resolvedConfig = jdbcConfig.dbConfig.resolve()
+  lazy val databaseConfig: DatabaseConfig[JdbcProfile] = DatabaseConfig.forConfig("slick", resolvedConfig)
 
   lazy val isJDBC: Boolean = journalKey.contains("jdbc")
   lazy val isCassandra: Boolean = journalKey.contains("cassandra")
