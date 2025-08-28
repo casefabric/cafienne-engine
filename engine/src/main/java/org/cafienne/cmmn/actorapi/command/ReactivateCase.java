@@ -20,7 +20,6 @@ package org.cafienne.cmmn.actorapi.command;
 import org.cafienne.actormodel.exception.InvalidCommandException;
 import org.cafienne.actormodel.identity.CaseUserIdentity;
 import org.cafienne.cmmn.actorapi.command.team.CaseTeam;
-import org.cafienne.cmmn.actorapi.event.CaseDefinitionApplied;
 import org.cafienne.cmmn.definition.CaseDefinition;
 import org.cafienne.cmmn.definition.parameter.InputParameterDefinition;
 import org.cafienne.cmmn.instance.Case;

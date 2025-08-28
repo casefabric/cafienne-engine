@@ -19,7 +19,6 @@ package org.cafienne.humantask.actorapi.command;
 
 import org.cafienne.actormodel.identity.CaseUserIdentity;
 import org.cafienne.cmmn.instance.task.humantask.HumanTask;
-import org.cafienne.humantask.instance.TaskState;
 import org.cafienne.humantask.instance.WorkflowTask;
 import org.cafienne.infrastructure.serialization.Manifest;
 import org.cafienne.json.ValueMap;

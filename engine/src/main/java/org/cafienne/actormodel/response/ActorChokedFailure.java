@@ -18,7 +18,6 @@
 package org.cafienne.actormodel.response;
 
 import org.cafienne.actormodel.command.ModelCommand;
-import org.cafienne.actormodel.response.CommandFailure;
 import org.cafienne.infrastructure.serialization.Manifest;
 import org.cafienne.json.ValueMap;
 

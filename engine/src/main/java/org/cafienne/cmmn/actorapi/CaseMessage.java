@@ -19,7 +19,6 @@ package org.cafienne.cmmn.actorapi;
 
 import org.cafienne.actormodel.ActorType;
 import org.cafienne.actormodel.message.UserMessage;
-import org.cafienne.cmmn.instance.Case;
 
 public interface CaseMessage extends UserMessage {
     @Override

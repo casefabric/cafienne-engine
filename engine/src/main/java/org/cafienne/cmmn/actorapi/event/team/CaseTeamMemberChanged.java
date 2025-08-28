@@ -26,7 +26,6 @@ import org.cafienne.infrastructure.serialization.Manifest;
 import org.cafienne.json.ValueMap;
 
 import java.io.IOException;
-import java.util.Set;
 
 /**
  * Event caused when a consent group is given access to the case.

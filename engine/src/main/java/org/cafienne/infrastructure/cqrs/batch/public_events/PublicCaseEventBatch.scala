@@ -17,11 +17,11 @@
 
 package org.cafienne.infrastructure.cqrs.batch.public_events
 
-import org.apache.pekko.persistence.query.Offset
 import com.typesafe.scalalogging.LazyLogging
+import org.apache.pekko.persistence.query.Offset
 import org.cafienne.actormodel.event.ModelEvent
 import org.cafienne.infrastructure.cqrs.batch.EventBatch
-import org.cafienne.infrastructure.cqrs.batch.public_events.migration.{CaseMigrated, HumanTaskDropped, HumanTaskMigrated, MilestoneDropped, MilestoneMigrated, StageDropped, StageMigrated}
+import org.cafienne.infrastructure.cqrs.batch.public_events.migration._
 
 import java.time.Instant
 

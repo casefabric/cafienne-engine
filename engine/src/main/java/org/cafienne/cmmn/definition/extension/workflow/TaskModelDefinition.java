@@ -18,8 +18,6 @@
 package org.cafienne.cmmn.definition.extension.workflow;
 
 import org.cafienne.cmmn.definition.CMMNElementDefinition;
-import org.cafienne.cmmn.definition.ConstraintDefinition;
-import org.cafienne.cmmn.definition.HumanTaskDefinition;
 import org.cafienne.cmmn.definition.ModelDefinition;
 import org.cafienne.cmmn.definition.expression.ResolverDefinition;
 import org.cafienne.cmmn.definition.parameter.InputParameterDefinition;
@@ -32,7 +30,6 @@ import org.cafienne.json.Value;
 import org.w3c.dom.Element;
 
 import java.io.IOException;
-import java.time.Instant;
 import java.util.Map;
 
 public class TaskModelDefinition extends ResolverDefinition {

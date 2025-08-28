@@ -18,10 +18,10 @@
 package org.cafienne.cmmn.expression.spel;
 
 import org.cafienne.cmmn.definition.*;
-import org.cafienne.cmmn.definition.parameter.ParameterDefinition;
-import org.cafienne.cmmn.definition.sentry.IfPartDefinition;
 import org.cafienne.cmmn.definition.extension.workflow.AssignmentDefinition;
 import org.cafienne.cmmn.definition.extension.workflow.DueDateDefinition;
+import org.cafienne.cmmn.definition.parameter.ParameterDefinition;
+import org.cafienne.cmmn.definition.sentry.IfPartDefinition;
 import org.cafienne.cmmn.expression.CMMNExpressionEvaluator;
 import org.cafienne.cmmn.expression.InvalidExpressionException;
 import org.cafienne.cmmn.expression.spel.api.APIRootObject;

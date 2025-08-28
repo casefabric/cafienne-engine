@@ -26,7 +26,6 @@ import org.cafienne.json.ValueMap;
 
 import java.io.IOException;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Manifest
 public class ConsentGroupMemberChanged extends ConsentGroupMemberEvent {

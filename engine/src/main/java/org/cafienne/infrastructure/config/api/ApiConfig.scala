@@ -17,8 +17,8 @@
 
 package org.cafienne.infrastructure.config.api
 
-import org.cafienne.infrastructure.config.util.MandatoryConfig
 import org.cafienne.infrastructure.config.CaseSystemConfig
+import org.cafienne.infrastructure.config.util.MandatoryConfig
 
 class ApiConfig(val parent: CaseSystemConfig) extends MandatoryConfig {
   def path = "api"

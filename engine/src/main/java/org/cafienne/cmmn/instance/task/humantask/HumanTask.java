@@ -24,7 +24,6 @@ import org.cafienne.cmmn.definition.PlanningTableDefinition;
 import org.cafienne.cmmn.definition.extension.workflow.validation.TaskOutputValidatorDefinition;
 import org.cafienne.cmmn.definition.team.CaseRoleDefinition;
 import org.cafienne.cmmn.instance.*;
-import org.cafienne.cmmn.instance.Task;
 import org.cafienne.cmmn.instance.task.validation.TaskOutputValidator;
 import org.cafienne.cmmn.instance.task.validation.ValidationResponse;
 import org.cafienne.humantask.actorapi.event.HumanTaskResumed;

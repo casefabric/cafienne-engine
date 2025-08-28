@@ -20,7 +20,6 @@ package org.cafienne.cmmn.expression.spel.api;
 import org.cafienne.cmmn.expression.spel.api.cmmn.plan.CaseAPI;
 import org.cafienne.cmmn.expression.spel.api.cmmn.plan.PlanItemAPI;
 import org.cafienne.cmmn.expression.spel.api.cmmn.team.CurrentMemberAPI;
-import org.cafienne.cmmn.expression.spel.api.cmmn.team.MemberAPI;
 import org.cafienne.cmmn.instance.Case;
 import org.cafienne.cmmn.instance.PlanItem;
 

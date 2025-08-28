@@ -18,7 +18,6 @@
 package org.cafienne.cmmn.expression.spel;
 
 import org.cafienne.cmmn.definition.CMMNElementDefinition;
-import org.cafienne.cmmn.expression.spel.Evaluator;
 import org.cafienne.cmmn.expression.spel.api.APIRootObject;
 import org.springframework.expression.Expression;
 

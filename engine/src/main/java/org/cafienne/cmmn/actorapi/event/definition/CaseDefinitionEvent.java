@@ -19,7 +19,6 @@ package org.cafienne.cmmn.actorapi.event.definition;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import org.cafienne.cmmn.actorapi.event.CaseBaseEvent;
-import org.cafienne.cmmn.actorapi.event.CaseEvent;
 import org.cafienne.cmmn.definition.CaseDefinition;
 import org.cafienne.cmmn.instance.Case;
 import org.cafienne.infrastructure.serialization.Fields;

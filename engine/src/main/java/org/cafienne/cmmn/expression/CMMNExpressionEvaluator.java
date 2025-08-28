@@ -18,10 +18,10 @@
 package org.cafienne.cmmn.expression;
 
 import org.cafienne.cmmn.definition.*;
-import org.cafienne.cmmn.definition.parameter.ParameterDefinition;
-import org.cafienne.cmmn.definition.sentry.IfPartDefinition;
 import org.cafienne.cmmn.definition.extension.workflow.AssignmentDefinition;
 import org.cafienne.cmmn.definition.extension.workflow.DueDateDefinition;
+import org.cafienne.cmmn.definition.parameter.ParameterDefinition;
+import org.cafienne.cmmn.definition.sentry.IfPartDefinition;
 import org.cafienne.cmmn.instance.Case;
 import org.cafienne.cmmn.instance.PlanItem;
 import org.cafienne.cmmn.instance.Task;

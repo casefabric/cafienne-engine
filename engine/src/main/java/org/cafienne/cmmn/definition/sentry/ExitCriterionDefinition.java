@@ -20,8 +20,6 @@ package org.cafienne.cmmn.definition.sentry;
 import org.cafienne.cmmn.definition.CMMNElementDefinition;
 import org.cafienne.cmmn.definition.ModelDefinition;
 import org.cafienne.cmmn.instance.Transition;
-import org.cafienne.cmmn.instance.sentry.CriteriaListener;
-import org.cafienne.cmmn.instance.sentry.ExitCriterion;
 import org.w3c.dom.Element;
 
 public class ExitCriterionDefinition extends CriterionDefinition {

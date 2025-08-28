@@ -23,7 +23,6 @@ import org.cafienne.json.Value;
 import org.cafienne.json.ValueMap;
 import org.cafienne.processtask.definition.SubProcessDefinition;
 import org.cafienne.processtask.definition.SubProcessOutputMappingDefinition;
-import org.cafienne.processtask.implementation.http.HTTPCallDefinition;
 import org.cafienne.processtask.instance.ProcessTaskActor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

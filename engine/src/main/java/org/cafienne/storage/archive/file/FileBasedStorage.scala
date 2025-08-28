@@ -17,13 +17,13 @@
 
 package org.cafienne.storage.archive.file
 
-import org.apache.pekko.Done
 import com.typesafe.scalalogging.LazyLogging
+import org.apache.pekko.Done
 import org.cafienne.infrastructure.config.engine.FileStorageConfig
+import org.cafienne.json.{JSONReader, ValueMap}
 import org.cafienne.storage.actormodel.ActorMetadata
 import org.cafienne.storage.archival.Archive
 import org.cafienne.storage.archive.Storage
-import org.cafienne.json.{JSONReader, ValueMap}
 
 import java.io.{File, FileInputStream, FileWriter}
 import scala.concurrent.Future

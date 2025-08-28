@@ -17,9 +17,9 @@
 
 package org.cafienne.timerservice.persistence.inmemory
 
+import com.typesafe.scalalogging.LazyLogging
 import org.apache.pekko.Done
 import org.apache.pekko.persistence.query.Offset
-import com.typesafe.scalalogging.LazyLogging
 import org.cafienne.timerservice.Timer
 import org.cafienne.timerservice.persistence.TimerStore
 
