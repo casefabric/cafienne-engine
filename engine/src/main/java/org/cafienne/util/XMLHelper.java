@@ -41,7 +41,9 @@ public class XMLHelper {
     public static String printXMLNode(Node node) {
         try {
             TransformerFactory tf = TransformerFactory.newInstance();
-            tf.setAttribute("indent-number", 2);
+            if (tf.getFeature("indent-number")) {
+                tf.setAttribute("indent-number", 2);
+            }
             Transformer transformer = tf.newTransformer();
             String omitDeclaration = node instanceof Document || node == node.getOwnerDocument().getDocumentElement() ? "no" : "yes";
             transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, omitDeclaration);
