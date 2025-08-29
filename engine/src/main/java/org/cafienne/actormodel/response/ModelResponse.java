@@ -39,6 +39,11 @@ public interface ModelResponse extends IncomingActorMessage {
     ActorLastModified lastModifiedContent();
 
     /**
+     * Indicates whether the command created state changes in the actor (without running into failures).
+     */
+    boolean actorChanged();
+
+    /**
      * Return a Value representation of the response content.
      * Defaults to an empty json object.
      */

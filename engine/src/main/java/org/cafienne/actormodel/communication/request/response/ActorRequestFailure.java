@@ -32,6 +32,11 @@ public class ActorRequestFailure extends CaseSystemCommunicationResponse {
     }
 
     @Override
+    public boolean actorChanged() {
+        return false;
+    }
+
+    @Override
     protected void process(RemoteActorState<?> state) {
         state.registerFailure(this);
     }
