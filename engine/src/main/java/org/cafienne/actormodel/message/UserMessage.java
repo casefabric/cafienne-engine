@@ -28,6 +28,9 @@ import org.cafienne.json.ValueMap;
  * Typically used in Commands and resulting Events and Responses from those commands.
  */
 public interface UserMessage extends CafienneSerializable {
+    /**
+     * Returns the user responsible for this message.
+     */
     UserIdentity getUser();
 
     /**
@@ -36,6 +39,15 @@ public interface UserMessage extends CafienneSerializable {
      */
     default ActorType actorType() {
         return ActorType.ModelActor;
+    }
+
+    /**
+     * Returns a string with the identifier of the actor that handles this message.
+     */
+    String getActorId();
+
+    default String actorId() {
+        return getActorId();
     }
 
     default boolean isBootstrapMessage() {
@@ -53,6 +65,6 @@ public interface UserMessage extends CafienneSerializable {
     /**
      * Return a ValueMap serialization of the message
      */
-     ValueMap rawJson();
+    ValueMap rawJson();
 
 }
