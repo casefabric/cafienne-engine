@@ -53,7 +53,7 @@ public class SwitchDebugMode extends CaseCommand {
 
     @Override
     public String toString() {
-        return "Setting debug mode of case '" + getCaseInstanceId() + "' to "+debugMode;
+        return "Setting debug mode of case '" + getActorId() + "' to "+debugMode;
     }
 
     @Override

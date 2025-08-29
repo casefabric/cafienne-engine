@@ -52,7 +52,7 @@ public class ForceRecoveryCommand extends TestScriptCommand {
 
     @Override
     public String toString() {
-        return "ForceRecovery[" + getCaseInstanceId() + "]";
+        return "ForceRecovery[" + getActorId() + "]";
     }
 
     @Override

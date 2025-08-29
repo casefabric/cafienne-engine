@@ -29,8 +29,8 @@ import org.cafienne.json.ValueMap;
 
 /**
  * A {@link Case} instance is designed to handle various CaseCommands, such as {@link StartCase}, {@link MakePlanItemTransition}, etc.
- * Each CaseCommand must implement it's own logic within the case, through the optional {@link BaseModelCommand#validate} and the mandatory {@link CaseCommand#process} methods.
- * When the case has succesfully handled the command, it will persist the resulting {@link CaseEvent}s, and send a reply back, see {@link CaseResponse}.
+ * Each CaseCommand must implement its own logic within the case, through the optional {@link BaseModelCommand#validate} and the mandatory {@link CaseCommand#process} methods.
+ * When the case has successfully handled the command, it will persist the resulting {@link CaseEvent}s, and send a reply back, see {@link CaseResponse}.
  */
 public abstract class CaseCommand extends BaseModelCommand<Case, CaseUserIdentity> implements CaseMessage {
     /**
@@ -55,8 +55,8 @@ public abstract class CaseCommand extends BaseModelCommand<Case, CaseUserIdentit
     /**
      * The id of the case on which to perform the command
      *
-     * @return
      */
+    @Deprecated
     public String getCaseInstanceId() {
         return actorId;
     }
@@ -67,7 +67,6 @@ public abstract class CaseCommand extends BaseModelCommand<Case, CaseUserIdentit
      * Implementations can override this method to implement their own validation logic.
      * Implementations may throw the {@link InvalidCommandException} if they encounter a validation error
      *
-     * @param caseInstance
      * @throws InvalidCommandException If the command is invalid
      */
     public void validate(Case caseInstance) throws InvalidCommandException {
@@ -77,8 +76,6 @@ public abstract class CaseCommand extends BaseModelCommand<Case, CaseUserIdentit
 
     /**
      * This method validates the case team membership of the tenant user that sent this command
-     *
-     * @param caseInstance
      */
     protected void validateCaseTeamMembership(Case caseInstance) {
         caseInstance.getCaseTeam().validateMembership(getUser());

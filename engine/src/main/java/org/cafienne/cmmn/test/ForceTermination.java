@@ -55,7 +55,7 @@ public class ForceTermination extends TestScriptCommand {
 
     @Override
     public String toString() {
-        return "ForceTermination[" + getCaseInstanceId() + "]";
+        return "ForceTermination[" + getActorId() + "]";
     }
 
     @Override

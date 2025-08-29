@@ -49,7 +49,7 @@ public class GetDiscretionaryItems extends CaseCommand {
     public void processCaseCommand(Case caseInstance) {
         // Convert the response to JSON
         ValueMap node = new ValueMap();
-        node.plus(Fields.caseInstanceId, getCaseInstanceId());
+        node.plus(Fields.caseInstanceId, getActorId());
         node.plus(Fields.name, caseInstance.getDefinition().getName());
         ValueList items = node.withArray(Fields.discretionaryItems);
 
