@@ -18,10 +18,10 @@ public class IncomingRequestState {
 
     public void handleIncomingRequest(RequestModelActor request) {
 //        System.out.println("\n" + actor +"   RECEIVED REQUEST " + request.getCommandDescription() +" with id " + request.getMessageId());
-        IncomingRequest incoming = requests.get(request.getMessageId());
+        IncomingRequest incoming = requests.get(request.getCorrelationId());
         if (incoming == null) {
             incoming = new IncomingRequest(this);
-            requests.put(request.getMessageId(), incoming);
+            requests.put(request.getCorrelationId(), incoming);
             this.actor.addEvent(new ActorRequestStored(request));
         } else {
 //            System.out.println("Gettging same request again, ignoring it.");
@@ -30,7 +30,7 @@ public class IncomingRequestState {
     }
 
     public void updateState(ModelActorRequestEvent event) {
-        IncomingRequest incoming = requests.computeIfAbsent(event.getMessageId(), k -> new IncomingRequest(this));
+        IncomingRequest incoming = requests.computeIfAbsent(event.getCorrelationId(), k -> new IncomingRequest(this));
         incoming.updateState(event);
     }
 

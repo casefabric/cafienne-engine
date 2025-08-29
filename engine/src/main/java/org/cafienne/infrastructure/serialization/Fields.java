@@ -21,7 +21,7 @@ package org.cafienne.infrastructure.serialization;
  * Big long enum with all field names that are used in places with CafienneJson (ValueMap and so)
  */
 public enum Fields {
-    messageId,
+    correlationId,
     actor,
     actorId,
     user,

@@ -47,8 +47,8 @@ public class ActorRequestStored extends ModelActorRequestEvent implements Commit
     }
 
     @Override
-    public String getMessageId() {
-        return request.getMessageId();
+    public String getCorrelationId() {
+        return request.getCorrelationId();
     }
 
     @Override

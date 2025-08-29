@@ -40,8 +40,8 @@ public abstract class CaseSystemCommunicationCommand extends BaseModelCommand<Mo
     }
 
     @Override
-    public String getMessageId() {
-        return command.getMessageId();
+    public String getCorrelationId() {
+        return command.getCorrelationId();
     }
 
     protected void writeActorCommand(JsonGenerator generator) throws IOException {

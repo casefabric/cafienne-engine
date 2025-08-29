@@ -19,6 +19,7 @@ package org.cafienne.actormodel.message.event;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import org.cafienne.actormodel.ModelActor;
+import org.cafienne.actormodel.ModelActorTransaction;
 import org.cafienne.actormodel.identity.UserIdentity;
 import org.cafienne.infrastructure.serialization.Fields;
 import org.cafienne.json.ValueMap;
@@ -34,13 +35,19 @@ public abstract class BaseModelEvent<M extends ModelActor, U extends UserIdentit
     public final String tenant;
     private final U user;
     private final Instant timestamp;
+    private final String correlationId;
 
     protected BaseModelEvent(M actor) {
         this.json = new ValueMap();
         this.actorId = actor.getId();
         this.tenant = actor.getTenant();
-        this.user = (U) actor.getCurrentUser();
         this.timestamp = actor.getTransactionTimestamp();
+        // During recovery, events update the actor state, which in itself can lead to new events.
+        // These events are not added if recovery is running.
+        //  Since we're recovering, there is no current transaction.
+        //  In that case we set user and correlation id to null (since the event is ignored anyway).
+        this.user = actor.recoveryRunning() ? null : (U) actor.getCurrentTransaction().getMessage().getUser();
+        this.correlationId = actor.recoveryRunning() ? null : actor.getCurrentTransaction().getMessage().getCorrelationId();
     }
 
     protected BaseModelEvent(ValueMap json) {
@@ -50,6 +57,12 @@ public abstract class BaseModelEvent<M extends ModelActor, U extends UserIdentit
         this.tenant = modelEventJson.readString(Fields.tenant);
         this.timestamp = modelEventJson.readInstant(Fields.timestamp);
         this.user = readUser(modelEventJson.with(Fields.user));
+        this.correlationId = modelEventJson.readString(Fields.correlationId);
+    }
+
+    @Override
+    public String getCorrelationId() {
+        return correlationId;
     }
 
     /**
@@ -107,6 +120,7 @@ public abstract class BaseModelEvent<M extends ModelActor, U extends UserIdentit
         generator.writeFieldName(Fields.modelEvent.toString());
         generator.writeStartObject();
         writeField(generator, Fields.actorId, this.getActorId());
+        writeField(generator, Fields.correlationId, this.getCorrelationId());
         writeField(generator, Fields.tenant, this.tenant);
         writeField(generator, Fields.timestamp, this.timestamp);
         writeField(generator, Fields.user, user);

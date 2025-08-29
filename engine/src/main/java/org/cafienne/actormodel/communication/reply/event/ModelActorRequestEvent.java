@@ -13,7 +13,7 @@ public abstract class ModelActorRequestEvent extends CaseSystemCommunicationEven
     public final String sourceActorId;
 
     protected ModelActorRequestEvent(ModelCommand command, String sourceActorId) {
-        super(command.getActor(), command.getMessageId());
+        super(command.getActor(), command.getCorrelationId());
         this.sourceActorId = sourceActorId;
     }
 

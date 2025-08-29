@@ -34,6 +34,15 @@ public interface UserMessage extends CafienneSerializable {
     UserIdentity getUser();
 
     /**
+     * Every command has a unique identifier. This can be used to correlate Commands, Events and Responses.
+     */
+    String getCorrelationId();
+
+    default String correlationId() {
+        return getCorrelationId();
+    }
+
+    /**
      * Explicit method to be implemented returning the type of the ModelActor handling this message.
      * This is required for the message routing within the CaseSystem
      */

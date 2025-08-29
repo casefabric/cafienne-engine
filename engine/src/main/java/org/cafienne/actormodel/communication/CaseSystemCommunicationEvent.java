@@ -18,7 +18,7 @@ public abstract class CaseSystemCommunicationEvent extends CaseSystemEvent imple
 
     protected CaseSystemCommunicationEvent(ValueMap json) {
         super(json);
-        this.messageId = json.readString(Fields.messageId);
+        this.messageId = json.readString(Fields.correlationId);
     }
 
     @Override
@@ -26,7 +26,7 @@ public abstract class CaseSystemCommunicationEvent extends CaseSystemEvent imple
     }
 
     @Override
-    public String getMessageId() {
+    public String getCorrelationId() {
         return this.messageId;
     }
 
@@ -37,6 +37,6 @@ public abstract class CaseSystemCommunicationEvent extends CaseSystemEvent imple
 
     public void writeActorRequestEvent(JsonGenerator generator) throws IOException {
         super.writeModelEvent(generator);
-        writeField(generator, Fields.messageId, messageId);
+        writeField(generator, Fields.correlationId, messageId);
     }
 }

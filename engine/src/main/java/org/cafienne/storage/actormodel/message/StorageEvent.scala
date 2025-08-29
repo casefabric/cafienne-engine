@@ -35,6 +35,7 @@ trait StorageEvent extends StorageMessage with CafienneJson with ModelEvent {
   val metadata: ActorMetadata
   val user: StorageUser = metadata.user
   val tenant: String = user.tenant
+  override def getCorrelationId: String = ""
   override val actorId: String = metadata.actorId
   override val actorType: ActorType = metadata.actorType
   val parentActorId: ActorMetadata = metadata.parent

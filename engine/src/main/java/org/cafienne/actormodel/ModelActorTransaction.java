@@ -65,6 +65,14 @@ public class ModelActorTransaction {
         this.checkEngineVersion();
     }
 
+    /**
+     * Return the message for which this transaction was created.
+     * This can be used to e.g. read the user information or the correlation id.
+     */
+    public IncomingActorMessage getMessage() {
+        return message;
+    }
+
     void perform() {
         actor.addDebugInfo(() -> "---------- User " + message.getUser().id() + " in " + actor + " receives message " + message.getDescription(), message.rawJson());
 
