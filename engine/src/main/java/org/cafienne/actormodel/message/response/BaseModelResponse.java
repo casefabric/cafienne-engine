@@ -36,6 +36,7 @@ public abstract class BaseModelResponse implements ModelResponse {
     private Instant lastModified;
     private final UserIdentity user;
     private final String commandType;
+    private final boolean actorChanged;
 
     protected BaseModelResponse(ModelCommand command) {
         this.json = new ValueMap();
@@ -44,6 +45,7 @@ public abstract class BaseModelResponse implements ModelResponse {
         // If a Command never reached the actor (e.g., if CaseSystem routing service ran into an error),
         //  the actor will not be available. Checking that here. Required for CommandFailure.
         this.lastModified = command.getActor() != null ? command.getActor().getLastModified() : null;
+        this.actorChanged = command.getActor() != null && command.getActor().getCurrentTransaction() != null && command.getActor().getCurrentTransaction().hasState();
         this.user = command.getUser();
         this.commandType = command.getClass().getName();
     }
@@ -55,6 +57,7 @@ public abstract class BaseModelResponse implements ModelResponse {
         this.lastModified = json.readInstant(Fields.lastModified);
         this.user = json.readObject(Fields.user, UserIdentity::deserialize);
         this.commandType = json.readString(Fields.commandType);
+        this.actorChanged = json.readBoolean(Fields.actorChanged);
     }
 
     @Override
@@ -92,6 +95,11 @@ public abstract class BaseModelResponse implements ModelResponse {
         return new ActorLastModified(actorId, getLastModified());
     }
 
+    @Override
+    public boolean actorChanged() {
+        return actorChanged;
+    }
+
     public UserIdentity getUser() {
         return user;
     }
@@ -102,6 +110,7 @@ public abstract class BaseModelResponse implements ModelResponse {
         writeField(generator, Fields.actorId, actorId);
         writeField(generator, Fields.commandType, commandType);
         writeField(generator, Fields.lastModified, this.getLastModified());
+        writeField(generator, Fields.actorChanged, actorChanged);
         writeField(generator, Fields.user, user);
     }
 

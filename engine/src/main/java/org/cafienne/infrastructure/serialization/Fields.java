@@ -27,6 +27,7 @@ public enum Fields {
     user,
 
     lastModified,
+    actorChanged,
     timestamp,
     commandType,
     command,

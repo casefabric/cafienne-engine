@@ -42,9 +42,35 @@ public class LastModifiedRegistration {
     private final Map<String, Instant> lastModifiedRegistration = new HashMap<>();
     private final Map<String, List<Waiter>> waiters = new HashMap<>();
     public final String name;
+    private final List<String> correlationIdentifiers = new ArrayList<>();
+    private final Map<String, Promise<String>> correlationIdWaiters = new HashMap<>();
 
     public LastModifiedRegistration(String name) {
         this.name = name;
+    }
+
+    public Promise<String> waitFor(String correlationId) {
+        Promise<String> p = Futures.promise();
+        if (correlationIdentifiers.remove(correlationId)) {
+            p.success(correlationId);
+        } else {
+            correlationIdWaiters.put(correlationId, p);
+        }
+        return p;
+    }
+
+    private void handleCorrelationIdWaiters(String correlationId) {
+        Promise<String> promise = correlationIdWaiters.remove(correlationId);
+        if (promise != null) {
+            if (!promise.isCompleted()) {
+                // Only invoke the promise if no one has done it yet
+                promise.success(correlationId);
+            }
+        } else {
+            // Apparently no one registered (yet) for this correlation id. Let's add it.
+            //  Note: we also need to clean up those identifiers after some time.
+            correlationIdentifiers.add(correlationId);
+        }
     }
 
     public Promise<String> waitFor(ActorLastModified notBefore) {
@@ -75,7 +101,8 @@ public class LastModifiedRegistration {
         logger.debug(msg);
     }
 
-    public void handle(ActorModified event) {
+    public void handle(ActorModified<?> event) {
+        handleCorrelationIdWaiters(event.correlationId());
         handle(event.getActorId(), event.lastModified());
     }
 
@@ -126,7 +153,6 @@ public class LastModifiedRegistration {
         private final long createdAt = System.currentTimeMillis();
 
         Waiter(ActorLastModified notBefore, Promise<String> promise) {
-
             this.notBefore = notBefore;
             this.promise = promise;
         }

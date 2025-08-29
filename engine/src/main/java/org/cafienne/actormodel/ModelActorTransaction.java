@@ -86,6 +86,10 @@ public class ModelActorTransaction {
         commit();
     }
 
+    public boolean hasState() {
+        return !hasFailures() && hasStatefulEvents();
+    }
+
     void runCommand(ModelCommand command) {
 //        actor.addDebugInfo(() -> "---------- User " + command.getUser().id() + " in " + actor + " starts command " + command.getDescription() , command.rawJson());
 
@@ -180,7 +184,7 @@ public class ModelActorTransaction {
         if (getLogger().isDebugEnabled() || EngineDeveloperConsole.enabled()) {
             StringBuilder msg = new StringBuilder("\n------------------------ PERSISTING " + events.size() + " EVENTS IN " + actor);
             events.forEach(e -> msg.append("\n\t").append(e));
-            getLogger().debug(msg + "\n");
+            getLogger().debug("{}\n", msg);
             EngineDeveloperConsole.debugIndentedConsoleLogging(msg + "\n");
         }
         // Include the debug event if any.
@@ -251,7 +255,7 @@ public class ModelActorTransaction {
      * Simplistic
      */
     private boolean hasStatefulEvents() {
-        return !events.isEmpty();
+        return !events.isEmpty() && !(events.size() == 1 && events.getFirst() instanceof DebugEvent);
     }
 
     /**

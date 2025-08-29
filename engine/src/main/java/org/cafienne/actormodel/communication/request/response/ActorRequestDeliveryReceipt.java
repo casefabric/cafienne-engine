@@ -16,6 +16,11 @@ public class ActorRequestDeliveryReceipt extends CaseSystemCommunicationResponse
     }
 
     @Override
+    public boolean actorChanged() {
+        return true;
+    }
+
+    @Override
     public String getCommandDescription() {
         return "Delivered[" + command.getDescription() + "]";
     }
