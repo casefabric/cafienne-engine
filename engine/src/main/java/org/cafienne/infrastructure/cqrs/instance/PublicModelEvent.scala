@@ -1,7 +1,7 @@
 package org.cafienne.infrastructure.cqrs.instance
 
 import org.apache.pekko.persistence.query.Offset
-import org.cafienne.actormodel.event.ModelEvent
+import org.cafienne.actormodel.message.event.ModelEvent
 import org.cafienne.infrastructure.cqrs.offset.OffsetRecord
 import org.cafienne.json.{CafienneJson, Value, ValueMap}
 

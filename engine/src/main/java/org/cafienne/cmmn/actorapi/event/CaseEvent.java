@@ -17,7 +17,7 @@
 
 package org.cafienne.cmmn.actorapi.event;
 
-import org.cafienne.actormodel.event.ModelEvent;
+import org.cafienne.actormodel.message.event.ModelEvent;
 import org.cafienne.cmmn.actorapi.CaseMessage;
 
 import java.util.Set;

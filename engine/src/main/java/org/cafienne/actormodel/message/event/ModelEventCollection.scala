@@ -15,8 +15,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cafienne.actormodel.command
+package org.cafienne.actormodel.message.event
 
-import org.cafienne.infrastructure.serialization.JacksonSerializable
+import scala.collection.mutable.ListBuffer
 
-case class TerminateModelActor(actorId: String) extends JacksonSerializable
+trait ModelEventCollection {
+  val events: ListBuffer[ModelEvent] = ListBuffer()
+
+  def eventsOfType[ME <: ModelEvent](clazz: Class[ME]): Seq[ME] = events.filter(event => clazz.isAssignableFrom(event.getClass)).map(_.asInstanceOf[ME]).toSeq
+
+  def optionalEvent[ME <: ModelEvent](clazz: Class[ME]): Option[ME] = eventsOfType(clazz).headOption
+
+  def getEvent[ME <: ModelEvent](clazz: Class[ME]): ME = optionalEvent(clazz).get
+}

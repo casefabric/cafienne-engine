@@ -19,7 +19,7 @@ package org.cafienne.infrastructure.cqrs
 
 import com.typesafe.scalalogging.LazyLogging
 import org.apache.pekko.persistence.query.EventEnvelope
-import org.cafienne.actormodel.event.ModelEvent
+import org.cafienne.actormodel.message.event.ModelEvent
 import org.cafienne.infrastructure.serialization.{DeserializationFailure, UnrecognizedManifest}
 
 trait ModelEventFilter extends LazyLogging {

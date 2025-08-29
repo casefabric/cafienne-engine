@@ -18,7 +18,7 @@
 package org.cafienne.cmmn.actorapi.event.plan.task;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import org.cafienne.actormodel.command.ModelCommand;
+import org.cafienne.actormodel.message.command.ModelCommand;
 import org.cafienne.cmmn.instance.Task;
 import org.cafienne.infrastructure.serialization.Fields;
 import org.cafienne.infrastructure.serialization.Manifest;

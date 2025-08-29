@@ -23,17 +23,17 @@ import org.apache.pekko.persistence.AbstractPersistentActor;
 import org.apache.pekko.persistence.JournalProtocol;
 import org.apache.pekko.persistence.SnapshotOffer;
 import org.apache.pekko.persistence.SnapshotProtocol;
-import org.cafienne.actormodel.command.BootstrapMessage;
 import org.cafienne.actormodel.communication.reply.state.IncomingRequestState;
 import org.cafienne.actormodel.communication.request.state.RemoteActorState;
 import org.cafienne.actormodel.debug.DebugInfoAppender;
-import org.cafienne.actormodel.event.ActorModified;
-import org.cafienne.actormodel.event.ModelEvent;
 import org.cafienne.actormodel.exception.CommandException;
 import org.cafienne.actormodel.identity.UserIdentity;
 import org.cafienne.actormodel.message.IncomingActorMessage;
-import org.cafienne.actormodel.response.CommandFailure;
-import org.cafienne.actormodel.response.ModelResponse;
+import org.cafienne.actormodel.message.command.BootstrapMessage;
+import org.cafienne.actormodel.message.event.ActorModified;
+import org.cafienne.actormodel.message.event.ModelEvent;
+import org.cafienne.actormodel.message.response.CommandFailure;
+import org.cafienne.actormodel.message.response.ModelResponse;
 import org.cafienne.infrastructure.EngineVersion;
 import org.cafienne.infrastructure.enginedeveloper.EngineDeveloperConsole;
 import org.cafienne.system.CaseSystem;
@@ -404,7 +404,7 @@ public abstract class ModelActor extends AbstractPersistentActor {
     /**
      * This method is invoked when handling of the source message completed and
      * resulting state changes are to be persisted in the event journal.
-     * It can be used by e.g. ModelCommands and ModelResponses to add a {@link org.cafienne.actormodel.event.ActorModified} event.
+     * It can be used by e.g. ModelCommands and ModelResponses to add a {@link org.cafienne.actormodel.message.event.ActorModified} event.
      */
     protected void completeMessageHandling(IncomingActorMessage source, ModelActorTransaction modelActorTransaction) {
         if (modelActorTransaction.needsCommitEvent()) {
@@ -417,7 +417,7 @@ public abstract class ModelActor extends AbstractPersistentActor {
     /**
      * This method is invoked when handling of the source message completed and
      * resulting state changes are to be persisted in the event journal.
-     * It can be used by e.g. ModelCommands and ModelResponses to add a {@link org.cafienne.actormodel.event.ActorModified} event.
+     * It can be used by e.g. ModelCommands and ModelResponses to add a {@link org.cafienne.actormodel.message.event.ActorModified} event.
      */
     protected void addCommitEvent(IncomingActorMessage message) {
     }

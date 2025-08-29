@@ -15,38 +15,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cafienne.actormodel.event;
+package org.cafienne.actormodel.message.command;
 
-import org.cafienne.actormodel.ModelActor;
 import org.cafienne.actormodel.message.UserMessage;
-import org.cafienne.json.ValueMap;
 
-import java.time.Instant;
-import java.util.Set;
-
-public interface ModelEvent extends UserMessage {
-    String TAG = "cafienne";
-
-    Set<String> tags = Set.of(ModelEvent.TAG);
-
-    default Set<String> tags() {
-        return tags;
-    }
-
-    /**
-     * Hook that will be invoked after the event is persisted.
-     * This can be used to run followup actions only after transaction completed.
-     */
-    default void afterPersist(ModelActor actor) {
-    }
-
-    void updateActorState(ModelActor actor);
-
+/**
+ * The first command that is sent to a ModelActor has to implement this interface such that the actor can
+ * initialize itself with the required information.
+ * This is required to enable the ModelActor class to do some basic authorization checks that must be done by
+ * the platform and cannot be left to actor specific logic overwriting it.
+ * It should also be implemented in the first state-changing ModelEvent, so that the same information can be set
+ * during recovery of the ModelActor
+ */
+public interface BootstrapMessage extends UserMessage {
     String tenant();
 
-    String getActorId();
-
-    Instant getTimestamp();
-
-    ValueMap rawJson();
+    @Override
+    default boolean isBootstrapMessage() {
+        return true;
+    }
 }

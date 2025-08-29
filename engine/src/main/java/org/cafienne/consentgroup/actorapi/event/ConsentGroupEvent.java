@@ -17,7 +17,7 @@
 
 package org.cafienne.consentgroup.actorapi.event;
 
-import org.cafienne.actormodel.event.ModelEvent;
+import org.cafienne.actormodel.message.event.ModelEvent;
 import org.cafienne.consentgroup.ConsentGroupActor;
 import org.cafienne.consentgroup.actorapi.ConsentGroupMessage;
 

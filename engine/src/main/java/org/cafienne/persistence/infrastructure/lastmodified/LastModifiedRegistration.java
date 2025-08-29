@@ -18,8 +18,8 @@
 package org.cafienne.persistence.infrastructure.lastmodified;
 
 import org.apache.pekko.dispatch.Futures;
-import org.cafienne.actormodel.event.ActorModified;
-import org.cafienne.actormodel.response.ActorLastModified;
+import org.cafienne.actormodel.message.event.ActorModified;
+import org.cafienne.actormodel.message.response.ActorLastModified;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import scala.concurrent.Promise;

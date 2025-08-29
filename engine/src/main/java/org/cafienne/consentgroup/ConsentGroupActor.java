@@ -18,9 +18,9 @@
 package org.cafienne.consentgroup;
 
 import org.cafienne.actormodel.ModelActor;
-import org.cafienne.actormodel.event.ModelEvent;
 import org.cafienne.actormodel.identity.ConsentGroupUser;
 import org.cafienne.actormodel.message.IncomingActorMessage;
+import org.cafienne.actormodel.message.event.ModelEvent;
 import org.cafienne.consentgroup.actorapi.ConsentGroupMember;
 import org.cafienne.consentgroup.actorapi.command.ConsentGroupCommand;
 import org.cafienne.consentgroup.actorapi.command.CreateConsentGroup;

@@ -18,7 +18,7 @@
 package org.cafienne.consentgroup.actorapi.event;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import org.cafienne.actormodel.command.BootstrapMessage;
+import org.cafienne.actormodel.message.command.BootstrapMessage;
 import org.cafienne.consentgroup.ConsentGroupActor;
 import org.cafienne.infrastructure.EngineVersion;
 import org.cafienne.infrastructure.serialization.Fields;

@@ -17,10 +17,10 @@
 
 package org.cafienne.consentgroup.actorapi.command;
 
-import org.cafienne.actormodel.command.BaseModelCommand;
 import org.cafienne.actormodel.exception.AuthorizationException;
 import org.cafienne.actormodel.exception.InvalidCommandException;
 import org.cafienne.actormodel.identity.ConsentGroupUser;
+import org.cafienne.actormodel.message.command.BaseModelCommand;
 import org.cafienne.consentgroup.ConsentGroupActor;
 import org.cafienne.consentgroup.actorapi.ConsentGroupMessage;
 import org.cafienne.consentgroup.actorapi.exception.ConsentGroupException;

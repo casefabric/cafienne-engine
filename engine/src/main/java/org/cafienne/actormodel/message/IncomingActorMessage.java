@@ -17,8 +17,8 @@
 
 package org.cafienne.actormodel.message;
 
-import org.cafienne.actormodel.command.ModelCommand;
-import org.cafienne.actormodel.response.ModelResponse;
+import org.cafienne.actormodel.message.command.ModelCommand;
+import org.cafienne.actormodel.message.response.ModelResponse;
 
 /**
  * An IncomingActorMessage is received by a ModelActor. Typically a ModelCommand or a ModelResponse.

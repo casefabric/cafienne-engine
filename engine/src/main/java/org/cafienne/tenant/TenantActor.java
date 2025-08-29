@@ -18,9 +18,9 @@
 package org.cafienne.tenant;
 
 import org.cafienne.actormodel.ModelActor;
-import org.cafienne.actormodel.event.ModelEvent;
 import org.cafienne.actormodel.identity.TenantUser;
 import org.cafienne.actormodel.message.IncomingActorMessage;
+import org.cafienne.actormodel.message.event.ModelEvent;
 import org.cafienne.cmmn.actorapi.command.platform.NewUserInformation;
 import org.cafienne.cmmn.actorapi.command.platform.PlatformUpdate;
 import org.cafienne.system.CaseSystem;

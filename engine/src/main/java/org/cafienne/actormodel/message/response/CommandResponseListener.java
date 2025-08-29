@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cafienne.actormodel.response;
+package org.cafienne.actormodel.message.response;
 
 import org.cafienne.cmmn.actorapi.command.CaseCommand;
 import org.cafienne.cmmn.actorapi.response.CaseResponse;

@@ -20,7 +20,7 @@ package org.cafienne.storage.restore
 import com.typesafe.scalalogging.LazyLogging
 import org.apache.pekko.persistence.journal.Tagged
 import org.apache.pekko.persistence.{DeleteMessagesSuccess, RecoveryCompleted}
-import org.cafienne.actormodel.event.ModelEvent
+import org.cafienne.actormodel.message.event.ModelEvent
 import org.cafienne.storage.actormodel.message.StorageEvent
 import org.cafienne.storage.actormodel.{ActorMetadata, BaseStorageActor}
 import org.cafienne.storage.archival.{Archive, ModelEventSerializer}

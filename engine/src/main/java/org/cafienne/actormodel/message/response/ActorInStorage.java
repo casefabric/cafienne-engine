@@ -15,14 +15,33 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cafienne.actormodel.event;
+package org.cafienne.actormodel.message.response;
 
+import com.fasterxml.jackson.core.JsonGenerator;
+import org.cafienne.actormodel.ActorType;
+import org.cafienne.actormodel.message.command.ModelCommand;
+import org.cafienne.infrastructure.serialization.Fields;
 import org.cafienne.infrastructure.serialization.Manifest;
 import org.cafienne.json.ValueMap;
 
+import java.io.IOException;
+
 @Manifest
-public class SentryEvent extends DebugEvent {
-    public SentryEvent(ValueMap json) {
+public class ActorInStorage extends BaseModelResponse {
+    public final ActorType actorType;
+    public ActorInStorage(ModelCommand command, ActorType actorType) {
+        super(command);
+        this.actorType = actorType;
+    }
+
+    public ActorInStorage(ValueMap json) {
         super(json);
+        this.actorType = json.readEnum(Fields.type, ActorType.class);
+    }
+
+    @Override
+    public void write(JsonGenerator generator) throws IOException {
+        super.write(generator);
+        writeField(generator, Fields.type, actorType);
     }
 }

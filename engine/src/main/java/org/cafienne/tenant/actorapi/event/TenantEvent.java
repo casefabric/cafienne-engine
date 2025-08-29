@@ -17,7 +17,7 @@
 
 package org.cafienne.tenant.actorapi.event;
 
-import org.cafienne.actormodel.event.ModelEvent;
+import org.cafienne.actormodel.message.event.ModelEvent;
 import org.cafienne.tenant.TenantActor;
 import org.cafienne.tenant.actorapi.TenantMessage;
 

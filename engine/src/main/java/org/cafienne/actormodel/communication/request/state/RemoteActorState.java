@@ -1,12 +1,12 @@
 package org.cafienne.actormodel.communication.request.state;
 
 import org.cafienne.actormodel.ModelActor;
-import org.cafienne.actormodel.command.ModelCommand;
 import org.cafienne.actormodel.communication.request.event.ActorRequestCreated;
 import org.cafienne.actormodel.communication.request.event.ActorRequestDelivered;
 import org.cafienne.actormodel.communication.request.event.ModelActorReplyEvent;
 import org.cafienne.actormodel.communication.request.response.ActorRequestDeliveryReceipt;
 import org.cafienne.actormodel.communication.request.response.ActorRequestFailure;
+import org.cafienne.actormodel.message.command.ModelCommand;
 
 import java.util.HashMap;
 import java.util.Map;

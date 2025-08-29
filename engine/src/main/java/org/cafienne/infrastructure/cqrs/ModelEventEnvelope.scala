@@ -18,7 +18,7 @@
 package org.cafienne.infrastructure.cqrs
 
 import org.apache.pekko.persistence.query.{EventEnvelope, Offset}
-import org.cafienne.actormodel.event.ModelEvent
+import org.cafienne.actormodel.message.event.ModelEvent
 
 case class ModelEventEnvelope(envelope: EventEnvelope) {
   lazy val offset: Offset = envelope.offset

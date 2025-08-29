@@ -17,9 +17,9 @@
 
 package org.cafienne.cmmn.actorapi.command;
 
-import org.cafienne.actormodel.command.BaseModelCommand;
 import org.cafienne.actormodel.exception.InvalidCommandException;
 import org.cafienne.actormodel.identity.CaseUserIdentity;
+import org.cafienne.actormodel.message.command.BaseModelCommand;
 import org.cafienne.cmmn.actorapi.CaseMessage;
 import org.cafienne.cmmn.actorapi.command.plan.MakePlanItemTransition;
 import org.cafienne.cmmn.actorapi.event.CaseEvent;
