@@ -15,10 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cafienne.actormodel.response;
+package org.cafienne.actormodel.message.response;
 
-import org.cafienne.actormodel.command.ModelCommand;
 import org.cafienne.actormodel.message.IncomingActorMessage;
+import org.cafienne.actormodel.message.command.ModelCommand;
 import org.cafienne.json.Value;
 import org.cafienne.json.ValueMap;
 

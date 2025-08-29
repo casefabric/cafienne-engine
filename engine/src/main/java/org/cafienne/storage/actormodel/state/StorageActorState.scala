@@ -19,7 +19,7 @@ package org.cafienne.storage.actormodel.state
 
 import com.typesafe.scalalogging.LazyLogging
 import org.apache.pekko.actor.ActorRef
-import org.cafienne.actormodel.event.{ModelEvent, ModelEventCollection}
+import org.cafienne.actormodel.message.event.{ModelEvent, ModelEventCollection}
 import org.cafienne.storage.actormodel.command.ClearTimerData
 import org.cafienne.storage.actormodel.event.{ChildrenReceived, QueryDataCleared, TimerDataCleared}
 import org.cafienne.storage.actormodel.message.{StorageActionStarted, StorageEvent}

@@ -1,4 +1,4 @@
-package org.cafienne.actormodel.event;
+package org.cafienne.actormodel.message.event;
 
 import org.cafienne.actormodel.ModelActor;
 import org.cafienne.json.ValueMap;

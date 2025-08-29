@@ -15,11 +15,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cafienne.actormodel.command;
+package org.cafienne.actormodel.message.command;
 
 import org.cafienne.actormodel.ModelActor;
 import org.cafienne.actormodel.message.IncomingActorMessage;
-import org.cafienne.actormodel.response.ModelResponse;
+import org.cafienne.actormodel.message.response.ModelResponse;
 
 public interface ModelCommand extends IncomingActorMessage {
     /**

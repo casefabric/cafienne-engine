@@ -17,9 +17,9 @@
 
 package org.cafienne.infrastructure.serialization.serializers;
 
-import org.cafienne.actormodel.event.DebugEvent;
-import org.cafienne.actormodel.event.EngineVersionChanged;
-import org.cafienne.actormodel.event.SentryEvent;
+import org.cafienne.actormodel.message.event.DebugEvent;
+import org.cafienne.actormodel.message.event.EngineVersionChanged;
+import org.cafienne.actormodel.message.event.SentryEvent;
 import org.cafienne.cmmn.actorapi.event.*;
 import org.cafienne.cmmn.actorapi.event.file.*;
 import org.cafienne.cmmn.actorapi.event.migration.*;

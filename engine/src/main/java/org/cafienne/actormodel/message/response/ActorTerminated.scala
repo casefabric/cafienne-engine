@@ -15,8 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cafienne.actormodel.command
+package org.cafienne.actormodel.message.response
 
 import org.cafienne.infrastructure.serialization.JacksonSerializable
 
-case class TerminateModelActor(actorId: String) extends JacksonSerializable
+case class ActorTerminated(actorId: String) extends JacksonSerializable

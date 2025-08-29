@@ -1,6 +1,6 @@
 package org.cafienne.persistence.infrastructure.lastmodified
 
-import org.cafienne.actormodel.response.ActorLastModified
+import org.cafienne.actormodel.message.response.ActorLastModified
 
 import scala.concurrent.Future
 

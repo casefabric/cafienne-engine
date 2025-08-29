@@ -18,9 +18,9 @@
 package org.cafienne.cmmn.actorapi.command;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import org.cafienne.actormodel.command.BootstrapMessage;
 import org.cafienne.actormodel.exception.InvalidCommandException;
 import org.cafienne.actormodel.identity.CaseUserIdentity;
+import org.cafienne.actormodel.message.command.BootstrapMessage;
 import org.cafienne.cmmn.actorapi.command.team.CaseTeam;
 import org.cafienne.cmmn.actorapi.event.CaseDefinitionApplied;
 import org.cafienne.cmmn.actorapi.response.CaseStartedResponse;

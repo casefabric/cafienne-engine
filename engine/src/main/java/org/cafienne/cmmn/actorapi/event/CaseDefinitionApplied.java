@@ -18,7 +18,7 @@
 package org.cafienne.cmmn.actorapi.event;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import org.cafienne.actormodel.command.BootstrapMessage;
+import org.cafienne.actormodel.message.command.BootstrapMessage;
 import org.cafienne.cmmn.actorapi.event.definition.CaseDefinitionEvent;
 import org.cafienne.cmmn.definition.CaseDefinition;
 import org.cafienne.cmmn.instance.Case;

@@ -15,30 +15,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cafienne.actormodel.response;
+package org.cafienne.actormodel.message.event;
 
-import org.cafienne.actormodel.command.ModelCommand;
 import org.cafienne.infrastructure.serialization.Manifest;
 import org.cafienne.json.ValueMap;
 
-/**
- * Can be used to return an exception to the sender of the command when the engine ran into some non-functional exception,
- * e.g. during handling of a command.
- */
 @Manifest
-public class ActorChokedFailure extends CommandFailure {
-    /**
-     * Create a failure response for the command.
-     * The message id of the command will be pasted into the message id of the response.
-     *
-     * @param command
-     * @param failure The reason why the command failed
-     */
-    public ActorChokedFailure(ModelCommand command, Throwable failure) {
-        super(command, failure);
-    }
-
-    public ActorChokedFailure(ValueMap json) {
+public class SentryEvent extends DebugEvent {
+    public SentryEvent(ValueMap json) {
         super(json);
     }
 }

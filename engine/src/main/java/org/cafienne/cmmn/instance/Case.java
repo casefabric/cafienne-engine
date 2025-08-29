@@ -18,9 +18,9 @@
 package org.cafienne.cmmn.instance;
 
 import org.cafienne.actormodel.ModelActor;
-import org.cafienne.actormodel.event.ModelEvent;
 import org.cafienne.actormodel.identity.CaseUserIdentity;
 import org.cafienne.actormodel.message.IncomingActorMessage;
+import org.cafienne.actormodel.message.event.ModelEvent;
 import org.cafienne.cmmn.actorapi.command.CaseCommand;
 import org.cafienne.cmmn.actorapi.command.platform.PlatformUpdate;
 import org.cafienne.cmmn.actorapi.command.team.CaseTeam;

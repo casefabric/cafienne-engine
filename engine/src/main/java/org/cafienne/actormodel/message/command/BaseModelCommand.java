@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cafienne.actormodel.command;
+package org.cafienne.actormodel.message.command;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -25,7 +25,7 @@ import org.apache.pekko.actor.ActorRef;
 import org.cafienne.actormodel.ModelActor;
 import org.cafienne.actormodel.exception.InvalidCommandException;
 import org.cafienne.actormodel.identity.UserIdentity;
-import org.cafienne.actormodel.response.ModelResponse;
+import org.cafienne.actormodel.message.response.ModelResponse;
 import org.cafienne.infrastructure.serialization.Fields;
 import org.cafienne.json.JSONParseFailure;
 import org.cafienne.json.JSONReader;

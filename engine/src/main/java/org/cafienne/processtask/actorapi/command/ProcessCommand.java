@@ -17,9 +17,9 @@
 
 package org.cafienne.processtask.actorapi.command;
 
-import org.cafienne.actormodel.command.BaseModelCommand;
 import org.cafienne.actormodel.exception.InvalidCommandException;
 import org.cafienne.actormodel.identity.UserIdentity;
+import org.cafienne.actormodel.message.command.BaseModelCommand;
 import org.cafienne.json.ValueMap;
 import org.cafienne.processtask.actorapi.ProcessActorMessage;
 import org.cafienne.processtask.actorapi.response.ProcessResponse;

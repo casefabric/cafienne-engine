@@ -18,7 +18,7 @@
 package org.cafienne.cmmn.actorapi.event;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import org.cafienne.actormodel.event.CommitEvent;
+import org.cafienne.actormodel.message.event.CommitEvent;
 import org.cafienne.cmmn.actorapi.command.platform.PlatformUpdate;
 import org.cafienne.cmmn.instance.Case;
 import org.cafienne.infrastructure.serialization.Fields;

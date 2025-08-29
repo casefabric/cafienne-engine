@@ -19,7 +19,7 @@ package org.cafienne.actormodel.tagging
 
 import com.typesafe.scalalogging.LazyLogging
 import org.apache.pekko.persistence.journal.{Tagged, WriteEventAdapter}
-import org.cafienne.actormodel.event.ModelEvent
+import org.cafienne.actormodel.message.event.ModelEvent
 
 class CaseTaggingEventAdapter extends WriteEventAdapter with LazyLogging {
   logger.warn("You can safely remove the CaseTaggingEventAdapter properties in the read journal configuration")

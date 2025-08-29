@@ -17,7 +17,7 @@
 
 package org.cafienne.storage.archival
 
-import org.cafienne.actormodel.event.ModelEvent
+import org.cafienne.actormodel.message.event.ModelEvent
 import org.cafienne.infrastructure.serialization.{CafienneSerializer, Fields}
 import org.cafienne.json.ValueMap
 

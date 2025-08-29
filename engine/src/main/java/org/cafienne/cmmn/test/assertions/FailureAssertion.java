@@ -18,7 +18,7 @@
 package org.cafienne.cmmn.test.assertions;
 
 import org.cafienne.actormodel.exception.SerializedException;
-import org.cafienne.actormodel.response.CommandFailure;
+import org.cafienne.actormodel.message.response.CommandFailure;
 import org.cafienne.cmmn.test.CaseTestCommand;
 import org.cafienne.cmmn.test.TestScript;
 

@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cafienne.actormodel.event;
+package org.cafienne.actormodel.message.event;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import org.cafienne.actormodel.ModelActor;

@@ -18,7 +18,7 @@
 package org.cafienne.storage.actormodel
 
 import org.apache.pekko.actor.ActorRef
-import org.cafienne.actormodel.event.ModelEventCollection
+import org.cafienne.actormodel.message.event.ModelEventCollection
 import org.cafienne.storage.actormodel.event.ChildrenReceived
 import org.cafienne.storage.actormodel.message.{StorageActionCompleted, StorageActionStarted, StorageEvent}
 

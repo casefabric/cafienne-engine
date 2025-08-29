@@ -17,7 +17,7 @@
 
 package org.cafienne.actormodel.exception;
 
-import org.cafienne.actormodel.command.ModelCommand;
+import org.cafienne.actormodel.message.command.ModelCommand;
 
 /**
  * Every {@link ModelCommand} must have a tenant set.

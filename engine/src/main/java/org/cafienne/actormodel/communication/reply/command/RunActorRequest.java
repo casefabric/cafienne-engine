@@ -6,7 +6,7 @@ import org.cafienne.actormodel.communication.CaseSystemCommunicationCommand;
 import org.cafienne.actormodel.communication.reply.event.ActorRequestExecuted;
 import org.cafienne.actormodel.communication.reply.event.ActorRequestStored;
 import org.cafienne.actormodel.exception.InvalidCommandException;
-import org.cafienne.actormodel.response.ModelResponse;
+import org.cafienne.actormodel.message.response.ModelResponse;
 import org.cafienne.infrastructure.serialization.Fields;
 import org.cafienne.infrastructure.serialization.Manifest;
 import org.cafienne.json.ValueMap;

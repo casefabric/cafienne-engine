@@ -15,14 +15,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cafienne.actormodel.event;
+package org.cafienne.actormodel.message.event
 
-import org.cafienne.infrastructure.serialization.Manifest;
-import org.cafienne.json.ValueMap;
+import scala.collection.mutable.ListBuffer
 
-@Manifest
-public class SentryEvent extends DebugEvent {
-    public SentryEvent(ValueMap json) {
-        super(json);
-    }
+trait ModelEventCollection {
+  val events: ListBuffer[ModelEvent] = ListBuffer()
+
+  def eventsOfType[ME <: ModelEvent](clazz: Class[ME]): Seq[ME] = events.filter(event => clazz.isAssignableFrom(event.getClass)).map(_.asInstanceOf[ME]).toSeq
+
+  def optionalEvent[ME <: ModelEvent](clazz: Class[ME]): Option[ME] = eventsOfType(clazz).headOption
+
+  def getEvent[ME <: ModelEvent](clazz: Class[ME]): ME = optionalEvent(clazz).get
 }

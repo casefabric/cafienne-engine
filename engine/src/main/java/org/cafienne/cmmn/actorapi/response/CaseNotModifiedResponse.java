@@ -17,7 +17,7 @@
 
 package org.cafienne.cmmn.actorapi.response;
 
-import org.cafienne.actormodel.response.CommandFailure;
+import org.cafienne.actormodel.message.response.CommandFailure;
 import org.cafienne.cmmn.actorapi.command.CaseCommand;
 import org.cafienne.cmmn.actorapi.command.plan.GetDiscretionaryItems;
 import org.cafienne.infrastructure.serialization.Manifest;

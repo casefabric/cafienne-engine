@@ -17,7 +17,7 @@
 
 package org.cafienne.cmmn.test.assertions;
 
-import org.cafienne.actormodel.event.ModelEvent;
+import org.cafienne.actormodel.message.event.ModelEvent;
 import org.cafienne.cmmn.actorapi.event.CaseModified;
 import org.cafienne.cmmn.actorapi.event.file.CaseFileItemTransitioned;
 import org.cafienne.cmmn.instance.Path;

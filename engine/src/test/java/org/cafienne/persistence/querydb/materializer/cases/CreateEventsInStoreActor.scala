@@ -3,7 +3,7 @@ package org.cafienne.persistence.querydb.materializer.cases
 import org.apache.pekko.actor.{ActorContext, ActorRef}
 import org.apache.pekko.persistence.PersistentActor
 import org.apache.pekko.persistence.journal.Tagged
-import org.cafienne.actormodel.event.ModelEvent
+import org.cafienne.actormodel.message.event.ModelEvent
 
 import scala.jdk.CollectionConverters.CollectionHasAsScala
 

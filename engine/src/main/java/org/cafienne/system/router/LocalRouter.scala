@@ -19,8 +19,8 @@ package org.cafienne.system.router
 
 import com.typesafe.scalalogging.LazyLogging
 import org.apache.pekko.actor.{Actor, ActorRef, Props, Terminated}
-import org.cafienne.actormodel.command.{ModelCommand, TerminateModelActor}
-import org.cafienne.actormodel.response.ActorTerminated
+import org.cafienne.actormodel.message.command.{ModelCommand, TerminateModelActor}
+import org.cafienne.actormodel.message.response.ActorTerminated
 import org.cafienne.infrastructure.serialization.DeserializationFailure
 import org.cafienne.system.CaseSystem
 

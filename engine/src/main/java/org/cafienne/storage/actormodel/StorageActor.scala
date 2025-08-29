@@ -20,7 +20,7 @@ package org.cafienne.storage.actormodel
 import com.typesafe.scalalogging.LazyLogging
 import org.apache.pekko.persistence.RecoveryCompleted
 import org.apache.pekko.persistence.journal.Tagged
-import org.cafienne.actormodel.event.ModelEvent
+import org.cafienne.actormodel.message.event.ModelEvent
 import org.cafienne.storage.actormodel.message.StorageEvent
 import org.cafienne.storage.actormodel.state.StorageActorState
 import org.cafienne.system.CaseSystem

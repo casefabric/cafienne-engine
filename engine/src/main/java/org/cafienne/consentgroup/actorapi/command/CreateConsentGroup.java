@@ -17,9 +17,9 @@
 
 package org.cafienne.consentgroup.actorapi.command;
 
-import org.cafienne.actormodel.command.BootstrapMessage;
 import org.cafienne.actormodel.exception.InvalidCommandException;
 import org.cafienne.actormodel.identity.ConsentGroupUser;
+import org.cafienne.actormodel.message.command.BootstrapMessage;
 import org.cafienne.consentgroup.ConsentGroupActor;
 import org.cafienne.consentgroup.actorapi.ConsentGroup;
 import org.cafienne.consentgroup.actorapi.exception.ConsentGroupException;

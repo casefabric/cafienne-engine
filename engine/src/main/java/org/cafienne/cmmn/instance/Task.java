@@ -17,8 +17,8 @@
 
 package org.cafienne.cmmn.instance;
 
-import org.cafienne.actormodel.command.ModelCommand;
 import org.cafienne.actormodel.exception.InvalidCommandException;
+import org.cafienne.actormodel.message.command.ModelCommand;
 import org.cafienne.cmmn.actorapi.event.plan.task.*;
 import org.cafienne.cmmn.definition.ItemDefinition;
 import org.cafienne.cmmn.definition.ParameterMappingDefinition;

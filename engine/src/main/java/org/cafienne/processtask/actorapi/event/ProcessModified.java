@@ -17,8 +17,8 @@
 
 package org.cafienne.processtask.actorapi.event;
 
-import org.cafienne.actormodel.event.ActorModified;
 import org.cafienne.actormodel.message.IncomingActorMessage;
+import org.cafienne.actormodel.message.event.ActorModified;
 import org.cafienne.infrastructure.serialization.Manifest;
 import org.cafienne.json.ValueMap;
 import org.cafienne.processtask.instance.ProcessTaskActor;

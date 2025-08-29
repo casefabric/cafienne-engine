@@ -15,33 +15,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cafienne.actormodel.response;
+package org.cafienne.actormodel.message.response;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import org.cafienne.actormodel.ActorType;
-import org.cafienne.actormodel.command.ModelCommand;
-import org.cafienne.infrastructure.serialization.Fields;
+import org.cafienne.actormodel.message.command.ModelCommand;
 import org.cafienne.infrastructure.serialization.Manifest;
 import org.cafienne.json.ValueMap;
 
-import java.io.IOException;
-
+/**
+ * Can be used to return an exception to the sender of the command when the engine ran into some non-functional exception.
+ */
 @Manifest
-public class ActorInStorage extends BaseModelResponse {
-    public final ActorType actorType;
-    public ActorInStorage(ModelCommand command, ActorType actorType) {
-        super(command);
-        this.actorType = actorType;
+public class EngineChokedFailure extends CommandFailure {
+    /**
+     * Create a failure response for the command.
+     * The message id of the command will be pasted into the message id of the response.
+     *
+     * @param command
+     * @param failure The reason why the command failed
+     */
+    public EngineChokedFailure(ModelCommand command, Throwable failure) {
+        super(command, failure);
     }
 
-    public ActorInStorage(ValueMap json) {
+    public EngineChokedFailure(ValueMap json) {
         super(json);
-        this.actorType = json.readEnum(Fields.type, ActorType.class);
-    }
-
-    @Override
-    public void write(JsonGenerator generator) throws IOException {
-        super.write(generator);
-        writeField(generator, Fields.type, actorType);
     }
 }

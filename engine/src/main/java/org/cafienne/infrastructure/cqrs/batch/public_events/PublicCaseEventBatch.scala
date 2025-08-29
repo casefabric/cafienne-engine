@@ -19,7 +19,7 @@ package org.cafienne.infrastructure.cqrs.batch.public_events
 
 import com.typesafe.scalalogging.LazyLogging
 import org.apache.pekko.persistence.query.Offset
-import org.cafienne.actormodel.event.ModelEvent
+import org.cafienne.actormodel.message.event.ModelEvent
 import org.cafienne.infrastructure.cqrs.batch.EventBatch
 import org.cafienne.infrastructure.cqrs.batch.public_events.migration._
 

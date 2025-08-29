@@ -1,9 +1,9 @@
 package org.cafienne.actormodel.communication.request.response;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import org.cafienne.actormodel.command.ModelCommand;
 import org.cafienne.actormodel.communication.request.state.RemoteActorState;
 import org.cafienne.actormodel.exception.SerializedException;
+import org.cafienne.actormodel.message.command.ModelCommand;
 import org.cafienne.infrastructure.serialization.Fields;
 import org.cafienne.infrastructure.serialization.Manifest;
 import org.cafienne.json.Value;

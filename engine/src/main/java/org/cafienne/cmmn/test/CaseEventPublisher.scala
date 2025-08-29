@@ -21,7 +21,7 @@ import org.apache.pekko.actor.ActorSystem
 import org.apache.pekko.persistence.query.{EventEnvelope, Offset}
 import org.apache.pekko.stream.scaladsl.{Sink, Source}
 import org.apache.pekko.{Done, NotUsed}
-import org.cafienne.actormodel.event.ModelEvent
+import org.cafienne.actormodel.message.event.ModelEvent
 import org.cafienne.infrastructure.cqrs.ReadJournalProvider
 import org.cafienne.system.CaseSystem
 

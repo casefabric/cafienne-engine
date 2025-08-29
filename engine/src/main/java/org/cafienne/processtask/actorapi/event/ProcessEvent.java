@@ -17,7 +17,7 @@
 
 package org.cafienne.processtask.actorapi.event;
 
-import org.cafienne.actormodel.event.ModelEvent;
+import org.cafienne.actormodel.message.event.ModelEvent;
 import org.cafienne.processtask.actorapi.ProcessActorMessage;
 
 import java.util.Set;
