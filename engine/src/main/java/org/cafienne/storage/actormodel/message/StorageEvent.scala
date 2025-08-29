@@ -18,9 +18,9 @@
 package org.cafienne.storage.actormodel.message
 
 import com.fasterxml.jackson.core.JsonGenerator
-import org.cafienne.actormodel.ModelActor
 import org.cafienne.actormodel.event.ModelEvent
 import org.cafienne.actormodel.identity.UserIdentity
+import org.cafienne.actormodel.{ActorType, ModelActor}
 import org.cafienne.infrastructure.serialization.Fields
 import org.cafienne.json.{CafienneJson, Value, ValueMap}
 import org.cafienne.storage.StorageUser
@@ -36,7 +36,7 @@ trait StorageEvent extends StorageMessage with CafienneJson with ModelEvent {
   val user: StorageUser = metadata.user
   val tenant: String = user.tenant
   val actorId: String = metadata.actorId
-  val actorType: String = metadata.actorType
+  override val actorType: ActorType = metadata.actorType
   val parentActorId: ActorMetadata = metadata.parent
   val optionalJson: Option[ValueMap] = None
 

@@ -17,6 +17,7 @@
 
 package org.cafienne.tenant.actorapi;
 
+import org.cafienne.actormodel.ActorType;
 import org.cafienne.actormodel.message.UserMessage;
 import org.cafienne.tenant.TenantActor;
 
@@ -25,7 +26,7 @@ import org.cafienne.tenant.TenantActor;
  */
 public interface TenantMessage extends UserMessage {
     @Override
-    default Class<TenantActor> actorClass() {
-        return TenantActor.class;
+    default ActorType actorType() {
+        return ActorType.Tenant;
     }
 }

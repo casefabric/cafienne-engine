@@ -17,8 +17,8 @@
 
 package org.cafienne.storage.archival
 
-import org.apache.pekko.actor.Actor
 import com.typesafe.scalalogging.LazyLogging
+import org.apache.pekko.actor.Actor
 import org.cafienne.storage.actormodel.{ActorMetadata, RootStorageActor}
 import org.cafienne.storage.archival.event.ArchivalRequested
 import org.cafienne.system.CaseSystem

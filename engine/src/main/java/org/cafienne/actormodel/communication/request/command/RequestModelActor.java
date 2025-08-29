@@ -5,7 +5,6 @@ import org.cafienne.actormodel.ModelActor;
 import org.cafienne.actormodel.command.BootstrapMessage;
 import org.cafienne.actormodel.command.ModelCommand;
 import org.cafienne.actormodel.communication.CaseSystemCommunicationCommand;
-import org.cafienne.actormodel.communication.reply.event.ActorRequestStored;
 import org.cafienne.actormodel.communication.request.response.ActorRequestDeliveryReceipt;
 import org.cafienne.actormodel.communication.request.state.RemoteActorState;
 import org.cafienne.actormodel.exception.InvalidCommandException;

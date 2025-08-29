@@ -22,7 +22,6 @@ import org.cafienne.cmmn.instance.Case;
 import org.cafienne.infrastructure.serialization.Fields;
 import org.cafienne.infrastructure.serialization.Manifest;
 import org.cafienne.json.ValueMap;
-import org.cafienne.processtask.actorapi.event.ProcessEnded;
 
 import java.io.IOException;
 

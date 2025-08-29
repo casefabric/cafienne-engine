@@ -18,8 +18,8 @@
 package org.cafienne.service.http.cases.migration
 
 import io.swagger.v3.oas.annotations.media.Schema
-import org.cafienne.service.infrastructure.payload.EntityReader.{EntityReader, entityReader}
 import org.cafienne.service.http.cases.team.CaseTeamAPI
+import org.cafienne.service.infrastructure.payload.EntityReader.{EntityReader, entityReader}
 
 import scala.annotation.meta.field
 

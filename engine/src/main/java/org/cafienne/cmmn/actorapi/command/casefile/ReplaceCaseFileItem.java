@@ -19,9 +19,9 @@ package org.cafienne.cmmn.actorapi.command.casefile;
 
 import org.cafienne.actormodel.identity.CaseUserIdentity;
 import org.cafienne.cmmn.instance.Case;
+import org.cafienne.cmmn.instance.Path;
 import org.cafienne.cmmn.instance.casefile.CaseFileItemCollection;
 import org.cafienne.cmmn.instance.casefile.CaseFileItemTransition;
-import org.cafienne.cmmn.instance.Path;
 import org.cafienne.infrastructure.serialization.Manifest;
 import org.cafienne.json.Value;
 import org.cafienne.json.ValueMap;

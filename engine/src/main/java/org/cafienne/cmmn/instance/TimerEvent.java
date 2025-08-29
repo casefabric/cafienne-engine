@@ -20,7 +20,6 @@ package org.cafienne.cmmn.instance;
 import org.cafienne.cmmn.actorapi.event.plan.eventlistener.*;
 import org.cafienne.cmmn.definition.ItemDefinition;
 import org.cafienne.cmmn.definition.TimerEventDefinition;
-import org.cafienne.humantask.actorapi.event.migration.HumanTaskDropped;
 
 import java.time.Instant;
 

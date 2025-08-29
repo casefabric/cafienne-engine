@@ -17,13 +17,13 @@
 
 package org.cafienne.storage.archive.file
 
-import org.apache.pekko.Done
 import com.typesafe.scalalogging.LazyLogging
+import org.apache.pekko.Done
 import org.cafienne.infrastructure.config.engine.FileStorageConfig
+import org.cafienne.json.{JSONReader, ValueMap}
 import org.cafienne.storage.actormodel.ActorMetadata
 import org.cafienne.storage.archival.Archive
 import org.cafienne.storage.archive.Storage
-import org.cafienne.json.{JSONReader, ValueMap}
 
 import java.io.{File, FileInputStream, FileWriter}
 import scala.concurrent.Future
@@ -41,7 +41,7 @@ class FileBasedStorage(val config: FileStorageConfig) extends Storage with LazyL
   }
 
   def getFile(metadata: ActorMetadata): File = {
-    val fileName = s"${File.separator}archive-${metadata.actorType.toLowerCase()}-${metadata.actorId}.json"
+    val fileName = s"${File.separator}archive-${metadata.actorType.value.toLowerCase()}-${metadata.actorId}.json"
     new File(directory.getAbsolutePath + fileName)
   }
 

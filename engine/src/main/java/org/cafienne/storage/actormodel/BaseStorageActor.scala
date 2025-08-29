@@ -17,8 +17,8 @@
 
 package org.cafienne.storage.actormodel
 
-import org.apache.pekko.persistence.PersistentActor
 import com.typesafe.scalalogging.LazyLogging
+import org.apache.pekko.persistence.PersistentActor
 import org.cafienne.system.CaseSystem
 
 trait BaseStorageActor

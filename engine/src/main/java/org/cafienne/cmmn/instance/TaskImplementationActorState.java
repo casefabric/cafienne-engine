@@ -17,9 +17,9 @@
 
 package org.cafienne.cmmn.instance;
 
-import org.cafienne.actormodel.communication.request.state.RemoteActorState;
 import org.cafienne.actormodel.communication.request.response.ActorRequestDeliveryReceipt;
 import org.cafienne.actormodel.communication.request.response.ActorRequestFailure;
+import org.cafienne.actormodel.communication.request.state.RemoteActorState;
 import org.cafienne.actormodel.communication.request.state.Request;
 import org.cafienne.cmmn.actorapi.event.plan.task.TaskCommandRejected;
 import org.cafienne.cmmn.actorapi.event.plan.task.TaskImplementationNotStarted;

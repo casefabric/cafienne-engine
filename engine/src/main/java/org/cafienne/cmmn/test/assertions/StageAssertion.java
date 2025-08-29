@@ -18,9 +18,7 @@
 package org.cafienne.cmmn.test.assertions;
 
 import org.cafienne.cmmn.actorapi.event.plan.PlanItemCreated;
-import org.cafienne.cmmn.instance.CasePlan;
 import org.cafienne.cmmn.instance.PlanItemType;
-import org.cafienne.cmmn.instance.Stage;
 import org.cafienne.cmmn.instance.State;
 import org.cafienne.cmmn.test.CaseTestCommand;
 import org.cafienne.cmmn.test.filter.EventFilter;

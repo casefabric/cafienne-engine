@@ -17,8 +17,8 @@
 
 package org.cafienne.infrastructure.config.engine
 
-import org.cafienne.infrastructure.config.util.ChildConfigReader
 import org.cafienne.infrastructure.config.CaseSystemConfig
+import org.cafienne.infrastructure.config.util.ChildConfigReader
 
 class EngineConfig(val parent: CaseSystemConfig) extends ChildConfigReader {
   def path = "engine"

@@ -1,7 +1,6 @@
 package org.cafienne.actormodel.communication.reply.event;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import org.cafienne.actormodel.command.ModelCommand;
 import org.cafienne.actormodel.communication.reply.command.RunActorRequest;
 import org.cafienne.actormodel.event.CommitEvent;
 import org.cafienne.actormodel.exception.SerializedException;

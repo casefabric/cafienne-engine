@@ -18,6 +18,7 @@
 package org.cafienne.infrastructure.cqrs.javadsl
 
 import org.apache.pekko.persistence.query.Offset
+
 import scala.concurrent.Future
 
 /**

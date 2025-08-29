@@ -21,7 +21,6 @@ import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.query.JsonQueryExecuterFactory;
 import org.cafienne.json.StringValue;
 import org.cafienne.json.ValueMap;
-import org.cafienne.processtask.definition.SubProcessDefinition;
 import org.cafienne.processtask.implementation.SubProcess;
 import org.cafienne.processtask.instance.ProcessTaskActor;
 

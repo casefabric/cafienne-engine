@@ -26,6 +26,7 @@ import org.apache.pekko.persistence.SnapshotProtocol;
 import org.cafienne.actormodel.command.BootstrapMessage;
 import org.cafienne.actormodel.communication.reply.state.IncomingRequestState;
 import org.cafienne.actormodel.communication.request.state.RemoteActorState;
+import org.cafienne.actormodel.debug.DebugInfoAppender;
 import org.cafienne.actormodel.event.ActorModified;
 import org.cafienne.actormodel.event.ModelEvent;
 import org.cafienne.actormodel.exception.CommandException;
@@ -33,7 +34,6 @@ import org.cafienne.actormodel.identity.UserIdentity;
 import org.cafienne.actormodel.message.IncomingActorMessage;
 import org.cafienne.actormodel.response.CommandFailure;
 import org.cafienne.actormodel.response.ModelResponse;
-import org.cafienne.cmmn.instance.debug.DebugInfoAppender;
 import org.cafienne.infrastructure.EngineVersion;
 import org.cafienne.infrastructure.enginedeveloper.EngineDeveloperConsole;
 import org.cafienne.system.CaseSystem;
@@ -110,6 +110,12 @@ public abstract class ModelActor extends AbstractPersistentActor {
         this.debugMode = caseSystem.config().actor().debugEnabled();
         this.id = self().path().name();
         this.scheduler = new CaseScheduler(this);
+    }
+
+    @Override
+    public void postStop() throws Exception {
+        monitor.cancelTimer(); // Clear in mem scheduler to stop the actor after idle time
+        super.postStop();
     }
 
     abstract protected boolean supportsCommand(Object msg);

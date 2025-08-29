@@ -17,8 +17,8 @@
 
 package org.cafienne.infrastructure.cqrs
 
-import org.apache.pekko.persistence.query.EventEnvelope
 import com.typesafe.scalalogging.LazyLogging
+import org.apache.pekko.persistence.query.EventEnvelope
 import org.cafienne.actormodel.event.ModelEvent
 import org.cafienne.infrastructure.serialization.{DeserializationFailure, UnrecognizedManifest}
 

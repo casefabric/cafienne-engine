@@ -25,8 +25,6 @@ import org.cafienne.infrastructure.serialization.Fields;
 import org.cafienne.json.ValueMap;
 
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Basic event allowing listeners that are interested only in case team member events to do initial filtering.

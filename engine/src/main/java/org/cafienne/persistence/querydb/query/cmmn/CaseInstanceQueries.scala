@@ -2,7 +2,7 @@ package org.cafienne.persistence.querydb.query.cmmn
 
 import org.cafienne.actormodel.identity.UserIdentity
 import org.cafienne.persistence.querydb.query.result.{CaseFileDocumentation, CaseTeamResponse, Documentation, FullCase}
-import org.cafienne.persistence.querydb.record.{CaseDefinitionRecord, CaseFileRecord, CaseRecord, PerformableTaskRecord, PlanItemRecord}
+import org.cafienne.persistence.querydb.record._
 
 import scala.concurrent.Future
 

@@ -26,7 +26,6 @@ import org.cafienne.json.Value;
 import org.cafienne.json.ValueMap;
 
 import java.io.IOException;
-import java.time.Instant;
 
 @Manifest
 public class HumanTaskMigrated extends HumanTaskEvent {

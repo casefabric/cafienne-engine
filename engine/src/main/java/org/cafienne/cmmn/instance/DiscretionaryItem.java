@@ -23,8 +23,6 @@ import org.cafienne.infrastructure.serialization.Fields;
 import org.cafienne.json.ValueMap;
 
 import java.util.Collection;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public class DiscretionaryItem extends CMMNElement<DiscretionaryItemDefinition> {
     private final PlanItem<?> containingPlanItem;
