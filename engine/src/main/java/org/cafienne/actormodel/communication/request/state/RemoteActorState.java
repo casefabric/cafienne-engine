@@ -54,7 +54,7 @@ public abstract class RemoteActorState<LocalActor extends ModelActor> {
     }
 
     public final void updateState(ModelActorReplyEvent event) {
-        Request request = requests.computeIfAbsent(event.getMessageId(), k -> new Request(this));
+        Request request = requests.computeIfAbsent(event.getCorrelationId(), k -> new Request(this));
         request.updateState(event);
     }
 

@@ -8,7 +8,7 @@ import org.cafienne.json.ValueMap;
 @Manifest
 public class ActorRequestDelivered extends ModelActorReplyEvent {
     public ActorRequestDelivered(RemoteActorState<?> state, ActorRequestDeliveryReceipt receipt) {
-        super(state.actor, receipt.getMessageId(), state.targetActorId);
+        super(state.actor, receipt.getCorrelationId(), state.targetActorId);
     }
 
     public ActorRequestDelivered(ValueMap json) {

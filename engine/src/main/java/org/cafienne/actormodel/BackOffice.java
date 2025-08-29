@@ -37,6 +37,10 @@ class BackOffice {
         this.monitor = monitor;
     }
 
+    ModelActorTransaction getCurrentTransaction() {
+        return currentTransaction;
+    }
+
     void performTransaction(IncomingActorMessage message) {
         // Tell the actor monitor we're busy
         monitor.setBusy();

@@ -185,6 +185,13 @@ public abstract class ModelActor extends AbstractPersistentActor {
         return currentUser;
     }
 
+    /**
+     * Returns the transaction that is currently being handled. Can only be invoked after recovery completed.
+     */
+    public ModelActorTransaction getCurrentTransaction() {
+        return backOffice.getCurrentTransaction();
+    }
+
     public final void setCurrentUser(UserIdentity user) {
         this.currentUser = user;
     }

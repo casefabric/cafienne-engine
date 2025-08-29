@@ -31,7 +31,7 @@ import java.time.Instant;
  */
 public abstract class BaseModelResponse implements ModelResponse {
     private final ValueMap json;
-    private final String messageId;
+    private final String correlationId;
     private final String actorId;
     private Instant lastModified;
     private final UserIdentity user;
@@ -39,7 +39,7 @@ public abstract class BaseModelResponse implements ModelResponse {
 
     protected BaseModelResponse(ModelCommand command) {
         this.json = new ValueMap();
-        this.messageId = command.getMessageId();
+        this.correlationId = command.getCorrelationId();
         this.actorId = command.actorId();
         // If a Command never reached the actor (e.g., if CaseSystem routing service ran into an error),
         //  the actor will not be available. Checking that here. Required for CommandFailure.
@@ -50,7 +50,7 @@ public abstract class BaseModelResponse implements ModelResponse {
 
     protected BaseModelResponse(ValueMap json) {
         this.json = json;
-        this.messageId = json.readString(Fields.messageId);
+        this.correlationId = json.readString(Fields.correlationId);
         this.actorId = json.readString(Fields.actorId);
         this.lastModified = json.readInstant(Fields.lastModified);
         this.user = json.readObject(Fields.user, UserIdentity::deserialize);
@@ -58,8 +58,8 @@ public abstract class BaseModelResponse implements ModelResponse {
     }
 
     @Override
-    public String getMessageId() {
-        return messageId;
+    public String getCorrelationId() {
+        return correlationId;
     }
 
     /**
@@ -98,7 +98,7 @@ public abstract class BaseModelResponse implements ModelResponse {
 
     @Override
     public void write(JsonGenerator generator) throws IOException {
-        writeField(generator, Fields.messageId, this.getMessageId());
+        writeField(generator, Fields.correlationId, this.getCorrelationId());
         writeField(generator, Fields.actorId, actorId);
         writeField(generator, Fields.commandType, commandType);
         writeField(generator, Fields.lastModified, this.getLastModified());

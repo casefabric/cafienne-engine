@@ -19,6 +19,7 @@ package org.cafienne.actormodel.event;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import org.cafienne.actormodel.ModelActor;
+import org.cafienne.actormodel.ModelActorTransaction;
 import org.cafienne.actormodel.identity.UserIdentity;
 import org.cafienne.infrastructure.serialization.Fields;
 import org.cafienne.json.ValueMap;
@@ -34,13 +35,15 @@ public abstract class BaseModelEvent<M extends ModelActor> implements ModelEvent
     public final String tenant;
     private final UserIdentity user;
     private final Instant timestamp;
+    private final String correlationId;
 
     protected BaseModelEvent(M actor) {
         this.json = new ValueMap();
         this.actorId = actor.getId();
         this.tenant = actor.getTenant();
-        this.user = actor.getCurrentUser();
+        this.user = actor.getCurrentTransaction().getMessage().getUser();
         this.timestamp = actor.getTransactionTimestamp();
+        this.correlationId = actor.getCurrentTransaction().getMessage().getCorrelationId();
     }
 
     protected BaseModelEvent(ValueMap json) {
@@ -50,6 +53,12 @@ public abstract class BaseModelEvent<M extends ModelActor> implements ModelEvent
         this.tenant = modelEventJson.readString(Fields.tenant);
         this.timestamp = modelEventJson.readInstant(Fields.timestamp);
         this.user = modelEventJson.readObject(Fields.user, UserIdentity::deserialize);
+        this.correlationId = modelEventJson.readString(Fields.correlationId);
+    }
+
+    @Override
+    public String getCorrelationId() {
+        return correlationId;
     }
 
     @Override
@@ -102,6 +111,7 @@ public abstract class BaseModelEvent<M extends ModelActor> implements ModelEvent
         generator.writeFieldName(Fields.modelEvent.toString());
         generator.writeStartObject();
         writeField(generator, Fields.actorId, this.getActorId());
+        writeField(generator, Fields.correlationId, this.getCorrelationId());
         writeField(generator, Fields.tenant, this.tenant);
         writeField(generator, Fields.timestamp, this.timestamp);
         writeField(generator, Fields.user, user);
