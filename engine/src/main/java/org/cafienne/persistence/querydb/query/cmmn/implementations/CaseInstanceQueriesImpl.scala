@@ -213,24 +213,30 @@ class CaseInstanceQueriesImpl(queryDB: QueryDB)
       access <- queryCaseAccess(user, ids.id)
     } yield access
 
+    val taskQuery = for {
+      rootCase <- TableQuery[CaseIdentifierView].filter(_.id === caseInstanceId).map(_.rootCaseId)
+      cases <- TableQuery[CaseIdentifierView].filter(_.rootCaseId === rootCase).map(_.id)
+      tasks <- TableQuery[TaskTable].filter(_.caseInstanceId === cases)
+    } yield tasks
+
     // We're joining 2 queries:
     //  1. on the one hand get the entire chain of cases to which the caseInstanceId belongs
     //  2. then also fetch all tasks for all those cases, but with full authorization information on the cases to which those tasks belong
     //  The second query helps us to understand that a case is accessible by the user, the first one is needed to find out which cases are a subcase of the requested caseInstanceId
-    val tasksWithCaseAccess = authorizedCaseChain.distinct.joinFull(TableQuery[TaskTable]).on(_._1 === _.caseInstanceId)
+    val tasksWithCaseAccess = taskQuery.joinFull(authorizedCaseChain).on(_.caseInstanceId === _._1)
 
     // Joining left, because the case tree must always exist, and if it doesn't we don't have access to it either and we'll throw case search failure.
-    val query = rootCaseChain.joinFull(tasksWithCaseAccess).on(_.id === _._2.map(_.caseInstanceId))
+    val query = tasksWithCaseAccess.joinFull(rootCaseChain).on(_._1.map(_.caseInstanceId) === _.id)
 
-    //      println("\n\nQuery\n" + query.result.statements.mkString("") + "\n\n")
+  //      println("\n\nQuery\n" + query.result.statements.mkString("\n ") + "\n\n")
 
     db.run(query.result).map(records => {
-      //        val summary = records.map(record => "case["+record._1.map(_.id).getOrElse("NONE") + "]: " + record._2.map(_._1.fold("not authorized")(_ => "having access ")).getOrElse("   NO AUTH    ")  + "  |  " + record._2.map(_._2.map(_.taskName).getOrElse("no task here")).getOrElse(" NO TASKS"))
+      //        val summary = records.map(record => "case["+record._2.map(_.id).getOrElse("NONE") + "]: " + record._1.map(_._2.fold("not authorized")(_ => "having access ")).getOrElse("   NO AUTH    ")  + "  |  " + record._1.map(_._1.map(_.taskName).getOrElse("no task here")).getOrElse(" NO TASKS"))
       //        println("\n\n" + user.id +" found " + records.length +" records for case " + caseInstanceId +":\n" + summary.mkString("\n"))
-      val rootCaseChain = records.map(_._1)
-      val tasksAndCasesWithAuthorization = records.map(_._2).filter(_.nonEmpty).map(_.get)
-      val caseAccess: Seq[CaseRoleAccess] = tasksAndCasesWithAuthorization.map(_._1).filter(_.nonEmpty).map(_.get).map(r => CaseRoleAccess(r._1, r._2, r._3))
-      val tasks: Seq[TaskRecord] = tasksAndCasesWithAuthorization.map(_._2).filter(_.nonEmpty).map(_.get).distinctBy(_.id)
+      val rootCaseChain = records.map(_._2)
+      val tasksAndCasesWithAuthorization = records.map(_._1).filter(_.nonEmpty).map(_.get)
+      val caseAccess: Seq[CaseRoleAccess] = tasksAndCasesWithAuthorization.map(_._2).filter(_.nonEmpty).map(_.get).map(r => CaseRoleAccess(r._1, r._2, r._3))
+      val tasks: Seq[TaskRecord] = tasksAndCasesWithAuthorization.map(_._1).filter(_.nonEmpty).map(_.get).distinctBy(_.id)
 
       val accessibleCases = caseAccess
       if (caseAccess.isEmpty) {
