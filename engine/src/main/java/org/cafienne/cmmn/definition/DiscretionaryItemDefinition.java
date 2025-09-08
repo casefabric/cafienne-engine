@@ -154,7 +154,7 @@ public class DiscretionaryItemDefinition extends TableItemDefinition implements 
         } else {
             containingPlanItem.getCaseInstance().addDebugInfo(() -> this + ": checking " + getApplicabilityRules().size() + " applicability rule(s)");
             for (ApplicabilityRuleDefinition rule : getApplicabilityRules()) {
-                // If any of the rules evaluates to false, the discretionary item is not allowed
+                // If any of the rules evaluates to false, the discretionary item is not allowed (see CMMN1.1 SPEC page 42)
                 if (!rule.evaluate(containingPlanItem, rule, this)) {
                     return false;
                 }
