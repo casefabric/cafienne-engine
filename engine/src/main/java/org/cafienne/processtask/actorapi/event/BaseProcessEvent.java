@@ -18,19 +18,25 @@
 package org.cafienne.processtask.actorapi.event;
 
 import com.fasterxml.jackson.core.JsonGenerator;
+import org.cafienne.actormodel.identity.UserIdentity;
 import org.cafienne.actormodel.message.event.BaseModelEvent;
 import org.cafienne.json.ValueMap;
 import org.cafienne.processtask.instance.ProcessTaskActor;
 
 import java.io.IOException;
 
-public abstract class BaseProcessEvent extends BaseModelEvent<ProcessTaskActor> implements ProcessEvent {
+public abstract class BaseProcessEvent extends BaseModelEvent<ProcessTaskActor, UserIdentity> implements ProcessEvent {
     protected BaseProcessEvent(ProcessTaskActor processInstance) {
         super(processInstance);
     }
 
     protected BaseProcessEvent(ValueMap json) {
         super(json);
+    }
+
+    @Override
+    protected UserIdentity readUser(ValueMap json) {
+        return UserIdentity.deserialize(json);
     }
 
     @Override

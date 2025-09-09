@@ -26,20 +26,20 @@ import org.cafienne.json.ValueMap;
 import java.io.IOException;
 import java.time.Instant;
 
-public abstract class BaseModelEvent<M extends ModelActor> implements ModelEvent {
+public abstract class BaseModelEvent<M extends ModelActor, U extends UserIdentity> implements ModelEvent {
     private final ValueMap json;
     
     // Serializable fields
     private final String actorId;
     public final String tenant;
-    private final UserIdentity user;
+    private final U user;
     private final Instant timestamp;
 
     protected BaseModelEvent(M actor) {
         this.json = new ValueMap();
         this.actorId = actor.getId();
         this.tenant = actor.getTenant();
-        this.user = actor.getCurrentUser();
+        this.user = (U) actor.getCurrentUser();
         this.timestamp = actor.getTransactionTimestamp();
     }
 
@@ -49,8 +49,13 @@ public abstract class BaseModelEvent<M extends ModelActor> implements ModelEvent
         this.actorId = modelEventJson.readString(Fields.actorId);
         this.tenant = modelEventJson.readString(Fields.tenant);
         this.timestamp = modelEventJson.readInstant(Fields.timestamp);
-        this.user = modelEventJson.readObject(Fields.user, UserIdentity::deserialize);
+        this.user = readUser(modelEventJson.with(Fields.user));
     }
+
+    /**
+     * Model actor specific command to is responsible for deserializing user to appropriate type.
+     */
+    protected abstract U readUser(ValueMap json);
 
     @Override
     public String tenant() {
