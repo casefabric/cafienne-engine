@@ -54,6 +54,6 @@ public class PlanItemExit extends CriteriaListener<ExitCriterionDefinition, Exit
 
     @Override
     protected void migrateCriteria(ItemDefinition newItemDefinition, boolean skipLogic) {
-        migrateCriteria(newItemDefinition.getExitCriteria(), skipLogic);
+        migrateCriteria(newItemDefinition.getExitCriteria(), item.getPreviousItemDefinition().getExitCriteria(), skipLogic);
     }
 }

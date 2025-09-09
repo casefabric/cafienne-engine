@@ -91,7 +91,7 @@ public abstract class CriteriaListener<T extends CriterionDefinition, C extends 
 
     protected abstract void migrateCriteria(ItemDefinition newItemDefinition, boolean skipLogic);
 
-    protected void migrateCriteria(Collection<T> newDefinitions, boolean skipLogic) {
+    protected void migrateCriteria(Collection<T> newDefinitions, Collection<T> existingDefinitions, boolean skipLogic) {
         if (isDisconnected()) {
             addDebugInfo(() -> "Skipping " + logDescription + " criteria migration of " + item + " as they are disconnected");
             return;
@@ -106,11 +106,11 @@ public abstract class CriteriaListener<T extends CriterionDefinition, C extends 
         Collection<C> existingCriteria = new ArrayList<>(criteria);
 
         existingCriteria.forEach(criterion -> migrateCriterion(criterion, newDefinitions, skipLogic));
-        newDefinitions.stream().filter(this::notYetHasCriterion).forEach(this::addCriterion);
+        findNewDefinitions(newDefinitions, existingDefinitions).forEach(this::addCriterion);
     }
 
-    private boolean notYetHasCriterion(T definition) {
-        return this.criteria.stream().noneMatch(c -> c.getDefinition() == definition);
+    private Collection<T> findNewDefinitions(Collection<T> newDefinitions, Collection<T> existingDefinitions) {
+        return newDefinitions.stream().filter(newDefinition -> existingDefinitions.stream().allMatch(existingDefinition -> existingDefinition.differs(newDefinition))).toList();
     }
 
     private void migrateCriterion(C criterion, Collection<T> newDefinitions, boolean skipLogic) {
