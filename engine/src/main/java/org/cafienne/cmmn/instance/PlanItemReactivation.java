@@ -62,6 +62,6 @@ public class PlanItemReactivation extends CriteriaListener<ReactivateCriterionDe
 
     @Override
     protected void migrateCriteria(ItemDefinition newItemDefinition, boolean skipLogic) {
-        migrateCriteria(newItemDefinition.getReactivatingCriteria(), skipLogic);
+        migrateCriteria(newItemDefinition.getReactivatingCriteria(), item.getPreviousItemDefinition().getReactivatingCriteria(), skipLogic);
     }
 }
