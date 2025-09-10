@@ -45,6 +45,7 @@ trait ConsentGroupTables extends SlickTableExtensions {
     // Constraints
     lazy val pk = primaryKey(pkName, (userId, group, role))
     lazy val indexOwnership = index(ixName(isOwner), (group, userId, role, isOwner))
+    lazy val indexGroup = index(ixName(group), (group))
 
     lazy val * = (group, userId, role, isOwner).mapTo[ConsentGroupMemberRecord]
   }
