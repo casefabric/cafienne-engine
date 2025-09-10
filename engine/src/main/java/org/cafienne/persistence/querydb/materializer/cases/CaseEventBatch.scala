@@ -37,10 +37,10 @@ class CaseEventBatch(val sink: CaseEventSink, override val persistenceId: String
   lazy val tenant: String = events.head.event.tenant()
   val dBTransaction: CaseStorageTransaction = storage.createCaseTransaction(persistenceId)
 
-  private val caseTeamProjection = new CaseTeamProjection(this)
-  private val caseFileProjection = new CaseFileProjection(this)
-  private val casePlanProjection = new CasePlanProjection(this)
-  private val caseProjection = new CaseProjection(this, caseFileProjection)
+  val caseTeamProjection = new CaseTeamProjection(this)
+  val caseFileProjection = new CaseFileProjection(this)
+  val casePlanProjection = new CasePlanProjection(this)
+  val caseProjection = new CaseProjection(this, caseFileProjection)
 
   def createOffsetRecord(offset: Offset): OffsetRecord = OffsetRecord(CaseEventSink.offsetName, offset)
 
