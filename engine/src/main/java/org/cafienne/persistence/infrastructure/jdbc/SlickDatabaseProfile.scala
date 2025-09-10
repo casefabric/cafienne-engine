@@ -32,4 +32,5 @@ trait SlickDatabaseProfile {
   lazy val db: dbConfig.profile.backend.JdbcDatabaseDef = dbConfig.db
 
   lazy val isSQLServer: Boolean = dbConfig.profile.isInstanceOf[slick.jdbc.SQLServerProfile]
+  lazy val isHsql: Boolean = dbConfig.profile.isInstanceOf[slick.jdbc.HsqldbProfile]
 }
