@@ -97,6 +97,7 @@ class QueryDB(config: PersistenceConfig, val dbConfig: DatabaseConfig[JdbcProfil
       new QueryDB_1_1_16(dbConfig, tablePrefix),
       new QueryDB_1_1_18(dbConfig, tablePrefix),
       new QueryDB_1_1_22(dbConfig, tablePrefix),
+      new QueryDB_1_1_36(dbConfig, tablePrefix),
     )
   }
 
