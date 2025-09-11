@@ -17,167 +17,73 @@
 
 package org.cafienne.persistence.infrastructure.lastmodified;
 
-import org.apache.pekko.dispatch.Futures;
 import org.cafienne.actormodel.message.event.ActorModified;
 import org.cafienne.actormodel.message.response.ActorLastModified;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.cafienne.persistence.infrastructure.lastmodified.registration.ActorWaitingList;
 import scala.concurrent.Promise;
 
+import java.time.Duration;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Registration of the last modified timestamp per case instance. Can be used by writers to and query actors to get notified about CaseLastModified.
  */
 public class LastModifiedRegistration {
-    private final static Logger logger = LoggerFactory.getLogger(LastModifiedRegistration.class);
     /**
      * Global startup moment of the whole JVM for last modified requests trying to be jumpy.
      */
-    private final static Instant startupMoment = Instant.now();
-    private final Map<String, Instant> lastModifiedRegistration = new HashMap<>();
-    private final Map<String, List<Waiter>> waiters = new HashMap<>();
+    public final static Instant startupMoment = Instant.now();
     public final String name;
-    private final List<String> correlationIdentifiers = new ArrayList<>();
-    private final Map<String, Promise<String>> correlationIdWaiters = new HashMap<>();
+    private final Map<String, ActorWaitingList> actorLists = new HashMap<>();
+    public final static long MONITOR_PERIOD = 10 * 60 * 1000; // Every 10 minutes
+    public final static Duration WAIT_TIMEOUT = Duration.ofMinutes(2);
 
     public LastModifiedRegistration(String name) {
         this.name = name;
-    }
 
-    public Promise<String> waitFor(String correlationId) {
-        Promise<String> p = Futures.promise();
-        if (correlationIdentifiers.remove(correlationId)) {
-            p.success(correlationId);
-        } else {
-            correlationIdWaiters.put(correlationId, p);
-        }
-        return p;
-    }
-
-    private void handleCorrelationIdWaiters(String correlationId) {
-        Promise<String> promise = correlationIdWaiters.remove(correlationId);
-        if (promise != null) {
-            if (!promise.isCompleted()) {
-                // Only invoke the promise if no one has done it yet
-                promise.success(correlationId);
+        Timer timer = new Timer(this.name + "-monitor", true);
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                List<ActorWaitingList> lists = actorLists.values().stream().toList();
+                if (lists.isEmpty()) {
+                    return;
+                }
+                Instant now = Instant.now();
+                lists.forEach(list -> list.cleanup(now));
+//                System.out.println("Cleaning " + name +" remained with " + actorLists.size() +" elements");
             }
-        } else {
-            // Apparently no one registered (yet) for this correlation id. Let's add it.
-            //  Note: we also need to clean up those identifiers after some time.
-            correlationIdentifiers.add(correlationId);
+        };
+        timer.schedule(task, MONITOR_PERIOD, MONITOR_PERIOD);  // Start only after 10 minutes
+    }
+
+    private ActorWaitingList getWaitingList(String actorId) {
+        synchronized (actorLists) {
+            ActorWaitingList list = actorLists.get(actorId);
+            if (list == null) {
+                list = new ActorWaitingList(this, actorId);
+                actorLists.put(actorId, list);
+            }
+            return list;
+        }
+    }
+
+    public void removeWaitingList(String actorId) {
+        synchronized (actorLists) {
+            actorLists.remove(actorId);
         }
     }
 
     public Promise<String> waitFor(ActorLastModified notBefore) {
-        log("Executing query after response for " + notBefore);
-        Promise<String> p = Futures.promise();
-
-        Instant lastKnownMoment = lastModifiedRegistration.get(notBefore.getActorId());
-        if (lastKnownMoment == null) {
-            if (notBefore.getLastModified().isBefore(startupMoment)) {
-                p.success("That's quite an old timestamp; we're not gonna wait for it; we started at " + startupMoment);
-            } else {
-                log("Adding waiter for actor[" + notBefore.getActorId() + "] modified at " + notBefore.getLastModified());
-                addWaiter(new Waiter(notBefore, p));
-            }
-        } else if (lastKnownMoment.isBefore(notBefore.getLastModified())) {
-            log("Adding waiter for entity " + notBefore.getActorId() + ", because last known moment is " + lastKnownMoment + ", and we're waiting for " + notBefore.getLastModified());
-            addWaiter(new Waiter(notBefore, p));
-        } else {
-            log("Returning because already available");
-            p.success("Your case last modified arrived already!");
-        }
-        return p;
+        return getWaitingList(notBefore.actorId).waitForLastModified(notBefore);
     }
 
-    // TEMPORARY LOGGING CODE
-    private void log(String msg) {
-        msg = name + " in thread: " + Thread.currentThread().getName() + ": " + msg;
-        logger.debug(msg);
+    public Promise<String> waitFor(String actorId, String correlationId) {
+        return getWaitingList(actorId).waitForCorrelationId(correlationId);
     }
 
     public void handle(ActorModified<?> event) {
-        handleCorrelationIdWaiters(event.correlationId());
-        handle(event.getActorId(), event.lastModified());
-    }
-
-    private void handle(String actorId, Instant newTimestamp) {
-        Instant lastKnownTimestamp = lastModifiedRegistration.get(actorId);
-        // Now check whether the new timestamp is indeed newer, and if so, update the registration
-        if (lastKnownTimestamp == null || lastKnownTimestamp.isBefore(newTimestamp)) {
-            lastModifiedRegistration.put(actorId, newTimestamp);
-            informWaiters(actorId, newTimestamp);
-        }
-    }
-
-    private void informWaiters(String id, Instant newTimestamp) {
-        // TODO: should this be synchronized code?? I think so... Or can we better use scala immutable maps?
-        synchronized (waiters) {
-            List<Waiter> waiterList = waiters.remove(id);
-            List<Waiter> newWaiters = new ArrayList<>();
-            if (waiterList == null) {
-                return;
-            }
-
-            log("Found " + newTimestamp + "/" + id+" for " + waiterList.size() + " waiters");
-            for (Waiter waiter : waiterList) {
-                if (newTimestamp.isBefore(waiter.moment())) {
-                    log("-need " + waiter.notBefore.getLastModified() + "/" + waiter.notBefore.getActorId());
-                    newWaiters.add(waiter);
-                } else {
-                    waiter.stopWaiting();
-                }
-            }
-
-            if (!newWaiters.isEmpty()) {
-                waiters.put(id, newWaiters);
-            }
-        }
-    }
-
-    private void addWaiter(Waiter waiter) {
-        synchronized (waiters) {
-            List<Waiter> waiterList = waiters.computeIfAbsent(waiter.id(), k -> new ArrayList<>());
-            waiterList.add(waiter);
-        }
-    }
-
-    class Waiter {
-        private final ActorLastModified notBefore;
-        private final Promise<String> promise;
-        private final long createdAt = System.currentTimeMillis();
-
-        Waiter(ActorLastModified notBefore, Promise<String> promise) {
-            this.notBefore = notBefore;
-            this.promise = promise;
-        }
-
-        void stopWaiting() {
-            log("Waited " + (System.currentTimeMillis() - createdAt) + " milliseconds");
-            if (!promise.isCompleted()) {
-                // Only invoke the promise if no one has done it yet
-                promise.success("Your case last modified arrived just now");
-            } else {
-                log("AFTER STOP WAITING, BUT ALREADY COMPLETED?!");
-            }
-        }
-
-        @Override
-        public String toString() {
-            return "Waiter[" + notBefore.toString() + "]";
-        }
-
-        String id() {
-            return notBefore.getActorId();
-        }
-
-        Instant moment() {
-            return notBefore.getLastModified();
-        }
+        getWaitingList(event.actorId()).handle(event);
     }
 }
