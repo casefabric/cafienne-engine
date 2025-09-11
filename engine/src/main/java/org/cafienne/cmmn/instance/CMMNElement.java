@@ -68,7 +68,7 @@ public class CMMNElement<T extends DefinitionElement> {
         return super.toString();
     }
 
-    protected <T extends CaseEvent> T addEvent(T event) {
+    protected <CE extends CaseEvent> CE addEvent(CE event) {
         return getCaseInstance().addEvent(event);
     }
 }
