@@ -18,10 +18,10 @@
 package org.cafienne.tenant.actorapi.command.platform;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import org.cafienne.actormodel.command.BootstrapMessage;
 import org.cafienne.actormodel.exception.InvalidCommandException;
 import org.cafienne.actormodel.identity.PlatformOwner;
 import org.cafienne.actormodel.identity.TenantUser;
+import org.cafienne.actormodel.message.command.BootstrapMessage;
 import org.cafienne.infrastructure.serialization.Fields;
 import org.cafienne.infrastructure.serialization.Manifest;
 import org.cafienne.json.ValueMap;

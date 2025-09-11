@@ -17,7 +17,7 @@
 
 package org.cafienne.processtask.actorapi.response;
 
-import org.cafienne.actormodel.response.BaseModelResponse;
+import org.cafienne.actormodel.message.response.BaseModelResponse;
 import org.cafienne.infrastructure.serialization.Manifest;
 import org.cafienne.json.ValueMap;
 import org.cafienne.processtask.actorapi.ProcessActorMessage;

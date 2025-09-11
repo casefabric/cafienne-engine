@@ -15,10 +15,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cafienne.actormodel.event;
+package org.cafienne.actormodel.message.event;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import org.cafienne.actormodel.ModelActor;
+import org.cafienne.actormodel.ModelActorTransaction;
 import org.cafienne.actormodel.identity.UserIdentity;
 import org.cafienne.infrastructure.serialization.Fields;
 import org.cafienne.json.ValueMap;
@@ -26,21 +27,27 @@ import org.cafienne.json.ValueMap;
 import java.io.IOException;
 import java.time.Instant;
 
-public abstract class BaseModelEvent<M extends ModelActor> implements ModelEvent {
+public abstract class BaseModelEvent<M extends ModelActor, U extends UserIdentity> implements ModelEvent {
     private final ValueMap json;
     
     // Serializable fields
     private final String actorId;
     public final String tenant;
-    private final UserIdentity user;
+    private final U user;
     private final Instant timestamp;
+    private final String correlationId;
 
     protected BaseModelEvent(M actor) {
         this.json = new ValueMap();
         this.actorId = actor.getId();
         this.tenant = actor.getTenant();
-        this.user = actor.getCurrentUser();
         this.timestamp = actor.getTransactionTimestamp();
+        // During recovery, events update the actor state, which in itself can lead to new events.
+        // These events are not added if recovery is running.
+        //  Since we're recovering, there is no current transaction.
+        //  In that case we set user and correlation id to null (since the event is ignored anyway).
+        this.user = actor.recoveryRunning() ? null : (U) actor.getCurrentTransaction().getMessage().getUser();
+        this.correlationId = actor.recoveryRunning() ? null : actor.getCurrentTransaction().getMessage().getCorrelationId();
     }
 
     protected BaseModelEvent(ValueMap json) {
@@ -49,8 +56,19 @@ public abstract class BaseModelEvent<M extends ModelActor> implements ModelEvent
         this.actorId = modelEventJson.readString(Fields.actorId);
         this.tenant = modelEventJson.readString(Fields.tenant);
         this.timestamp = modelEventJson.readInstant(Fields.timestamp);
-        this.user = modelEventJson.readObject(Fields.user, UserIdentity::deserialize);
+        this.user = readUser(modelEventJson.with(Fields.user));
+        this.correlationId = modelEventJson.readString(Fields.correlationId);
     }
+
+    @Override
+    public String getCorrelationId() {
+        return correlationId;
+    }
+
+    /**
+     * Model actor specific command to is responsible for deserializing user to appropriate type.
+     */
+    protected abstract U readUser(ValueMap json);
 
     @Override
     public String tenant() {
@@ -102,6 +120,7 @@ public abstract class BaseModelEvent<M extends ModelActor> implements ModelEvent
         generator.writeFieldName(Fields.modelEvent.toString());
         generator.writeStartObject();
         writeField(generator, Fields.actorId, this.getActorId());
+        writeField(generator, Fields.correlationId, this.getCorrelationId());
         writeField(generator, Fields.tenant, this.tenant);
         writeField(generator, Fields.timestamp, this.timestamp);
         writeField(generator, Fields.user, user);

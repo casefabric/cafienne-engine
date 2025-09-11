@@ -17,7 +17,7 @@
 
 package org.cafienne.persistence.querydb.materializer
 
-import org.cafienne.actormodel.event.CommitEvent
+import org.cafienne.actormodel.message.event.CommitEvent
 import org.cafienne.infrastructure.cqrs.ModelEventEnvelope
 import org.cafienne.infrastructure.cqrs.batch.EventBatch
 

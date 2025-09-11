@@ -18,8 +18,8 @@
 package org.cafienne.cmmn.actorapi.event;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import org.cafienne.actormodel.event.ActorModified;
 import org.cafienne.actormodel.message.IncomingActorMessage;
+import org.cafienne.actormodel.message.event.ActorModified;
 import org.cafienne.cmmn.actorapi.command.CaseCommand;
 import org.cafienne.cmmn.instance.Case;
 import org.cafienne.cmmn.instance.State;

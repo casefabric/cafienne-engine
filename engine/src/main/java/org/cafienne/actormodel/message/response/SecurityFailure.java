@@ -15,21 +15,30 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cafienne.tenant.actorapi.response;
+package org.cafienne.actormodel.message.response;
 
-import org.cafienne.actormodel.message.response.BaseModelResponse;
+import org.cafienne.actormodel.exception.AuthorizationException;
+import org.cafienne.actormodel.message.command.ModelCommand;
 import org.cafienne.infrastructure.serialization.Manifest;
 import org.cafienne.json.ValueMap;
-import org.cafienne.tenant.actorapi.TenantMessage;
-import org.cafienne.tenant.actorapi.command.TenantCommand;
 
+/**
+ * Can be used to return an exception to the sender of the command.
+ */
 @Manifest
-public class TenantResponse extends BaseModelResponse implements TenantMessage {
-    public TenantResponse(TenantCommand command) {
-        super(command);
+public class SecurityFailure extends CommandFailure {
+
+    /**
+     * Create a failure response for the command.
+     * The message id of the command will be pasted into the message id of the response.
+     * @param command
+     * @param failure The reason why the command failed
+     */
+    public SecurityFailure(ModelCommand command, AuthorizationException failure) {
+        super(command, failure);
     }
 
-    public TenantResponse(ValueMap json) {
+    public SecurityFailure(ValueMap json) {
         super(json);
     }
 }

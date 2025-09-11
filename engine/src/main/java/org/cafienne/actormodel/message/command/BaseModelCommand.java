@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cafienne.actormodel.command;
+package org.cafienne.actormodel.message.command;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -25,7 +25,7 @@ import org.apache.pekko.actor.ActorRef;
 import org.cafienne.actormodel.ModelActor;
 import org.cafienne.actormodel.exception.InvalidCommandException;
 import org.cafienne.actormodel.identity.UserIdentity;
-import org.cafienne.actormodel.response.ModelResponse;
+import org.cafienne.actormodel.message.response.ModelResponse;
 import org.cafienne.infrastructure.serialization.Fields;
 import org.cafienne.json.JSONParseFailure;
 import org.cafienne.json.JSONReader;
@@ -38,7 +38,7 @@ import java.io.StringWriter;
 
 public abstract class BaseModelCommand<T extends ModelActor, U extends UserIdentity> implements ModelCommand {
     private final ValueMap json;
-    protected final String msgId;
+    public final String correlationId;
     public final String actorId;
     private ActorRef sender;
     protected transient T actor;
@@ -63,14 +63,14 @@ public abstract class BaseModelCommand<T extends ModelActor, U extends UserIdent
         if (user == null || user.id() == null || user.id().trim().isEmpty()) {
             throw new InvalidCommandException("Tenant user cannot be null");
         }
-        this.msgId = new Guid().toString();
+        this.correlationId = new Guid().toString();
         this.user = user;
         this.actorId = actorId;
     }
 
     protected BaseModelCommand(ValueMap json) {
         this.json = json;
-        this.msgId = json.readString(Fields.messageId);
+        this.correlationId = json.readString(Fields.correlationId);
         this.actorId = json.readString(Fields.actorId);
         this.user = readUser(json.with(Fields.user));
     }
@@ -155,8 +155,8 @@ public abstract class BaseModelCommand<T extends ModelActor, U extends UserIdent
      * Returns the correlation id of this command, that can be used to relate a {@link ModelResponse} back to this
      * original command.
      */
-    public String getMessageId() {
-        return msgId;
+    public String getCorrelationId() {
+        return correlationId;
     }
 
     /**
@@ -180,7 +180,7 @@ public abstract class BaseModelCommand<T extends ModelActor, U extends UserIdent
 
     protected void writeModelCommand(JsonGenerator generator) throws IOException {
         writeField(generator, Fields.type, this.getCommandDescription());
-        writeField(generator, Fields.messageId, this.getMessageId());
+        writeField(generator, Fields.correlationId, this.getCorrelationId());
         writeField(generator, Fields.actorId, this.getActorId());
         writeField(generator, Fields.user, user);
     }

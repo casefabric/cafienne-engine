@@ -22,7 +22,7 @@ import org.apache.pekko.NotUsed
 import org.apache.pekko.stream.scaladsl.Source
 import org.apache.pekko.stream.stage.{GraphStage, GraphStageLogic}
 import org.apache.pekko.stream.{Attributes, FlowShape, Inlet, Outlet}
-import org.cafienne.actormodel.event.CommitEvent
+import org.cafienne.actormodel.message.event.CommitEvent
 import org.cafienne.infrastructure.cqrs.{ModelEventEnvelope, TaggedEventSource}
 
 /**

@@ -17,9 +17,9 @@
 
 package org.cafienne.cmmn.test;
 
-import org.cafienne.actormodel.command.BootstrapMessage;
-import org.cafienne.actormodel.response.CommandFailure;
-import org.cafienne.actormodel.response.ModelResponse;
+import org.cafienne.actormodel.message.command.BootstrapMessage;
+import org.cafienne.actormodel.message.response.CommandFailure;
+import org.cafienne.actormodel.message.response.ModelResponse;
 import org.cafienne.cmmn.actorapi.command.CaseCommand;
 import org.cafienne.cmmn.actorapi.response.CaseResponse;
 import org.cafienne.cmmn.instance.Case;
@@ -44,7 +44,7 @@ public class CaseTestCommand extends CaseCommand implements BootstrapMessage {
     private CommandFailure actualFailure;
 
     CaseTestCommand(TestScript testScript, CaseCommand command, CaseResponseValidator validator) {
-        super(command.getUser(), command.getCaseInstanceId());
+        super(command.getUser(), command.getActorId());
         this.testScript = testScript;
         this.actualCommand = command;
         this.validator = validator;

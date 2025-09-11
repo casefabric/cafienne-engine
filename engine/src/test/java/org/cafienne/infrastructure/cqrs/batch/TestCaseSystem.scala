@@ -1,8 +1,8 @@
 package org.cafienne.infrastructure.cqrs.batch
 
 import org.apache.pekko.actor.ActorSystem
-import org.cafienne.actormodel.command.ModelCommand
-import org.cafienne.actormodel.response.ModelResponse
+import org.cafienne.actormodel.message.command.ModelCommand
+import org.cafienne.actormodel.message.response.ModelResponse
 import org.cafienne.system.CaseSystem
 
 import scala.collection.mutable.ListBuffer

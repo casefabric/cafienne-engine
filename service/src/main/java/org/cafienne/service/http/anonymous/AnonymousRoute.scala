@@ -21,7 +21,7 @@ import org.apache.pekko.http.scaladsl.model.StatusCodes
 import org.apache.pekko.http.scaladsl.server.Directives._
 import org.apache.pekko.http.scaladsl.server.{ExceptionHandler, Route}
 import org.cafienne.actormodel.exception.SerializedException
-import org.cafienne.actormodel.response.{CommandFailure, EngineChokedFailure}
+import org.cafienne.actormodel.message.response.{CommandFailure, EngineChokedFailure}
 import org.cafienne.cmmn.actorapi.command.StartCase
 import org.cafienne.service.infrastructure.route.CaseServiceRoute
 

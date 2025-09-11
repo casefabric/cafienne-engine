@@ -17,10 +17,10 @@
 
 package org.cafienne.tenant.actorapi.command;
 
-import org.cafienne.actormodel.command.BaseModelCommand;
 import org.cafienne.actormodel.exception.AuthorizationException;
 import org.cafienne.actormodel.exception.InvalidCommandException;
 import org.cafienne.actormodel.identity.TenantUser;
+import org.cafienne.actormodel.message.command.BaseModelCommand;
 import org.cafienne.json.ValueMap;
 import org.cafienne.tenant.TenantActor;
 import org.cafienne.tenant.actorapi.TenantMessage;

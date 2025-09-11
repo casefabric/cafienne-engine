@@ -17,7 +17,7 @@
 
 package org.cafienne.consentgroup.actorapi.response;
 
-import org.cafienne.actormodel.response.BaseModelResponse;
+import org.cafienne.actormodel.message.response.BaseModelResponse;
 import org.cafienne.consentgroup.actorapi.ConsentGroupMessage;
 import org.cafienne.consentgroup.actorapi.command.ConsentGroupCommand;
 import org.cafienne.infrastructure.serialization.Manifest;

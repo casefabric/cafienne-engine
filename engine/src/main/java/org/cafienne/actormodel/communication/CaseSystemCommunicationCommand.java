@@ -3,9 +3,9 @@ package org.cafienne.actormodel.communication;
 import com.fasterxml.jackson.core.JsonGenerator;
 import org.cafienne.actormodel.ActorType;
 import org.cafienne.actormodel.ModelActor;
-import org.cafienne.actormodel.command.BaseModelCommand;
-import org.cafienne.actormodel.command.ModelCommand;
 import org.cafienne.actormodel.identity.UserIdentity;
+import org.cafienne.actormodel.message.command.BaseModelCommand;
+import org.cafienne.actormodel.message.command.ModelCommand;
 import org.cafienne.infrastructure.serialization.Fields;
 import org.cafienne.json.ValueMap;
 
@@ -40,8 +40,8 @@ public abstract class CaseSystemCommunicationCommand extends BaseModelCommand<Mo
     }
 
     @Override
-    public String getMessageId() {
-        return command.getMessageId();
+    public String getCorrelationId() {
+        return command.getCorrelationId();
     }
 
     protected void writeActorCommand(JsonGenerator generator) throws IOException {

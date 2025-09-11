@@ -1,6 +1,6 @@
 package org.cafienne.actormodel;
 
-import org.cafienne.actormodel.event.ModelEvent;
+import org.cafienne.actormodel.message.event.ModelEvent;
 import org.cafienne.cmmn.actorapi.event.CaseEvent;
 import org.cafienne.cmmn.instance.Case;
 import org.cafienne.consentgroup.ConsentGroupActor;

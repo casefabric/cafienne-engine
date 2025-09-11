@@ -17,7 +17,7 @@
 
 package org.cafienne.cmmn.test.filter;
 
-import org.cafienne.actormodel.event.ModelEvent;
+import org.cafienne.actormodel.message.event.ModelEvent;
 import org.cafienne.cmmn.test.CaseEventListener;
 
 /**

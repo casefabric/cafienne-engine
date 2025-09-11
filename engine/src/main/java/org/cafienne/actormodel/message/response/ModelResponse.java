@@ -15,10 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cafienne.actormodel.response;
+package org.cafienne.actormodel.message.response;
 
-import org.cafienne.actormodel.command.ModelCommand;
 import org.cafienne.actormodel.message.IncomingActorMessage;
+import org.cafienne.actormodel.message.command.ModelCommand;
 import org.cafienne.json.Value;
 import org.cafienne.json.ValueMap;
 
@@ -37,6 +37,11 @@ public interface ModelResponse extends IncomingActorMessage {
      * Return the last modified timestamp of the ModelActor, along with the actor id.
      */
     ActorLastModified lastModifiedContent();
+
+    /**
+     * Indicates whether the command created state changes in the actor (without running into failures).
+     */
+    boolean actorChanged();
 
     /**
      * Return a Value representation of the response content.

@@ -20,7 +20,7 @@ package org.cafienne.system.bootstrap
 import com.typesafe.config.{Config, ConfigException, ConfigFactory}
 import com.typesafe.scalalogging.LazyLogging
 import org.cafienne.actormodel.identity.TenantUser
-import org.cafienne.actormodel.response.{ActorExistsFailure, CommandFailure, ModelResponse}
+import org.cafienne.actormodel.message.response.{ActorExistsFailure, CommandFailure, ModelResponse}
 import org.cafienne.system.CaseSystem
 import org.cafienne.tenant.actorapi.command.platform.CreateTenant
 import org.cafienne.tenant.actorapi.response.TenantResponse

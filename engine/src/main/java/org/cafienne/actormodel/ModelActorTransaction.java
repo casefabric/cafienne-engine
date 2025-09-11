@@ -19,19 +19,20 @@ package org.cafienne.actormodel;
 
 import org.apache.pekko.actor.ActorRef;
 import org.apache.pekko.persistence.journal.Tagged;
-import org.cafienne.actormodel.command.ModelCommand;
 import org.cafienne.actormodel.communication.reply.command.RunActorRequest;
 import org.cafienne.actormodel.communication.reply.event.ActorRequestFailed;
 import org.cafienne.actormodel.communication.request.response.ActorRequestFailure;
 import org.cafienne.actormodel.debug.DebugInfoAppender;
-import org.cafienne.actormodel.event.CommitEvent;
-import org.cafienne.actormodel.event.EngineVersionChanged;
-import org.cafienne.actormodel.event.ModelEvent;
 import org.cafienne.actormodel.exception.AuthorizationException;
 import org.cafienne.actormodel.exception.CommandException;
 import org.cafienne.actormodel.exception.InvalidCommandException;
 import org.cafienne.actormodel.message.IncomingActorMessage;
-import org.cafienne.actormodel.response.*;
+import org.cafienne.actormodel.message.command.ModelCommand;
+import org.cafienne.actormodel.message.event.CommitEvent;
+import org.cafienne.actormodel.message.event.DebugEvent;
+import org.cafienne.actormodel.message.event.EngineVersionChanged;
+import org.cafienne.actormodel.message.event.ModelEvent;
+import org.cafienne.actormodel.message.response.*;
 import org.cafienne.infrastructure.EngineVersion;
 import org.cafienne.infrastructure.enginedeveloper.EngineDeveloperConsole;
 import org.cafienne.system.health.HealthMonitor;
@@ -64,6 +65,14 @@ public class ModelActorTransaction {
         this.checkEngineVersion();
     }
 
+    /**
+     * Return the message for which this transaction was created.
+     * This can be used to e.g. read the user information or the correlation id.
+     */
+    public IncomingActorMessage getMessage() {
+        return message;
+    }
+
     void perform() {
         actor.addDebugInfo(() -> "---------- User " + message.getUser().id() + " in " + actor + " receives message " + message.getDescription(), message.rawJson());
 
@@ -75,6 +84,10 @@ public class ModelActorTransaction {
         }
 
         commit();
+    }
+
+    public boolean hasState() {
+        return !hasFailures() && hasStatefulEvents();
     }
 
     void runCommand(ModelCommand command) {
@@ -171,7 +184,7 @@ public class ModelActorTransaction {
         if (getLogger().isDebugEnabled() || EngineDeveloperConsole.enabled()) {
             StringBuilder msg = new StringBuilder("\n------------------------ PERSISTING " + events.size() + " EVENTS IN " + actor);
             events.forEach(e -> msg.append("\n\t").append(e));
-            getLogger().debug(msg + "\n");
+            getLogger().debug("{}\n", msg);
             EngineDeveloperConsole.debugIndentedConsoleLogging(msg + "\n");
         }
         // Include the debug event if any.
@@ -242,7 +255,7 @@ public class ModelActorTransaction {
      * Simplistic
      */
     private boolean hasStatefulEvents() {
-        return !events.isEmpty();
+        return !events.isEmpty() && !(events.size() == 1 && events.getFirst() instanceof DebugEvent);
     }
 
     /**

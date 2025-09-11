@@ -19,7 +19,7 @@ package org.cafienne.persistence.querydb.materializer.tenant
 
 import com.typesafe.scalalogging.LazyLogging
 import org.apache.pekko.persistence.query.Offset
-import org.cafienne.actormodel.event.CommitEvent
+import org.cafienne.actormodel.message.event.CommitEvent
 import org.cafienne.infrastructure.cqrs.ModelEventEnvelope
 import org.cafienne.infrastructure.cqrs.offset.OffsetRecord
 import org.cafienne.persistence.querydb.materializer.{QueryDBEventBatch, QueryDBStorage}

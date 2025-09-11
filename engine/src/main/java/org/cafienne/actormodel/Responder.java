@@ -17,9 +17,9 @@
 
 package org.cafienne.actormodel;
 
-import org.cafienne.actormodel.command.ModelCommand;
-import org.cafienne.actormodel.response.CommandFailureListener;
-import org.cafienne.actormodel.response.CommandResponseListener;
+import org.cafienne.actormodel.message.command.ModelCommand;
+import org.cafienne.actormodel.message.response.CommandFailureListener;
+import org.cafienne.actormodel.message.response.CommandResponseListener;
 
 public class Responder {
     public final ModelCommand command;

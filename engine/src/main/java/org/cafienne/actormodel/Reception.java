@@ -19,16 +19,16 @@ package org.cafienne.actormodel;
 
 import org.apache.pekko.persistence.JournalProtocol;
 import org.apache.pekko.persistence.SnapshotProtocol;
-import org.cafienne.actormodel.command.ModelCommand;
 import org.cafienne.actormodel.communication.CaseSystemCommunicationMessage;
 import org.cafienne.actormodel.communication.request.command.RequestModelActor;
-import org.cafienne.actormodel.event.ModelEvent;
 import org.cafienne.actormodel.exception.InvalidCommandException;
 import org.cafienne.actormodel.message.IncomingActorMessage;
-import org.cafienne.actormodel.response.ActorChokedFailure;
-import org.cafienne.actormodel.response.ActorExistsFailure;
-import org.cafienne.actormodel.response.ActorInStorage;
-import org.cafienne.actormodel.response.CommandFailure;
+import org.cafienne.actormodel.message.command.ModelCommand;
+import org.cafienne.actormodel.message.event.ModelEvent;
+import org.cafienne.actormodel.message.response.ActorChokedFailure;
+import org.cafienne.actormodel.message.response.ActorExistsFailure;
+import org.cafienne.actormodel.message.response.ActorInStorage;
+import org.cafienne.actormodel.message.response.CommandFailure;
 import org.cafienne.infrastructure.serialization.DeserializationFailure;
 import org.cafienne.storage.actormodel.message.StorageEvent;
 

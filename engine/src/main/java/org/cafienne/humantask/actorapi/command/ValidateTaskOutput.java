@@ -18,7 +18,7 @@
 package org.cafienne.humantask.actorapi.command;
 
 import org.cafienne.actormodel.identity.CaseUserIdentity;
-import org.cafienne.actormodel.response.CommandFailure;
+import org.cafienne.actormodel.message.response.CommandFailure;
 import org.cafienne.cmmn.instance.task.validation.ValidationResponse;
 import org.cafienne.humantask.actorapi.response.HumanTaskValidationResponse;
 import org.cafienne.humantask.instance.WorkflowTask;

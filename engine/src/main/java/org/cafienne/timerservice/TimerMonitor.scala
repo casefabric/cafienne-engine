@@ -21,7 +21,7 @@ import com.typesafe.scalalogging.LazyLogging
 import org.apache.pekko.Done
 import org.apache.pekko.actor.{ActorRef, Scheduler}
 import org.apache.pekko.persistence.query.Offset
-import org.cafienne.actormodel.response.ModelResponse
+import org.cafienne.actormodel.message.response.ModelResponse
 import org.cafienne.cmmn.actorapi.event.plan.eventlistener.TimerSet
 import org.cafienne.storage.actormodel.command.ClearTimerData
 import org.cafienne.storage.actormodel.event.TimerDataCleared
@@ -51,7 +51,7 @@ class TimerMonitor(val timerService: TimerService) extends LazyLogging {
     message match {
       case response: ModelResponse =>
         // Find the active timer we just triggered and inform it about the response
-        activeTimers.values.filter(timer => timer.command.getMessageId eq response.getMessageId).foreach(_.handleResponse(response))
+        activeTimers.values.filter(timer => timer.command.getCorrelationId eq response.getCorrelationId).foreach(_.handleResponse(response))
         Future.successful(Done)
       case clearTimers: ClearTimerData =>
         val sender: ActorRef = timerService.sender()

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import org.cafienne.actormodel.ModelActor;
 import org.cafienne.actormodel.communication.reply.command.RunActorRequest;
 import org.cafienne.actormodel.communication.request.command.RequestModelActor;
-import org.cafienne.actormodel.event.CommitEvent;
+import org.cafienne.actormodel.message.event.CommitEvent;
 import org.cafienne.infrastructure.serialization.Fields;
 import org.cafienne.infrastructure.serialization.Manifest;
 import org.cafienne.json.ValueMap;
@@ -47,8 +47,8 @@ public class ActorRequestStored extends ModelActorRequestEvent implements Commit
     }
 
     @Override
-    public String getMessageId() {
-        return request.getMessageId();
+    public String getCorrelationId() {
+        return request.getCorrelationId();
     }
 
     @Override

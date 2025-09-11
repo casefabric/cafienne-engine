@@ -19,7 +19,7 @@ package org.cafienne.persistence.querydb.materializer.cases
 
 import com.typesafe.scalalogging.LazyLogging
 import org.apache.pekko.persistence.query.Offset
-import org.cafienne.actormodel.event.CommitEvent
+import org.cafienne.actormodel.message.event.CommitEvent
 import org.cafienne.cmmn.actorapi.event.file.CaseFileEvent
 import org.cafienne.cmmn.actorapi.event.plan.CasePlanEvent
 import org.cafienne.cmmn.actorapi.event.team.CaseTeamEvent

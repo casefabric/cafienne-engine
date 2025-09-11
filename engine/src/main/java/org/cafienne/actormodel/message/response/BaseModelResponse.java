@@ -15,11 +15,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cafienne.actormodel.response;
+package org.cafienne.actormodel.message.response;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import org.cafienne.actormodel.command.ModelCommand;
 import org.cafienne.actormodel.identity.UserIdentity;
+import org.cafienne.actormodel.message.command.ModelCommand;
 import org.cafienne.infrastructure.serialization.Fields;
 import org.cafienne.json.ValueMap;
 
@@ -31,35 +31,38 @@ import java.time.Instant;
  */
 public abstract class BaseModelResponse implements ModelResponse {
     private final ValueMap json;
-    private final String messageId;
+    private final String correlationId;
     private final String actorId;
     private Instant lastModified;
     private final UserIdentity user;
     private final String commandType;
+    private final boolean actorChanged;
 
     protected BaseModelResponse(ModelCommand command) {
         this.json = new ValueMap();
-        this.messageId = command.getMessageId();
+        this.correlationId = command.getCorrelationId();
         this.actorId = command.actorId();
         // If a Command never reached the actor (e.g., if CaseSystem routing service ran into an error),
         //  the actor will not be available. Checking that here. Required for CommandFailure.
         this.lastModified = command.getActor() != null ? command.getActor().getLastModified() : null;
+        this.actorChanged = command.getActor() != null && command.getActor().getCurrentTransaction() != null && command.getActor().getCurrentTransaction().hasState();
         this.user = command.getUser();
         this.commandType = command.getClass().getName();
     }
 
     protected BaseModelResponse(ValueMap json) {
         this.json = json;
-        this.messageId = json.readString(Fields.messageId);
+        this.correlationId = json.readString(Fields.correlationId);
         this.actorId = json.readString(Fields.actorId);
         this.lastModified = json.readInstant(Fields.lastModified);
         this.user = json.readObject(Fields.user, UserIdentity::deserialize);
         this.commandType = json.readString(Fields.commandType);
+        this.actorChanged = json.readBoolean(Fields.actorChanged);
     }
 
     @Override
-    public String getMessageId() {
-        return messageId;
+    public String getCorrelationId() {
+        return correlationId;
     }
 
     /**
@@ -92,16 +95,22 @@ public abstract class BaseModelResponse implements ModelResponse {
         return new ActorLastModified(actorId, getLastModified());
     }
 
+    @Override
+    public boolean actorChanged() {
+        return actorChanged;
+    }
+
     public UserIdentity getUser() {
         return user;
     }
 
     @Override
     public void write(JsonGenerator generator) throws IOException {
-        writeField(generator, Fields.messageId, this.getMessageId());
+        writeField(generator, Fields.correlationId, this.getCorrelationId());
         writeField(generator, Fields.actorId, actorId);
         writeField(generator, Fields.commandType, commandType);
         writeField(generator, Fields.lastModified, this.getLastModified());
+        writeField(generator, Fields.actorChanged, actorChanged);
         writeField(generator, Fields.user, user);
     }
 

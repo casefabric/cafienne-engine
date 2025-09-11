@@ -18,8 +18,8 @@
 package org.cafienne.actormodel.message;
 
 import org.cafienne.actormodel.ActorType;
-import org.cafienne.actormodel.command.BootstrapMessage;
 import org.cafienne.actormodel.identity.UserIdentity;
+import org.cafienne.actormodel.message.command.BootstrapMessage;
 import org.cafienne.infrastructure.serialization.CafienneSerializable;
 import org.cafienne.json.ValueMap;
 
@@ -28,7 +28,19 @@ import org.cafienne.json.ValueMap;
  * Typically used in Commands and resulting Events and Responses from those commands.
  */
 public interface UserMessage extends CafienneSerializable {
+    /**
+     * Returns the user responsible for this message.
+     */
     UserIdentity getUser();
+
+    /**
+     * Every command has a unique identifier. This can be used to correlate Commands, Events and Responses.
+     */
+    String getCorrelationId();
+
+    default String correlationId() {
+        return getCorrelationId();
+    }
 
     /**
      * Explicit method to be implemented returning the type of the ModelActor handling this message.
@@ -36,6 +48,15 @@ public interface UserMessage extends CafienneSerializable {
      */
     default ActorType actorType() {
         return ActorType.ModelActor;
+    }
+
+    /**
+     * Returns a string with the identifier of the actor that handles this message.
+     */
+    String getActorId();
+
+    default String actorId() {
+        return getActorId();
     }
 
     default boolean isBootstrapMessage() {
@@ -53,6 +74,6 @@ public interface UserMessage extends CafienneSerializable {
     /**
      * Return a ValueMap serialization of the message
      */
-     ValueMap rawJson();
+    ValueMap rawJson();
 
 }

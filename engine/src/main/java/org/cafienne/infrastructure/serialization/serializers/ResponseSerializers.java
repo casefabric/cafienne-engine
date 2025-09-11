@@ -17,7 +17,7 @@
 
 package org.cafienne.infrastructure.serialization.serializers;
 
-import org.cafienne.actormodel.response.*;
+import org.cafienne.actormodel.message.response.*;
 import org.cafienne.cmmn.actorapi.response.*;
 import org.cafienne.cmmn.actorapi.response.migration.MigrationStartedResponse;
 import org.cafienne.consentgroup.actorapi.response.ConsentGroupCreatedResponse;

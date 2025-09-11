@@ -19,8 +19,8 @@ package org.cafienne.actormodel;
 
 import org.apache.pekko.persistence.RecoveryCompleted;
 import org.apache.pekko.persistence.SnapshotOffer;
-import org.cafienne.actormodel.event.CaseSystemEvent;
-import org.cafienne.actormodel.event.ModelEvent;
+import org.cafienne.actormodel.message.event.CaseSystemEvent;
+import org.cafienne.actormodel.message.event.ModelEvent;
 import org.cafienne.infrastructure.serialization.DeserializationFailure;
 
 /**

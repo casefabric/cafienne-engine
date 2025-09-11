@@ -18,7 +18,7 @@
 package org.cafienne.cmmn.actorapi.event.plan.eventlistener;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import org.cafienne.actormodel.event.ModelEvent;
+import org.cafienne.actormodel.message.event.ModelEvent;
 import org.cafienne.cmmn.actorapi.event.CaseEvent;
 import org.cafienne.cmmn.actorapi.event.plan.CasePlanEvent;
 import org.cafienne.cmmn.instance.Case;

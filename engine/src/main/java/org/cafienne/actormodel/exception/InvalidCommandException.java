@@ -18,7 +18,7 @@
 package org.cafienne.actormodel.exception;
 
 import org.cafienne.actormodel.ModelActor;
-import org.cafienne.actormodel.command.ModelCommand;
+import org.cafienne.actormodel.message.command.ModelCommand;
 
 /**
  * This exception is typically raised during the {@link ModelCommand#validate(ModelActor)} method.

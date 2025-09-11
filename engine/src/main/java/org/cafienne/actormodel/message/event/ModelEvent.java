@@ -15,16 +15,33 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cafienne.actormodel.event
+package org.cafienne.actormodel.message.event;
 
-import scala.collection.mutable.ListBuffer
+import org.cafienne.actormodel.ModelActor;
+import org.cafienne.actormodel.message.UserMessage;
 
-trait ModelEventCollection {
-  val events: ListBuffer[ModelEvent] = ListBuffer()
+import java.time.Instant;
+import java.util.Set;
 
-  def eventsOfType[ME <: ModelEvent](clazz: Class[ME]): Seq[ME] = events.filter(event => clazz.isAssignableFrom(event.getClass)).map(_.asInstanceOf[ME]).toSeq
+public interface ModelEvent extends UserMessage {
+    String TAG = "cafienne";
 
-  def optionalEvent[ME <: ModelEvent](clazz: Class[ME]): Option[ME] = eventsOfType(clazz).headOption
+    Set<String> tags = Set.of(ModelEvent.TAG);
 
-  def getEvent[ME <: ModelEvent](clazz: Class[ME]): ME = optionalEvent(clazz).get
+    default Set<String> tags() {
+        return tags;
+    }
+
+    /**
+     * Hook that will be invoked after the event is persisted.
+     * This can be used to run followup actions only after transaction completed.
+     */
+    default void afterPersist(ModelActor actor) {
+    }
+
+    void updateActorState(ModelActor actor);
+
+    String tenant();
+
+    Instant getTimestamp();
 }

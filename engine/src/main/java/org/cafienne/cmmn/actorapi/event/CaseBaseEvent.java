@@ -18,19 +18,25 @@
 package org.cafienne.cmmn.actorapi.event;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import org.cafienne.actormodel.event.BaseModelEvent;
+import org.cafienne.actormodel.identity.CaseUserIdentity;
+import org.cafienne.actormodel.message.event.BaseModelEvent;
 import org.cafienne.cmmn.instance.Case;
 import org.cafienne.json.ValueMap;
 
 import java.io.IOException;
 
-public abstract class CaseBaseEvent extends BaseModelEvent<Case> implements CaseEvent {
+public abstract class CaseBaseEvent extends BaseModelEvent<Case, CaseUserIdentity> implements CaseEvent {
     protected CaseBaseEvent(Case caseInstance) {
         super(caseInstance);
     }
 
     protected CaseBaseEvent(ValueMap json) {
         super(json);
+    }
+
+    @Override
+    protected CaseUserIdentity readUser(ValueMap json) {
+        return CaseUserIdentity.deserialize(json);
     }
 
     protected void writeCaseEvent(JsonGenerator generator) throws IOException {
