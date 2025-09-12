@@ -86,7 +86,11 @@ class CasePlanProjection(override val batch: CaseEventBatch) extends CaseEventMa
     //  We check here to see if our version is an old or a new one, by checking whether
     //  a task is already available in the transaction (that means HumanTaskCreated was still there, the old format).
     val updatedTask = this.tasks.get(evt.getTaskId) match {
-      case None => TaskMerger.create(evt) // New format. TaskMerger will create the task
+      case None => {
+        val caseName = batch.caseProjection.getCase.map(_.caseName)
+        val newTask = TaskMerger.create(evt)
+        caseName.fold(newTask)(name => newTask.copy(caseName = name))
+      } // New format. TaskMerger will create the task
       case Some(task) => TaskMerger(evt, task) // Old format, must have been created in same transaction through HumanTaskCreated, fine too
     }
     this.tasks.put(evt.getTaskId, updatedTask)

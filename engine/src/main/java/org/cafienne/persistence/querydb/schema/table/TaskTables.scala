@@ -46,6 +46,8 @@ trait TaskTables extends SlickTableExtensions {
 
     lazy val caseInstanceId = idColumn[String]("case_instance_id")
 
+    lazy val caseName = column[String]("case_name", O.Default(""))
+
     lazy val role = column[String]("role", O.Default(""))
 
     lazy val taskName = column[String]("task_name", O.Default(""))
@@ -82,6 +84,6 @@ trait TaskTables extends SlickTableExtensions {
     lazy val indexTenant = oldStyleIndex(tenant)
     lazy val indexDueDate = index(oldStyleIxName(dueDate), dueDate)
 
-    lazy val * = (id, caseInstanceId, tenant, taskName, taskState, role, assignee, owner, dueDate, createdOn, createdBy, lastModified, modifiedBy, input, output, taskModel).mapTo[TaskRecord]
+    lazy val * = (id, caseInstanceId, caseName, tenant, taskName, taskState, role, assignee, owner, dueDate, createdOn, createdBy, lastModified, modifiedBy, input, output, taskModel).mapTo[TaskRecord]
   }
 }

@@ -29,6 +29,11 @@ class CaseProjection(override val batch: CaseEventBatch, caseFileProjection: Cas
   private var caseInstance: Option[CaseRecord] = None
   private var caseDefinition: Option[CaseDefinitionRecord] = None
 
+  def getCase: Option[CaseRecord] = {
+    if (caseInstance.nonEmpty) caseInstance
+    else dBTransaction.getCaseInstance(batch.caseInstanceId)
+  }
+
   def handleCaseEvent(event: CaseEvent): Unit = {
     event match {
       case event: CaseDefinitionApplied => createCaseInstance(event)

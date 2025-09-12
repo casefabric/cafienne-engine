@@ -18,18 +18,29 @@
 package org.cafienne.persistence.querydb.schema.versions
 
 import org.cafienne.persistence.infrastructure.jdbc.schema.QueryDBSchemaVersion
-import org.cafienne.persistence.querydb.schema.table.ConsentGroupTables
+import org.cafienne.persistence.querydb.schema.table.{CaseTables, ConsentGroupTables, TaskTables}
 import slick.basic.DatabaseConfig
 import slick.jdbc.JdbcProfile
-import slick.lifted.TableQuery
-import slick.migration.api.TableMigration
+import slick.migration.api.{SqlMigration, TableMigration}
 
 class QueryDB_1_1_36(val dbConfig: DatabaseConfig[JdbcProfile], val tablePrefix: String)
   extends QueryDBSchemaVersion
-    with ConsentGroupTables {
+    with ConsentGroupTables
+    with TaskTables
+    with CaseTables {
 
   val version = "1.1.36"
-  val migrations = addIndexToConsentGroupMemberTableOnGroup
+  val migrations = addIndexToConsentGroupMemberTableOnGroup.&(addCaseNameToTaskTable).&(fillTaskTable)
+
+  import dbConfig.profile.api._
 
   private def addIndexToConsentGroupMemberTableOnGroup = TableMigration(TableQuery[ConsentGroupMemberTable]).addIndexes(_.indexGroup)
+
+  private def addCaseNameToTaskTable = TableMigration(TableQuery[TaskTable]).addColumns(_.caseName)
+
+  private def fillTaskTable = {
+    val taskTable = TableMigration(TableQuery[TaskTable]).tableInfo.tableName // This will add a configured table-prefix to the table name (instead of hardcoding "task")
+    val caseTable = TableMigration(TableQuery[CaseInstanceTable]).tableInfo.tableName
+    SqlMigration(s"""update "$taskTable" set "case_name" = (select "case_name" from "$caseTable" where "$caseTable"."id" = "$taskTable"."case_instance_id")""")
+  }
 }

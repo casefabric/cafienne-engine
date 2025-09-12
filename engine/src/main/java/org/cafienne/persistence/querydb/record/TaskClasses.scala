@@ -23,6 +23,7 @@ import java.time.Instant
 
 final case class TaskRecord(id: String,
                             caseInstanceId: String,
+                            caseName: String = "",
                             tenant: String,
                             taskName: String = "",
                             taskState: String = "",
@@ -58,6 +59,7 @@ final case class TaskRecord(id: String,
     v.plus("owner", owner)
     v.plus("tenant", tenant)
     v.plus("caseInstanceId", caseInstanceId)
+    v.plus("caseName", caseName)
     v.plus("role", role)
     v.plus("lastModified", lastModified)
     v.plus("modifiedBy", modifiedBy)
