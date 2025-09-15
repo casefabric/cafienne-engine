@@ -52,6 +52,11 @@ class BackOffice {
         // Create a transaction context, and set it.
         //   The underlying Pekko system ensures that only one transaction is active at a time.
         currentTransaction = new ModelActorTransaction(actor, message);
+        // First check the engine version, potentially leading to an extra event.
+        //  NOTE: we MUST set it here, otherwise the call to getCurrentTransaction results in a
+        //  NullPointerException in EngineVersionChanged event
+        //  Probably a better solution is to always have a currentTransaction, also during recovery
+        currentTransaction.checkEngineVersion();
         currentTransaction.perform();
 
         // Tell the actor monitor we're free again
