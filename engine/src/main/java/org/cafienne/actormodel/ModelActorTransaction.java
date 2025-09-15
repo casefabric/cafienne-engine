@@ -61,8 +61,6 @@ public class ModelActorTransaction {
         this.sender = actor.sender();
         this.message = message;
         this.logger = new TransactionLogger(this, actor);
-        // First check the engine version, potentially leading to an extra event.
-        this.checkEngineVersion();
     }
 
     /**
@@ -110,7 +108,7 @@ public class ModelActorTransaction {
         }
     }
 
-    private void checkEngineVersion() {
+    void checkEngineVersion() {
         // First check whether the engine version has changed or not; this may lead to an EngineVersionChanged event
         EngineVersion actorVersion = actor.getEngineVersion();
         EngineVersion currentEngineVersion = actor.caseSystem.version();
