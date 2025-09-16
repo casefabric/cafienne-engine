@@ -97,7 +97,7 @@ public abstract class Criterion<D extends CriterionDefinition> extends CMMNEleme
         }
         if (isSatisfied()) {
             isActive = true;
-            listener.satisfy(this);
+            listener.satisfied(this);
         }
     }
 
@@ -214,6 +214,8 @@ public abstract class Criterion<D extends CriterionDefinition> extends CMMNEleme
     public void migrateDefinition(D newDefinition, boolean skipLogic) {
         super.migrateDefinition(newDefinition, skipLogic);
         this.onParts.forEach(onPart -> {
+            // TODO: shouldn't we drop on parts that do not have a new definition?
+            //  Suggestion: first create a test case for it and reproduce that this is an issue....
             if (onPart instanceof CaseFileItemOnPart) {
                 migrateCaseFileItemOnPart((CaseFileItemOnPart) onPart, newDefinition, skipLogic);
             } else if (onPart instanceof PlanItemOnPart) {

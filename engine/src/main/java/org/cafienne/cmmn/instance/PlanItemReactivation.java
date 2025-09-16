@@ -39,7 +39,7 @@ public class PlanItemReactivation extends CriteriaListener<ReactivateCriterionDe
     }
 
     @Override
-    public void satisfy(Criterion<?> criterion) {
+    protected void satisfy(Criterion<?> criterion) {
         if (item.getState().isFailed()) {
             item.addDebugInfo(() -> item + " is in Failed state, and " + criterion + " is satisfied and will trigger " + Transition.Reactivate);
             item.makeTransition(Transition.Reactivate);
