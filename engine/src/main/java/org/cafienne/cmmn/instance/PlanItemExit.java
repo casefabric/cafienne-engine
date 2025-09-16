@@ -35,7 +35,7 @@ public class PlanItemExit extends CriteriaListener<ExitCriterionDefinition, Exit
     }
 
     @Override
-    public void satisfy(Criterion<?> criterion) {
+    protected void satisfy(Criterion<?> criterion) {
         item.addDebugInfo(() -> criterion + " is satisfied, triggering exit on " + item);
         stopListening();
         item.makeTransition(item.getExitTransition());

@@ -69,7 +69,7 @@ public class PlanItemEntry extends CriteriaListener<EntryCriterionDefinition, En
     private Criterion<?> earlyBird = null;
 
     @Override
-    public void satisfy(Criterion<?> criterion) {
+    protected void satisfy(Criterion<?> criterion) {
         if (item.getState().isNull()) {
             // Criterion is an early bird considering our state, let's put it in the waiting room until our lifecycle starts
             earlyBird = criterion;
