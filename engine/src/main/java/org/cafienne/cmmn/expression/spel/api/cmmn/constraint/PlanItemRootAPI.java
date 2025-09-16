@@ -33,10 +33,12 @@ public class PlanItemRootAPI<T extends ConstraintDefinition> extends CaseRootObj
 
 
     private final T constraintDefinition;
+    private final PlanItem<?> item;
 
     public PlanItemRootAPI(T constraintDefinition, PlanItem<?> planItem) {
         super(planItem.getCaseInstance());
         this.constraintDefinition = constraintDefinition;
+        this.item = planItem;
 
         // Make sure we can directly access the task or stage or milestone; e.g. "task.index < 3"
         registerPlanItem(planItem);
@@ -52,6 +54,6 @@ public class PlanItemRootAPI<T extends ConstraintDefinition> extends CaseRootObj
 
     @Override
     public String getDescription() {
-        return constraintDefinition.getContextDescription();
+        return constraintDefinition.getType() +" in " + this.item;
     }
 }
