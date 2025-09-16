@@ -43,10 +43,16 @@ jobs:
               sbt docker:stage
               docker buildx build --platform=linux/arm64,linux/amd64 --push -t cafienne/engine:latest ./service/target/docker/stage
             else
-              echo "Not pushing image to docker hub"
+              if [ "${CIRCLE_BRANCH}" == "snapshot" ];
+              then
+                docker buildx create --use --name multi-arch-builder
+                sbt docker:stage
+                docker buildx build --platform=linux/arm64,linux/amd64 --push -t cafienne/engine:snapshot ./service/target/docker/stage
+              else
+                echo "Not pushing image to docker hub"
+              fi
             fi
 
-  
   release-build:
     working_directory: ~/cafienne-engine
     machine:
@@ -90,7 +96,7 @@ commands:
           command: sbt compile
       - run:
           name: Unit tests
-          command: cat /dev/null | sbt jacocoAggregate 
+          command: cat /dev/null | sbt jacocoAggregate
       - run:
           name: Compile CMMN Test Framwork
           command: |
@@ -394,6 +400,7 @@ workflows:
               only:
                 - main
                 - dependency-updates
+                - snapshot
                 - run-compatibility-tests
       - branch-build:
           context: automation-context
@@ -402,6 +409,7 @@ workflows:
               ignore:
                 - main
                 - dependency-updates
+                - snapshot
                 - run-compatibility-tests
       - release-build:
           context: automation-context
