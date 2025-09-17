@@ -123,6 +123,8 @@ public class EventSerializers {
         CafienneSerializer.addManifestWrapper(PlanItemTransitioned.class, PlanItemTransitioned::new);
         CafienneSerializer.addManifestWrapper(PlanItemMigrated.class, PlanItemMigrated::new);
         CafienneSerializer.addManifestWrapper(PlanItemDropped.class, PlanItemDropped::new);
+        CafienneSerializer.addManifestWrapper(PlanItemMoved.class, PlanItemMoved::new);
+        CafienneSerializer.addManifestWrapper(PlanItemMoving.class, PlanItemMoving::new);
         CafienneSerializer.addManifestWrapper(RepetitionRuleEvaluated.class, RepetitionRuleEvaluated::new);
         CafienneSerializer.addManifestWrapper(RequiredRuleEvaluated.class, RequiredRuleEvaluated::new);
         CafienneSerializer.addManifestWrapper(TaskInputFilled.class, TaskInputFilled::new);

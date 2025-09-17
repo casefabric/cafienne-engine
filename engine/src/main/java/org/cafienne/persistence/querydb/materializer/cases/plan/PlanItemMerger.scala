@@ -18,7 +18,7 @@
 package org.cafienne.persistence.querydb.materializer.cases.plan
 
 import org.cafienne.cmmn.actorapi.event.CaseModified
-import org.cafienne.cmmn.actorapi.event.migration.PlanItemMigrated
+import org.cafienne.cmmn.actorapi.event.migration.{PlanItemMigrated, PlanItemMoved}
 import org.cafienne.cmmn.actorapi.event.plan.task.{TaskInputFilled, TaskOutputFilled}
 import org.cafienne.cmmn.actorapi.event.plan.{PlanItemCreated, PlanItemTransitioned, RepetitionRuleEvaluated, RequiredRuleEvaluated}
 import org.cafienne.persistence.querydb.record.PlanItemRecord
@@ -41,6 +41,25 @@ object PlanItemMerger {
       createdBy = event.getUser.id)
   }
 
+  def merge(event: PlanItemMoved): PlanItemRecord = {
+    PlanItemRecord(
+      id = event.getPlanItemId,
+      definitionId = event.definitionId,
+      stageId = event.newStageId,
+      name = event.getPlanItemName,
+      index = event.getIndex,
+      caseInstanceId = event.getCaseInstanceId,
+      tenant = event.tenant,
+      planItemType = event.getType.toString,
+      lastModified = event.getTimestamp,
+      modifiedBy = event.getUser.id,
+      createdOn = event.createdOn,
+      transition = event.getTransition.toString,
+      currentState = event.getCurrentState.toString,
+      historyState = event.getHistoryState.toString,
+      createdBy = event.getUser.id)
+  }
+
   def merge(event: CaseModified, current: PlanItemRecord): PlanItemRecord =
     current.copy(
       lastModified = event.lastModified(),
@@ -55,6 +74,13 @@ object PlanItemMerger {
 
   def merge(event: PlanItemMigrated, current: PlanItemRecord): PlanItemRecord =
     current.copy(
+      name = event.planItemName,
+      definitionId = event.definitionId,
+    )
+
+  def merge(event: PlanItemMoved, current: PlanItemRecord): PlanItemRecord =
+    current.copy(
+      stageId = event.newStageId,
       name = event.planItemName,
       definitionId = event.definitionId,
     )

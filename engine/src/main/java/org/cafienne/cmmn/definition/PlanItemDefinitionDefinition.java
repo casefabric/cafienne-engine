@@ -69,4 +69,8 @@ public abstract class PlanItemDefinitionDefinition extends CMMNElementDefinition
         return sameIdentifiers(other)
                 && sameItemControl(other);
     }
+
+    public boolean sameType(PlanItemDefinitionDefinition other) {
+        return this.getClass().equals(other.getClass());
+    }
 }

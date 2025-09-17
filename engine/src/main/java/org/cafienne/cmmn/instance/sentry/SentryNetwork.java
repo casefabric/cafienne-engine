@@ -55,11 +55,12 @@ public class SentryNetwork {
      */
     public void connect(PlanItem<?> item) {
         // Visit each existing criterion in the network and inform them about the new plan item.
-        for (Criterion<?> criterion : criteria) {
+        //  Note: we need to only visit existing criteria, and not new ones (to avoid concurrency issues).
+        //  Copying the existing list of criteria for that reason.
+        for (Criterion<?> criterion : new ArrayList<>(criteria)) {
             criterion.establishPotentialConnection(item);
         }
     }
-
 
     /**
      * Disconnect the item from the network (typically when the plan item is lost in migration)

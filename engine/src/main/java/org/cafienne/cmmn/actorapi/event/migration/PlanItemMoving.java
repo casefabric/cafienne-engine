@@ -27,17 +27,17 @@ import org.cafienne.json.ValueMap;
 import java.io.IOException;
 
 @Manifest
-public class PlanItemMigrated extends CasePlanEvent {
+public class PlanItemMoving extends PlanItemMigrated {
     public final String planItemName;
     public final String definitionId;
 
-    public PlanItemMigrated(PlanItem<?> item) {
+    public PlanItemMoving(PlanItem<?> item) {
         super(item);
         this.planItemName = item.getName();
         this.definitionId = item.getItemDefinition().getId();
     }
 
-    public PlanItemMigrated(ValueMap json) {
+    public PlanItemMoving(ValueMap json) {
         super(json);
         this.planItemName = json.readString(Fields.name);
         this.definitionId = json.readString(Fields.definitionId, "");
@@ -61,7 +61,6 @@ public class PlanItemMigrated extends CasePlanEvent {
 
     @Override
     protected void updatePlanItemState(PlanItem<?> planItem) {
-        // Nothing to do here, since most of the logic is triggered in the DefinitionMigrated event and leads to other regular events.
-        // Still keeping this event, since name and id changes are published here for downstream event listeners.
+        planItem.updateState(this);
     }
 }

@@ -19,28 +19,38 @@ package org.cafienne.cmmn.actorapi.event.migration;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import org.cafienne.cmmn.actorapi.event.plan.CasePlanEvent;
+import org.cafienne.cmmn.actorapi.event.plan.PlanItemCreated;
+import org.cafienne.cmmn.actorapi.event.plan.PlanItemTransitioned;
 import org.cafienne.cmmn.instance.PlanItem;
+import org.cafienne.cmmn.instance.Stage;
 import org.cafienne.infrastructure.serialization.Fields;
 import org.cafienne.infrastructure.serialization.Manifest;
 import org.cafienne.json.ValueMap;
 
 import java.io.IOException;
+import java.time.Instant;
 
 @Manifest
-public class PlanItemMigrated extends CasePlanEvent {
+public class PlanItemMoved extends PlanItemTransitioned {
+    public final String newStageId;
     public final String planItemName;
     public final String definitionId;
+    public final Instant createdOn;
 
-    public PlanItemMigrated(PlanItem<?> item) {
-        super(item);
+    public PlanItemMoved(Stage<?> stage, PlanItem<?> item) {
+        super(item, item.getState(), item.getHistoryState(), item.getLastTransition());
+        this.newStageId = stage.getId();
         this.planItemName = item.getName();
         this.definitionId = item.getItemDefinition().getId();
+        this.createdOn = item.getCaseInstance().getCreatedOn();
     }
 
-    public PlanItemMigrated(ValueMap json) {
+    public PlanItemMoved(ValueMap json) {
         super(json);
+        this.newStageId = json.readString(Fields.newStageId);
         this.planItemName = json.readString(Fields.name);
         this.definitionId = json.readString(Fields.definitionId, "");
+        this.createdOn = getTimestamp();
     }
 
     @Override
@@ -54,14 +64,14 @@ public class PlanItemMigrated extends CasePlanEvent {
 
     @Override
     public void write(JsonGenerator generator) throws IOException {
-        super.writeCasePlanEvent(generator);
+        super.write(generator);
+        writeField(generator, Fields.newStageId, newStageId);
         writeField(generator, Fields.name, planItemName);
         writeField(generator, Fields.definitionId, definitionId);
     }
 
     @Override
     protected void updatePlanItemState(PlanItem<?> planItem) {
-        // Nothing to do here, since most of the logic is triggered in the DefinitionMigrated event and leads to other regular events.
-        // Still keeping this event, since name and id changes are published here for downstream event listeners.
+        planItem.updateState(this);
     }
 }

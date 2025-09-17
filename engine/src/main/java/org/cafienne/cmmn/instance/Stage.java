@@ -19,6 +19,8 @@ package org.cafienne.cmmn.instance;
 
 import org.cafienne.actormodel.exception.InvalidCommandException;
 import org.cafienne.cmmn.actorapi.event.CaseAppliedPlatformUpdate;
+import org.cafienne.cmmn.actorapi.event.migration.PlanItemMoved;
+import org.cafienne.cmmn.actorapi.event.migration.PlanItemMoving;
 import org.cafienne.cmmn.actorapi.event.plan.PlanItemCreated;
 import org.cafienne.cmmn.actorapi.event.plan.PlanItemTransitioned;
 import org.cafienne.cmmn.definition.*;
@@ -29,10 +31,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 public class Stage<T extends StageDefinition> extends TaskStage<T> {
     private final Collection<PlanItem<?>> planItems = new ArrayList<>();
+    private final Collection<PlanItem<?>> adoptedChildren = new ArrayList<>();
     private final boolean usePureCMMNFaultHandling;
 
     public Stage(String id, int index, ItemDefinition itemDefinition, T definition, Stage<?> parent, Case caseInstance) {
@@ -99,6 +101,19 @@ public class Stage<T extends StageDefinition> extends TaskStage<T> {
         return pic.getCreatedPlanItem();
     }
 
+    private void instantiateChildFromMigration(PlanItemDefinition itemDefinition) {
+        List<PlanItem<?>> existing = getCaseInstance().getPlanItems().stream().filter(item -> item.getItemDefinition().matches(itemDefinition)).toList();
+        if (!existing.isEmpty()) {
+            existing.forEach(child -> {
+//                System.out.println(this + ": adopting plan item " + child + " upon case migration (from " + child.getStage() + " to " + this + ")");
+                addDebugInfo(() -> this + ": adopting plan item " + child + " upon case migration (from " + child.getStage() + " to " + this + ")");
+                addEvent(new PlanItemMoved(this, child));
+            });
+        } else {
+            instantiateChild(itemDefinition);
+        }
+    }
+
     /**
      * Creates the child, but without triggering the lifecycle.
      */
@@ -115,7 +130,7 @@ public class Stage<T extends StageDefinition> extends TaskStage<T> {
      * @param reason The reason why this method is invoked is printed in the debug log event
      */
     private void invokeCreateOnNullItems(String reason) {
-        List<PlanItem<?>> nullItems = planItems.stream().filter(item -> item.getState().isNull()).collect(Collectors.toList());
+        List<PlanItem<?>> nullItems = planItems.stream().filter(item -> item.getState().isNull()).toList();
         if (!nullItems.isEmpty()) {
             addDebugInfo(() -> "Stage[" + getName() + "] / " + reason + ": invoking transition 'create' on " + nullItems.size() + " items:");
             nullItems.forEach(item -> addDebugInfo(() -> " - " + item));
@@ -129,13 +144,14 @@ public class Stage<T extends StageDefinition> extends TaskStage<T> {
 
     @Override
     protected void startInstance() {
+        adoptParentItems();
         // First trigger the 'create' transition on the already planned discretionary items
         if (hasNullItems()) {
             invokeCreateOnNullItems("creating planned discretionary items");
         }
 
         // Create the default child plan items
-        getDefinition().getPlanItems().forEach(this::instantiateChild);
+        getDefinition().getPlanItems().stream().filter(this::doesNotHaveChild).forEach(this::instantiateChild);
 
         // Now trigger the 'create' transition on the newly created children
         invokeCreateOnNullItems("creating default items");
@@ -200,7 +216,7 @@ public class Stage<T extends StageDefinition> extends TaskStage<T> {
                         }
                     } else {
                         addDebugInfo(() -> {
-                            String msg = getPlanItems().stream().filter(isFailedSibling).map(p -> "\n*   - " + p.toDescription()).collect(Collectors.toList()).toString();
+                            String msg = getPlanItems().stream().filter(isFailedSibling).map(p -> "\n*   - " + p.toDescription()).toList().toString();
                             return "Cannot reactivate stage " + getName() + " because " + getPlanItems().stream().filter(item -> item.getState().isFailed() && item != child).count() + " plan items are still in Fault state:" + msg;
                         });
                     }
@@ -254,7 +270,7 @@ public class Stage<T extends StageDefinition> extends TaskStage<T> {
         // BOTTOM-LINE interpretation: the stage will try to complete each time a child reaches semi-terminal state, or if the transition to complete is manually invoked
         // Here we check both.
         addDebugInfo(() -> {
-            String msg = getPlanItems().stream().map(p -> "\n*   - " + p.toDescription()).collect(Collectors.toList()).toString();
+            String msg = getPlanItems().stream().map(p -> "\n*   - " + p.toDescription()).toList().toString();
             return "*   checking " + planItems.size() + " plan items for completion:" + msg;
         });
         for (PlanItem<?> childItem : planItems) {
@@ -380,9 +396,12 @@ public class Stage<T extends StageDefinition> extends TaskStage<T> {
     @Override
     public void migrateItemDefinition(ItemDefinition newItemDefinition, T newDefinition, boolean skipLogic) {
         super.migrateItemDefinition(newItemDefinition, newDefinition, skipLogic);
+
         // Migrate existing children (potentially dropping and removing them)
         new ArrayList<>(planItems).forEach(item -> migrateChild(item, skipLogic));
-        if (skipLogic) return;
+        if (skipLogic) {
+            return;
+        }
 
         // When the Stage is in state Available, it is not yet active, and starting the Stage
         //  will make it active and then the new children will be instantiated automatically.
@@ -390,18 +409,65 @@ public class Stage<T extends StageDefinition> extends TaskStage<T> {
         // When Stage is Terminated or Completed, there is nothing to be done in the remainder. E.g., we cannot re-activate a completed Stage.
         if (this.getState().isAlive()) {
             // Iterate for newly added children and create them.
-            newDefinition.getPlanItems().stream().filter(this::doesNotHaveChild).forEach(this::instantiateChild);
+            newDefinition.getPlanItems().stream().filter(this::doesNotHaveChild).forEach(this::instantiateChildFromMigration);
             invokeCreateOnNullItems("migrating stage definition");
         }
     }
 
-    private void migrateChild(PlanItem<?> child, boolean skipLogic) {
+    private List<PlanItem<?>> getAllDroppedChildren() {
+        List<PlanItem<?>> movedChildren = new ArrayList<>();
+        Stage<?> ancestor = this;
+        while (ancestor != null) {
+            List<PlanItem<?>> stageMovedChildren = ancestor.planItems.stream().filter(item -> DefinitionElement.findDefinition(item.getItemDefinition(), getDefinition().getItemDefinitions()) == null).toList();
+            movedChildren.addAll(stageMovedChildren);
+            ancestor = ancestor.getStage();
+        }
+        return movedChildren;
+    }
+
+    private void migrateChild(PlanItem child, boolean skipLogic) {
+//        System.out.println("- " + this + ": MIGRATING CHILD " + child);
         ItemDefinition childDefinition = child.getItemDefinition();
         ItemDefinition newDefinition = DefinitionElement.findDefinition(childDefinition, getDefinition().getItemDefinitions());
         if (newDefinition != null) {
             migrateChild(child, newDefinition, skipLogic);
         } else {
-            dropChild(child);
+            ItemDefinition id = getDefinition().getCaseDefinition().findElement(e -> e instanceof ItemDefinition && e.sameIdentifiers(childDefinition));
+            if (id == null) {
+                addDebugInfo(() -> this + ": dropping " + child + " upon case migration");
+//                System.out.println(this + ": dropping " + child + " upon case migration");
+                dropChild(child);
+            } else if (!id.getPlanItemDefinition().sameType(childDefinition.getPlanItemDefinition())) {
+                addDebugInfo(() -> this + ": dropping " + child + " upon case migration, as the new item has a different type " + childDefinition.getPlanItemDefinition().getType());
+//                System.out.println(this + ": dropping " + child + " upon case migration, as the new item has a different type " + childDefinition.getPlanItemDefinition().getType());
+                dropChild(child);
+            } else {
+                migrateChild(child, id, skipLogic);
+                if (skipLogic) {
+                    return;
+                }
+                addDebugInfo(() -> this + ": moving " + child + " upon case migration, as it is has become part of a different stage");
+//                System.out.println(this + ": moving " + child + " upon case migration, as it is has become part of a different stage");
+                addEvent(new PlanItemMoving(child));
+            }
+        }
+    }
+
+    private void adoptParentItems() {
+        Stage<?> parent = this.getStage();
+        if (parent != null) {
+            List<PlanItem<?>> droppedParentChildren = parent.getAllDroppedChildren();
+
+//            System.out.println(this + " Found " + droppedParentChildren.size() + " dropped parent children");
+            droppedParentChildren.forEach(item -> {
+                ItemDefinition newChildDefinition = DefinitionElement.findDefinition(item.getItemDefinition(), getDefinition().getItemDefinitions());
+                if (newChildDefinition != null && newChildDefinition.getPlanItemDefinition().samePlanItemDefinitionDefinition(item.getItemDefinition().getPlanItemDefinition())) {
+//                    System.out.println("Found a parent dropped child!!!");
+                    addDebugInfo(() -> this + ": adopting plan item " + item + " upon case migration (from " + item.getStage() + " to " + this + ")");
+                    addEvent(new PlanItemMoved(this, item));
+                }
+            });
+//            System.out.println("Finished adopting parent children in " + this + "\n");
         }
     }
 
@@ -419,6 +485,13 @@ public class Stage<T extends StageDefinition> extends TaskStage<T> {
             return;
         }
         child.lostDefinition();
+    }
+
+    public Stage<?> updateState(PlanItemMoved event, PlanItem<?> child) {
+        this.planItems.remove(child);
+        Stage<?> newParent = getCaseInstance().getPlanItemById(event.newStageId);
+        newParent.planItems.add(child);
+        return newParent;
     }
 
     @Override
