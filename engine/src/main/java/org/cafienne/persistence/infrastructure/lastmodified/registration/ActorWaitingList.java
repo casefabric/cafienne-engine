@@ -39,17 +39,17 @@ public class ActorWaitingList {
         return p;
     }
 
-    public Promise<String> waitForLastModified(ActorLastModified notBefore) {
-        log("Executing query after response for " + notBefore);
-        Instant eventMoment = notBefore.lastModified;
+    public Promise<String> waitForLastModified(ActorLastModified waitForLastModified) {
+        log("Executing query after response for " + waitForLastModified);
+        Instant waitForLastModifiedMoment = waitForLastModified.lastModified;
 
         Promise<String> p = Futures.promise();
-        if (eventMoment.isBefore(startupMoment)) {
+        if (waitForLastModifiedMoment.isBefore(startupMoment)) {
             p.success("That's quite an old timestamp; we're not gonna wait for it; we started at " + startupMoment);
-        } else if (lastUpdate != null && !eventMoment.isAfter(lastUpdate.lastModified)) {
+        } else if (lastUpdate != null && waitForLastModifiedMoment.isBefore(lastUpdate.lastModified)) {
             p.success("Your case last modified arrived already!");
         } else {
-            addWaiter(new Waiter(this, eventMoment, p));
+            addWaiter(new Waiter(this, waitForLastModifiedMoment, p));
         }
         return p;
     }

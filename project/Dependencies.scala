@@ -79,6 +79,12 @@ object Dependencies {
     // Expression support (SPEL and JSONPath)
     , "com.jayway.jsonpath"     %  "json-path"                            % "2.9.0" // 2.7.0 is not compatible in expressions
     , "org.springframework"     %  "spring-expression"                    % "6.2.4"
+    // Metrics support
+    , "org.aspectj" % "aspectjrt" % "1.9.24" % "runtime"
+    , "org.aspectj" % "aspectjweaver" % "1.9.24" % "runtime"
+    , "com.github.pjfanning" %% "micrometer-pekko" % "0.18.0"
+    , "io.micrometer" % "micrometer-registry-prometheus" % "1.15.4"
+    , "io.prometheus" % "prometheus-metrics-core" % "1.4.1",
   )
 
   //Extended engine deps are bundled with service

@@ -28,8 +28,9 @@ class Waiter {
     }
 
     void tooLate() {
-        list.log("Waited " + (Instant.now().toEpochMilli() - createdAt.toEpochMilli()) + " milliseconds, but still no update happened");
-        promise.failure(new TimeoutException("Waited too long"));
+        long waitedFor = Instant.now().toEpochMilli() - createdAt.toEpochMilli();
+        list.log("Waited " + waitedFor + " milliseconds, but still no update happened");
+        promise.failure(new TimeoutException("Timeout after " + waitedFor + " milliseconds for updates on actor: " + this.list.actorId));
     }
 
     void stopWaiting() {

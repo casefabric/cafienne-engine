@@ -17,7 +17,11 @@
 
 package org.cafienne.service
 
+import com.github.pjfanning.micrometer.pekko.PekkoMetricRegistry
 import com.typesafe.scalalogging.LazyLogging
+import io.micrometer.core.instrument.Clock
+import io.micrometer.prometheusmetrics.{PrometheusConfig, PrometheusMeterRegistry}
+import io.prometheus.metrics.model.registry.PrometheusRegistry
 import org.cafienne.infrastructure.config.persistence.eventdb.JournalTableNameConfigMigrator
 import org.cafienne.infrastructure.config.util.SystemConfig
 import org.cafienne.service.http.CaseEngineHttpServer
@@ -30,6 +34,9 @@ import scala.util.{Failure, Success}
 object Main extends App with LazyLogging {
   try {
     val config = new SystemConfig(SystemConfig.load(), new JournalTableNameConfigMigrator)
+
+//    val prometheusMeterRegistry = new PrometheusMeterRegistry(PrometheusConfig.DEFAULT, PrometheusRegistry.defaultRegistry, Clock.SYSTEM)
+//    PekkoMetricRegistry.setRegistry(prometheusMeterRegistry)
 
     // Create the Case System
     val caseSystem: CaseSystem = CaseSystem(config)

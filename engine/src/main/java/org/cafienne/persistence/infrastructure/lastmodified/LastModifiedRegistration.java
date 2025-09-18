@@ -20,6 +20,7 @@ package org.cafienne.persistence.infrastructure.lastmodified;
 import org.cafienne.actormodel.message.event.ActorModified;
 import org.cafienne.actormodel.message.response.ActorLastModified;
 import org.cafienne.persistence.infrastructure.lastmodified.registration.ActorWaitingList;
+import org.cafienne.util.DeadLockThreadLogger$;
 import scala.concurrent.Promise;
 
 import java.time.Duration;
@@ -36,7 +37,8 @@ public class LastModifiedRegistration {
     public final static Instant startupMoment = Instant.now();
     public final String name;
     private final Map<String, ActorWaitingList> actorLists = new HashMap<>();
-    public final static long MONITOR_PERIOD = 10 * 60 * 1000; // Every 10 minutes
+    //TODO BEWARE changed the monitor period in order to get the issue faster. Put back to 10 after testing
+    public final static long MONITOR_PERIOD = 1 * 60 * 1000; // Every 10 minutes
     public final static Duration WAIT_TIMEOUT = Duration.ofMinutes(2);
 
     public LastModifiedRegistration(String name) {
@@ -46,16 +48,29 @@ public class LastModifiedRegistration {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                List<ActorWaitingList> lists = actorLists.values().stream().toList();
-                if (lists.isEmpty()) {
-                    return;
-                }
-                Instant now = Instant.now();
-                lists.forEach(list -> list.cleanup(now));
+                try {
+                    List<ActorWaitingList> lists = actorLists.values().stream().toList();
+                    if (lists.isEmpty()) {
+                        return;
+                    }
+                    Instant now = Instant.now();
+                    lists.forEach(list -> list.cleanup(now));
 //                System.out.println("Cleaning " + name +" remained with " + actorLists.size() +" elements");
+                } catch (Exception e) {
+                    System.err.println("Error while cleaning up last-modified actor lists: " + e.getMessage() + " cause: " + e.getCause().getMessage());
+                    throw e;
+                }
+            }
+        };
+        TimerTask deadlockChecker = new TimerTask() {
+            @Override
+            public void run() {
+                DeadLockThreadLogger$.MODULE$.reportDeadLocks();
+
             }
         };
         timer.schedule(task, MONITOR_PERIOD, MONITOR_PERIOD);  // Start only after 10 minutes
+        timer.schedule(deadlockChecker, 10000, 10000);  // Start only after 10 minutes
     }
 
     private ActorWaitingList getWaitingList(String actorId) {
