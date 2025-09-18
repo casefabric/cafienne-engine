@@ -3,7 +3,6 @@ package org.cafienne.persistence.infrastructure.lastmodified.registration;
 import scala.concurrent.Promise;
 
 import java.time.Instant;
-import java.util.concurrent.TimeoutException;
 import java.util.function.Function;
 
 class Waiter {
@@ -14,7 +13,7 @@ class Waiter {
 
     Waiter(ActorWaitingList list, Instant notBefore, Promise<String> promise) {
         // We have to do the matching with "not" statement, because lastModified and notBefore may equal as well.
-        this(list, promise, update -> update.lastModified.equals(notBefore) || update.lastModified.isAfter(notBefore));
+        this(list, promise, actorUpdatedEvent -> !notBefore.isAfter(actorUpdatedEvent.lastModified));
     }
 
     Waiter(ActorWaitingList list, String correlationId, Promise<String> promise) {
@@ -28,17 +27,18 @@ class Waiter {
     }
 
     void tooLate() {
-        list.log("Waited " + (Instant.now().toEpochMilli() - createdAt.toEpochMilli()) + " milliseconds, but still no update happened");
-        promise.failure(new TimeoutException("Waited too long"));
+        long waitedFor = Instant.now().toEpochMilli() - createdAt.toEpochMilli();
+        list.logTooLate(waitedFor);
+        promise.success("Cleaning Waiter for updates on actor: " + this.list.actorId + " after " + waitedFor + " milliseconds.");
     }
 
     void stopWaiting() {
-        list.log("Waited " + (Instant.now().toEpochMilli() - createdAt.toEpochMilli()) + " milliseconds");
+        list.log(() -> "Waited " + (Instant.now().toEpochMilli() - createdAt.toEpochMilli()) + " milliseconds");
         if (!promise.isCompleted()) {
             // Only invoke the promise if no one has done it yet
             promise.success("Your case last modified arrived just now");
         } else {
-            list.log("AFTER STOP WAITING, BUT ALREADY COMPLETED?!");
+            list.log(() -> "AFTER STOP WAITING, BUT ALREADY COMPLETED?!");
         }
     }
 

@@ -22,9 +22,11 @@ import org.cafienne.actormodel.message.response.ActorLastModified;
 import org.cafienne.persistence.infrastructure.lastmodified.registration.ActorWaitingList;
 import scala.concurrent.Promise;
 
-import java.time.Duration;
 import java.time.Instant;
-import java.util.*;
+import java.util.Collection;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Registration of the last modified timestamp per case instance. Can be used by writers to and query actors to get notified about CaseLastModified.
@@ -34,10 +36,10 @@ public class LastModifiedRegistration {
      * Global startup moment of the whole JVM for last modified requests trying to be jumpy.
      */
     public final static Instant startupMoment = Instant.now();
+    public Instant previousCleaningRound = startupMoment;
     public final String name;
-    private final Map<String, ActorWaitingList> actorLists = new HashMap<>();
+    private final ConcurrentHashMap<String, ActorWaitingList> actorLists = new ConcurrentHashMap<>();
     public final static long MONITOR_PERIOD = 10 * 60 * 1000; // Every 10 minutes
-    public final static Duration WAIT_TIMEOUT = Duration.ofMinutes(2);
 
     public LastModifiedRegistration(String name) {
         this.name = name;
@@ -46,12 +48,16 @@ public class LastModifiedRegistration {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                List<ActorWaitingList> lists = actorLists.values().stream().toList();
+                Collection<ActorWaitingList> lists = actorLists.values();
                 if (lists.isEmpty()) {
                     return;
                 }
                 Instant now = Instant.now();
-                lists.forEach(list -> list.cleanup(now));
+                // Tell all actor lists that they should remove all waiters created _before_ the previous cleaning round
+                // This will always avoid that "too recent" actor waiters get removed.
+                // It only removes waiters that have waited for more than 10 minutes and are still waiting.
+                lists.forEach(list -> list.cleanup(previousCleaningRound));
+                previousCleaningRound = now;
 //                System.out.println("Cleaning " + name +" remained with " + actorLists.size() +" elements");
             }
         };
@@ -59,20 +65,11 @@ public class LastModifiedRegistration {
     }
 
     private ActorWaitingList getWaitingList(String actorId) {
-        synchronized (actorLists) {
-            ActorWaitingList list = actorLists.get(actorId);
-            if (list == null) {
-                list = new ActorWaitingList(this, actorId);
-                actorLists.put(actorId, list);
-            }
-            return list;
-        }
+        return actorLists.computeIfAbsent(actorId, id -> new ActorWaitingList(this, actorId));
     }
 
     public void removeWaitingList(String actorId) {
-        synchronized (actorLists) {
-            actorLists.remove(actorId);
-        }
+        actorLists.remove(actorId);
     }
 
     public Promise<String> waitFor(ActorLastModified notBefore) {
