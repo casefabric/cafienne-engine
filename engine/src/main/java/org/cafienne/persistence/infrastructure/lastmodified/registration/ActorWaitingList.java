@@ -29,7 +29,7 @@ public class ActorWaitingList {
         this.actorId = actorId;
     }
 
-    public Promise<String> waitForCorrelationId(String correlationId) {
+    public synchronized Promise<String> waitForCorrelationId(String correlationId) {
         Promise<String> p = Futures.promise();
         if (updates.stream().anyMatch(update -> update.correlationId.equals(correlationId))) {
             p.success("Your correlation id arrived already!");
@@ -39,7 +39,7 @@ public class ActorWaitingList {
         return p;
     }
 
-    public Promise<String> waitForLastModified(ActorLastModified notBefore) {
+    public synchronized Promise<String> waitForLastModified(ActorLastModified notBefore) {
         log("Executing query after response for " + notBefore);
         Instant eventMoment = notBefore.lastModified;
 
@@ -54,18 +54,14 @@ public class ActorWaitingList {
         return p;
     }
 
-    public void handle(ActorModified<?> event) {
+    public synchronized void handle(ActorModified<?> event) {
         ActorUpdate latest = new ActorUpdate(event);
-        synchronized (updates) {
-            lastUpdate = latest;
-            updates.add(latest);
-        }
-        synchronized (waiters) {
-            List<Waiter> matches = waiters.stream().filter(waiter -> waiter.matches(latest)).toList();
+        lastUpdate = latest;
+        updates.add(latest);
+        List<Waiter> matches = waiters.stream().filter(waiter -> waiter.matches(latest)).toList();
 //            System.out.println("Found " + matches.size() +" waiters on event " + event.lastModified);
-            waiters.removeAll(matches);
-            matches.forEach(Waiter::stopWaiting);
-        }
+        waiters.removeAll(matches);
+        matches.forEach(Waiter::stopWaiting);
     }
 
     public void cleanup(Instant now) {
@@ -77,26 +73,20 @@ public class ActorWaitingList {
         lastModifiedRegistration.removeWaitingList(actorId);
     }
 
-    private void checkListRemoval(Instant now) {
+    private synchronized void checkListRemoval(Instant now) {
 //        System.out.println("Cleaning registration for actor[" + actorId +"] has " + waiters.size() +" waiters and " + updates.size() +" updates");
         List<Waiter> tooLate = waiters.stream().filter(waiter -> waiter.createdAt.plus(WAIT_TIMEOUT).isBefore(now)).toList();
-        synchronized (waiters) {
-            waiters.removeAll(tooLate);
-        }
+        waiters.removeAll(tooLate);
         tooLate.forEach(Waiter::tooLate);
         List<ActorUpdate> tooLongAgo = updates.stream().filter(update -> update.receivedAt.plus(WAIT_TIMEOUT).isBefore(now)).toList();
-        synchronized (updates) {
-            updates.removeAll(tooLongAgo);
-        }
+        updates.removeAll(tooLongAgo);
         if (updates.isEmpty() && waiters.isEmpty()) {
             stop();
         }
     }
 
     private void addWaiter(Waiter waiter) {
-        synchronized (waiters) {
-            waiters.add(waiter);
-        }
+        waiters.add(waiter);
     }
 
     void log(String msg) {

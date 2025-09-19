@@ -58,7 +58,7 @@ public class LastModifiedRegistration {
         timer.schedule(task, MONITOR_PERIOD, MONITOR_PERIOD);  // Start only after 10 minutes
     }
 
-    private ActorWaitingList getWaitingList(String actorId) {
+    private synchronized ActorWaitingList getWaitingList(String actorId) {
         synchronized (actorLists) {
             ActorWaitingList list = actorLists.get(actorId);
             if (list == null) {
