@@ -37,6 +37,10 @@ public class StageAPI extends PlanItemAPI<Stage<?>> {
             if (itemDefinition.getPlanItemControl().getRepetitionRule().isDefault()) {
                 itemAccessorsByName.put(itemDefinition.getName(), childContext);
             } else {
+                // Sometimes during migration a task is no longer repeatable, and then
+                if (itemAccessorsByName.get(itemDefinition.getName()) instanceof TaskAPI) {
+                    itemAccessorsByName.remove(itemDefinition.getName());
+                }
                 List list = (List) itemAccessorsByName.getOrDefault(itemDefinition.getName(), new ArrayList<PlanItemAPI<?>>());
                 list.add(childContext);
                 itemAccessorsByName.put(itemDefinition.getName(), list);
