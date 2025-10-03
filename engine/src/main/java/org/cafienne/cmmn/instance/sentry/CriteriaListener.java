@@ -87,13 +87,21 @@ public abstract class CriteriaListener<T extends CriterionDefinition, C extends 
         criterion.release();
     }
 
-    public abstract void satisfy(Criterion<?> criterion);
+    void satisfied(Criterion<?> criterion) {
+        if (isConnected) {
+            satisfy(criterion);
+        } else {
+            addDebugInfo(() -> "Skip handling a satisified " + criterion.getClass().getSimpleName() + " in the " + getClass().getSimpleName() + " of " + item + ". The " + getClass().getSimpleName() + " is already disconnected");
+        }
+    }
+
+    protected abstract void satisfy(Criterion<?> criterion);
 
     protected abstract void migrateCriteria(ItemDefinition newItemDefinition, boolean skipLogic);
 
     protected void migrateCriteria(Collection<T> newDefinitions, Collection<T> existingDefinitions, boolean skipLogic) {
         if (isDisconnected()) {
-            addDebugInfo(() -> "Skipping " + logDescription + " criteria migration of " + item + " as they are disconnected");
+            addDebugInfo(() -> "Skipping " + logDescription + " migration of " + item + " as they are disconnected");
             return;
         }
         addDebugInfo(() -> {
