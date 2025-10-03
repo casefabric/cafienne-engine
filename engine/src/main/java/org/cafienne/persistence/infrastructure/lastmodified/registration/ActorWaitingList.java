@@ -1,6 +1,7 @@
 package org.cafienne.persistence.infrastructure.lastmodified.registration;
 
 import org.apache.pekko.dispatch.Futures;
+import org.cafienne.actormodel.debug.DebugInfoAppender;
 import org.cafienne.actormodel.message.event.ActorModified;
 import org.cafienne.actormodel.message.response.ActorLastModified;
 import org.cafienne.persistence.infrastructure.lastmodified.LastModifiedRegistration;
@@ -9,20 +10,18 @@ import org.slf4j.LoggerFactory;
 import scala.concurrent.Promise;
 
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
-
-import static org.cafienne.persistence.infrastructure.lastmodified.LastModifiedRegistration.WAIT_TIMEOUT;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.stream.Collectors;
 
 public class ActorWaitingList {
     private final static Logger logger = LoggerFactory.getLogger(ActorWaitingList.class);
 
     private final LastModifiedRegistration lastModifiedRegistration;
     public final String actorId;
-    private static final Instant startupMoment = LastModifiedRegistration.startupMoment;
-    private final List<Waiter> waiters = new ArrayList<>();
-    private final List<ActorUpdate> updates = new ArrayList<>();
-    private ActorUpdate lastUpdate;
+    private final ConcurrentLinkedQueue<Waiter> waiters = new ConcurrentLinkedQueue<>();
+    private final ConcurrentLinkedQueue<ActorUpdate> updates = new ConcurrentLinkedQueue<>();
+    private ActorUpdate lastProcessedActorUpdate;
 
     public ActorWaitingList(LastModifiedRegistration lastModifiedRegistration, String actorId) {
         this.lastModifiedRegistration = lastModifiedRegistration;
@@ -40,36 +39,32 @@ public class ActorWaitingList {
     }
 
     public Promise<String> waitForLastModified(ActorLastModified notBefore) {
-        log("Executing query after response for " + notBefore);
-        Instant eventMoment = notBefore.lastModified;
+        log(() -> "Executing query after response for " + notBefore);
+        Instant awaitingEventMoment = notBefore.lastModified;
 
         Promise<String> p = Futures.promise();
-        if (eventMoment.isBefore(startupMoment)) {
-            p.success("That's quite an old timestamp; we're not gonna wait for it; we started at " + startupMoment);
-        } else if (lastUpdate != null && !eventMoment.isAfter(lastUpdate.lastModified)) {
+        if (awaitingEventMoment.isBefore(lastModifiedRegistration.previousCleaningRound)) {
+            p.success("That's quite an old timestamp; we're not gonna wait for it; we started at " + lastModifiedRegistration.previousCleaningRound);
+        } else if (lastProcessedActorUpdate != null && !awaitingEventMoment.isAfter(lastProcessedActorUpdate.lastModified)) {
             p.success("Your case last modified arrived already!");
         } else {
-            addWaiter(new Waiter(this, eventMoment, p));
+            addWaiter(new Waiter(this, awaitingEventMoment, p));
         }
         return p;
     }
 
     public void handle(ActorModified<?> event) {
         ActorUpdate latest = new ActorUpdate(event);
-        synchronized (updates) {
-            lastUpdate = latest;
-            updates.add(latest);
-        }
-        synchronized (waiters) {
-            List<Waiter> matches = waiters.stream().filter(waiter -> waiter.matches(latest)).toList();
+        lastProcessedActorUpdate = latest;
+        updates.add(latest);
+        List<Waiter> matches = waiters.stream().filter(waiter -> waiter.matches(latest)).toList();
 //            System.out.println("Found " + matches.size() +" waiters on event " + event.lastModified);
-            waiters.removeAll(matches);
-            matches.forEach(Waiter::stopWaiting);
-        }
+        waiters.removeAll(matches);
+        matches.forEach(Waiter::stopWaiting);
     }
 
-    public void cleanup(Instant now) {
-        checkListRemoval(now);
+    public void cleanup(Instant cleanUntil) {
+        checkListRemoval(cleanUntil);
     }
 
     private void stop() {
@@ -77,31 +72,35 @@ public class ActorWaitingList {
         lastModifiedRegistration.removeWaitingList(actorId);
     }
 
-    private void checkListRemoval(Instant now) {
+    private void checkListRemoval(Instant cleanUntil) {
 //        System.out.println("Cleaning registration for actor[" + actorId +"] has " + waiters.size() +" waiters and " + updates.size() +" updates");
-        List<Waiter> tooLate = waiters.stream().filter(waiter -> waiter.createdAt.plus(WAIT_TIMEOUT).isBefore(now)).toList();
-        synchronized (waiters) {
-            waiters.removeAll(tooLate);
-        }
+        List<Waiter> tooLate = waiters.stream().filter(waiter -> waiter.createdAt.isBefore(cleanUntil)).toList();
+        waiters.removeAll(tooLate);
         tooLate.forEach(Waiter::tooLate);
-        List<ActorUpdate> tooLongAgo = updates.stream().filter(update -> update.receivedAt.plus(WAIT_TIMEOUT).isBefore(now)).toList();
-        synchronized (updates) {
-            updates.removeAll(tooLongAgo);
-        }
+        List<ActorUpdate> tooLongAgo = updates.stream().filter(update -> update.receivedAt.isBefore(cleanUntil)).toList();
+        updates.removeAll(tooLongAgo);
         if (updates.isEmpty() && waiters.isEmpty()) {
             stop();
         }
     }
 
     private void addWaiter(Waiter waiter) {
-        synchronized (waiters) {
-            waiters.add(waiter);
+        waiters.add(waiter);
+    }
+
+    void logTooLate(long waitedFor) {
+        if (updates.isEmpty()) {
+            log(() -> "Cleaning a waiter for updates on actor: " + actorId + " after " + waitedFor + " milliseconds. No updates received from actor.");
+        } else {
+            String updateList = updates.stream().map(u -> "- " + u.lastModified).collect(Collectors.joining("\n"));
+            log(() -> "Cleaning a waiter that waited " + waitedFor + " milliseconds for updates on actor " + actorId + "; received " + updates.size() + " updates:\n" + updateList);
         }
     }
 
-    void log(String msg) {
+    void log(DebugInfoAppender messageProducer) {
         // TEMPORARY LOGGING CODE
         if (logger.isDebugEnabled()) {
+            String msg = String.valueOf(messageProducer.info());
             msg = lastModifiedRegistration.name + " in thread: " + Thread.currentThread().getName() + ": " + msg;
             logger.debug(msg);
         }
