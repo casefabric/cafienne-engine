@@ -21,6 +21,8 @@ import org.cafienne.actormodel.exception.InvalidCommandException;
 import org.cafienne.cmmn.actorapi.event.CaseAppliedPlatformUpdate;
 import org.cafienne.cmmn.actorapi.event.migration.PlanItemDropped;
 import org.cafienne.cmmn.actorapi.event.migration.PlanItemMigrated;
+import org.cafienne.cmmn.actorapi.event.migration.PlanItemMoved;
+import org.cafienne.cmmn.actorapi.event.migration.PlanItemMoving;
 import org.cafienne.cmmn.actorapi.event.plan.PlanItemTransitioned;
 import org.cafienne.cmmn.actorapi.event.plan.RepetitionRuleEvaluated;
 import org.cafienne.cmmn.actorapi.event.plan.RequiredRuleEvaluated;
@@ -46,7 +48,7 @@ public abstract class PlanItem<T extends PlanItemDefinitionDefinition> extends C
     /**
      * Stage to which this plan item belongs (null for CasePlan)
      */
-    private final Stage<?> stage;
+    private Stage<?> stage;
     /**
      * The actual plan item definition (or discretionary item definition, or case plan definition).
      */
@@ -81,6 +83,10 @@ public abstract class PlanItem<T extends PlanItemDefinitionDefinition> extends C
     private Transition lastTransition = Transition.None;
     private State state = State.Null;
     private State historyState = State.Null;
+    /**
+     * Indication whether the item is currently in "moving" state due to a migration
+     */
+    private boolean moving = false;
 
     protected PlanItem(String id, int index, ItemDefinition itemDefinition, T definition, Stage<?> parent, StateMachine stateMachine) {
         this(id, index, itemDefinition, definition, parent.getCaseInstance(), parent, stateMachine);
@@ -240,7 +246,7 @@ public abstract class PlanItem<T extends PlanItemDefinitionDefinition> extends C
         }
     }
 
-    private void setItemDefinition(ItemDefinition newItemDefinition) {
+    protected void setItemDefinition(ItemDefinition newItemDefinition) {
         this.previousItemDefinition = this.itemDefinition;
         this.itemDefinition = newItemDefinition;
     }
@@ -569,6 +575,7 @@ public abstract class PlanItem<T extends PlanItemDefinitionDefinition> extends C
 
     protected void migrateItemDefinition(ItemDefinition newItemDefinition, T newDefinition, boolean skipLogic) {
         addDebugInfo(() -> "=== Migrating definition of " + this.toDescription());
+//        System.out.println("=== Migrating definition of " + this.toDescription());
         super.migrateDefinition(newDefinition, skipLogic);
         setItemDefinition(newItemDefinition);
         // Also update the path during migration
@@ -605,7 +612,6 @@ public abstract class PlanItem<T extends PlanItemDefinitionDefinition> extends C
     }
 
     protected void lostDefinition() {
-        // Scenario not yet supported... What to do with existing items that cannot be found in the new stage definition?
         addDebugInfo(() -> "Dropping plan item " + getPath() + " upon case migration, as a new definition is not found for the plan item.");
         addEvent(new PlanItemDropped(this));
     }
@@ -614,5 +620,27 @@ public abstract class PlanItem<T extends PlanItemDefinitionDefinition> extends C
         stopListening();
         getStage().removeDroppedPlanItem(this);
         getCaseInstance().removeDroppedPlanItem(this);
+    }
+
+    /**
+     * Returns true if the item is currently moving because of a migration, and is not yet connected to the sentry network.
+     */
+    public boolean isMoving() {
+        return moving;
+    }
+
+    public void updateState(PlanItemMoving event) {
+        // Set moving flag, so that new criteria (from other plan items) will not connect to this item
+        moving = true;
+        // Disconnect from SentryNetwork
+        getCaseInstance().getSentryNetwork().disconnect(this);
+    }
+
+    public void updateState(PlanItemMoved event) {
+        this.stage = getStage().updateState(event, this);
+        // Switch off the moving flag
+        moving = false;
+        // Reconnect to the sentry network, to trigger any new on parts
+        getCaseInstance().getSentryNetwork().connect(this);
     }
 }

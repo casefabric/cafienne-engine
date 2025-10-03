@@ -70,6 +70,10 @@ public interface ItemDefinition extends DefinitionElement {
         }
     }
 
+    default boolean matches(ItemDefinition other) {
+        return this.sameIdentifiers(other) && this.getPlanItemDefinition().sameType(other.getPlanItemDefinition());
+    }
+
     default boolean isDiscretionary() {
         return false;
     }

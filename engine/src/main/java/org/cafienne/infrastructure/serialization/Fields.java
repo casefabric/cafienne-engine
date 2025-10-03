@@ -100,6 +100,7 @@ public enum Fields {
     type,
     index,
     stageId,
+    newStageId,
     milestoneId,
     eventId,
     currentState,

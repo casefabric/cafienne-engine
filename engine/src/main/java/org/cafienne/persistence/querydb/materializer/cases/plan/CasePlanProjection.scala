@@ -19,7 +19,7 @@ package org.cafienne.persistence.querydb.materializer.cases.plan
 
 import com.typesafe.scalalogging.LazyLogging
 import org.cafienne.cmmn.actorapi.event.CaseModified
-import org.cafienne.cmmn.actorapi.event.migration.{PlanItemDropped, PlanItemMigrated}
+import org.cafienne.cmmn.actorapi.event.migration.{PlanItemDropped, PlanItemMigrated, PlanItemMoved, PlanItemMoving}
 import org.cafienne.cmmn.actorapi.event.plan._
 import org.cafienne.humantask.actorapi.event._
 import org.cafienne.humantask.actorapi.event.migration.{HumanTaskDropped, HumanTaskMigrated}
@@ -45,9 +45,14 @@ class CasePlanProjection(override val batch: CaseEventBatch) extends CaseEventMa
     event match {
       case dropped: PlanItemDropped =>
         dBTransaction.deletePlanItemRecord(dropped.getPlanItemId)
+      case dropped: PlanItemMoving =>
+        dBTransaction.deletePlanItemRecord(dropped.getPlanItemId)
       case _ =>
         event match {
           case evt: PlanItemCreated =>
+            val planItem = PlanItemMerger.merge(evt)
+            planItems.put(planItem.id, planItem)
+          case evt: PlanItemMoved =>
             val planItem = PlanItemMerger.merge(evt)
             planItems.put(planItem.id, planItem)
           case other: CasePlanEvent => getPlanItem(event.getPlanItemId).map {

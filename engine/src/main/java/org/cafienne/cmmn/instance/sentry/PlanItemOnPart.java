@@ -73,7 +73,9 @@ public class PlanItemOnPart extends OnPart<PlanItemOnPartDefinition, PlanItemTra
     void connectToCase() {
         // Try to connect with all plan items in the case
         for (PlanItem<?> item : new ArrayList<>(getCaseInstance().getPlanItems())) {
-            establishPotentialConnection(item);
+            if (! item.isMoving()) { // Only connect if the item is not moving currently
+                establishPotentialConnection(item);
+            }
         }
     }
 
