@@ -118,11 +118,6 @@ public abstract class BaseModelCommand<T extends ModelActor, U extends UserIdent
         this.response = response;
     }
 
-    @Override
-    public boolean hasResponse() {
-        return response != null;
-    }
-
     protected boolean hasNoResponse() {
         return response == null;
     }

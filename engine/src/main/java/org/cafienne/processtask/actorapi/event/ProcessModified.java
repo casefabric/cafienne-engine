@@ -17,7 +17,7 @@
 
 package org.cafienne.processtask.actorapi.event;
 
-import org.cafienne.actormodel.message.IncomingActorMessage;
+import org.cafienne.actormodel.message.command.ModelCommand;
 import org.cafienne.actormodel.message.event.ActorModified;
 import org.cafienne.infrastructure.serialization.Manifest;
 import org.cafienne.json.ValueMap;
@@ -31,7 +31,7 @@ import org.cafienne.processtask.instance.ProcessTaskActor;
 @Manifest
 public class ProcessModified extends ActorModified<ProcessTaskActor> implements ProcessEvent {
 
-    public ProcessModified(ProcessTaskActor actor, IncomingActorMessage source) {
+    public ProcessModified(ProcessTaskActor actor, ModelCommand source) {
         super(actor, source);
     }
 

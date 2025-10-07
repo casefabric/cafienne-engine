@@ -22,7 +22,6 @@ import org.apache.pekko.persistence.SnapshotProtocol;
 import org.cafienne.actormodel.communication.CaseSystemCommunicationMessage;
 import org.cafienne.actormodel.communication.request.command.RequestModelActor;
 import org.cafienne.actormodel.exception.InvalidCommandException;
-import org.cafienne.actormodel.message.IncomingActorMessage;
 import org.cafienne.actormodel.message.command.ModelCommand;
 import org.cafienne.actormodel.message.event.ModelEvent;
 import org.cafienne.actormodel.message.response.ActorChokedFailure;
@@ -65,9 +64,10 @@ class Reception {
 
     void handleMessage(Object message) {
         switch (message) {
-            case IncomingActorMessage visitor -> {
-                // Responses are always allowed, as they come only when we have requested something
-                if (visitor.isResponse() || canPass(visitor.asCommand())) {
+            case ModelCommand visitor -> {
+                // ModelResponse is no longer send directly back to a ModelActor, but always wrapped in a CaseSystemCommunicationCommand.
+                //  Therefore, we only have to check on commands
+                if (canPass(visitor)) {
                     backOffice.performTransaction(visitor);
                 }
             }
@@ -134,27 +134,23 @@ class Reception {
         return isBroken;
     }
 
-    private boolean informAboutRecoveryFailure(IncomingActorMessage msg) {
-        actor.getLogger().warn("Aborting recovery of " + actor + " upon request of type " + msg.getClass().getSimpleName() + " from user " + msg.getUser().id() + ". " + recoveryFailureInformation);
-        if (msg.isCommand()) {
-            if (msg.isBootstrapMessage()) {
-                // Trying to do e.g. StartCase in e.g. a TenantActor
-                handleAlreadyCreated(msg);
-            } else if (isInStorageProcess) {
-                actor.reply(new ActorInStorage(msg.asCommand(), actorType), actor.sender());
-            } else {
-                String error = actor + " cannot handle message '" + msg.getClass().getSimpleName() + "' because it has not recovered properly. Check the server logs for more details.";
-                actor.reply(new ActorChokedFailure(msg.asCommand(), new InvalidCommandException(error)), actor.sender());
-            }
-            actor.takeABreak("Removing ModelActor[" + actor.getId() + "] because of recovery failure upon unexpected incoming message of type " + msg.getClass().getSimpleName());
+    private boolean informAboutRecoveryFailure(ModelCommand msg) {
+        actor.getLogger().warn("Aborting recovery of {} upon request of type {} from user {}. {}", actor, msg.getClass().getSimpleName(), msg.getUser().id(), recoveryFailureInformation);
+        if (msg.isBootstrapMessage()) {
+            // Trying to do e.g. StartCase in e.g. a TenantActor
+            handleAlreadyCreated(msg);
+        } else if (isInStorageProcess) {
+            actor.reply(new ActorInStorage(msg, actorType), actor.sender());
+        } else {
+            String error = actor + " cannot handle message '" + msg.getClass().getSimpleName() + "' because it has not recovered properly. Check the server logs for more details.";
+            actor.reply(new ActorChokedFailure(msg, new InvalidCommandException(error)), actor.sender());
         }
+        actor.takeABreak("Removing ModelActor[" + actor.getId() + "] because of recovery failure upon unexpected incoming message of type " + msg.getClass().getSimpleName());
         return false;
     }
 
-    private void handleAlreadyCreated(IncomingActorMessage msg) {
-        if (msg.isCommand()) {
-            actor.reply(new ActorExistsFailure(msg.asCommand(), new IllegalArgumentException("Failure while handling message " + msg.getClass().getSimpleName() + ". Check the server logs for more details")), actor.sender());
-        }
+    private void handleAlreadyCreated(ModelCommand msg) {
+        actor.reply(new ActorExistsFailure(msg, new IllegalArgumentException("Failure while handling message " + msg.getClass().getSimpleName() + ". Check the server logs for more details")), actor.sender());
     }
 
     private void fail(ModelCommand command, String errorMessage) {

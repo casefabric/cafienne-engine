@@ -28,8 +28,8 @@ import org.cafienne.actormodel.communication.request.state.RemoteActorState;
 import org.cafienne.actormodel.debug.DebugInfoAppender;
 import org.cafienne.actormodel.exception.CommandException;
 import org.cafienne.actormodel.identity.UserIdentity;
-import org.cafienne.actormodel.message.IncomingActorMessage;
 import org.cafienne.actormodel.message.command.BootstrapMessage;
+import org.cafienne.actormodel.message.command.ModelCommand;
 import org.cafienne.actormodel.message.event.ActorModified;
 import org.cafienne.actormodel.message.event.ModelEvent;
 import org.cafienne.actormodel.message.response.CommandFailure;
@@ -413,7 +413,7 @@ public abstract class ModelActor extends AbstractPersistentActor {
      * resulting state changes are to be persisted in the event journal.
      * It can be used by e.g. ModelCommands and ModelResponses to add a {@link org.cafienne.actormodel.message.event.ActorModified} event.
      */
-    protected void completeMessageHandling(IncomingActorMessage source, ModelActorTransaction modelActorTransaction) {
+    protected void completeMessageHandling(ModelCommand source, ModelActorTransaction modelActorTransaction) {
         if (modelActorTransaction.needsCommitEvent()) {
             addCommitEvent(source);
         } else {
@@ -426,14 +426,14 @@ public abstract class ModelActor extends AbstractPersistentActor {
      * resulting state changes are to be persisted in the event journal.
      * It can be used by e.g. ModelCommands and ModelResponses to add a {@link org.cafienne.actormodel.message.event.ActorModified} event.
      */
-    protected void addCommitEvent(IncomingActorMessage message) {
+    protected void addCommitEvent(ModelCommand message) {
     }
 
     /**
      * This method is invoked if th source message completed without leading to additional events.
      * It can typically be used to send "NotModified" responses
      */
-    protected void notModified(IncomingActorMessage source) {
+    protected void notModified(ModelCommand source) {
     }
 
     public void register(RemoteActorState<?> remoteActorState) {

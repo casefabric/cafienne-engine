@@ -19,7 +19,7 @@ package org.cafienne.consentgroup;
 
 import org.cafienne.actormodel.ModelActor;
 import org.cafienne.actormodel.identity.ConsentGroupUser;
-import org.cafienne.actormodel.message.IncomingActorMessage;
+import org.cafienne.actormodel.message.command.ModelCommand;
 import org.cafienne.actormodel.message.event.ModelEvent;
 import org.cafienne.consentgroup.actorapi.ConsentGroupMember;
 import org.cafienne.consentgroup.actorapi.command.ConsentGroupCommand;
@@ -116,12 +116,12 @@ public class ConsentGroupActor extends ModelActor {
 
     public void replace(ReplaceConsentGroup command) {
         // Remove users that no longer exist
-        members.keySet().stream().filter(command::missingUserId).collect(Collectors.toList()).forEach(this::removeMember);
+        members.keySet().stream().filter(command::missingUserId).toList().forEach(this::removeMember);
         command.getMembers().foreach(this::setMember);
     }
 
     @Override
-    protected void addCommitEvent(IncomingActorMessage message) {
+    protected void addCommitEvent(ModelCommand message) {
         addEvent(new ConsentGroupModified(this, message));
     }
 }

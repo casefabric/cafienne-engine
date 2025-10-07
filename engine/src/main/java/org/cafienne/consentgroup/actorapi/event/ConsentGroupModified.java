@@ -17,7 +17,7 @@
 
 package org.cafienne.consentgroup.actorapi.event;
 
-import org.cafienne.actormodel.message.IncomingActorMessage;
+import org.cafienne.actormodel.message.command.ModelCommand;
 import org.cafienne.actormodel.message.event.ActorModified;
 import org.cafienne.consentgroup.ConsentGroupActor;
 import org.cafienne.infrastructure.serialization.Manifest;
@@ -30,7 +30,7 @@ import org.cafienne.json.ValueMap;
  */
 @Manifest
 public class ConsentGroupModified extends ActorModified<ConsentGroupActor> implements ConsentGroupEvent  {
-    public ConsentGroupModified(ConsentGroupActor actor, IncomingActorMessage source) {
+    public ConsentGroupModified(ConsentGroupActor actor, ModelCommand source) {
         super(actor, source);
     }
 

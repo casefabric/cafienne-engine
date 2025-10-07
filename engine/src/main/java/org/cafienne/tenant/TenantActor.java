@@ -19,7 +19,7 @@ package org.cafienne.tenant;
 
 import org.cafienne.actormodel.ModelActor;
 import org.cafienne.actormodel.identity.TenantUser;
-import org.cafienne.actormodel.message.IncomingActorMessage;
+import org.cafienne.actormodel.message.command.ModelCommand;
 import org.cafienne.actormodel.message.event.ModelEvent;
 import org.cafienne.cmmn.actorapi.command.platform.NewUserInformation;
 import org.cafienne.cmmn.actorapi.command.platform.PlatformUpdate;
@@ -192,7 +192,7 @@ public class TenantActor extends ModelActor {
     }
 
     @Override
-    protected void addCommitEvent(IncomingActorMessage message) {
+    protected void addCommitEvent(ModelCommand message) {
         addEvent(new TenantModified(this, message));
     }
 }

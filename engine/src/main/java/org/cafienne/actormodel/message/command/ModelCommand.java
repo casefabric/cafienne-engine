@@ -18,10 +18,10 @@
 package org.cafienne.actormodel.message.command;
 
 import org.cafienne.actormodel.ModelActor;
-import org.cafienne.actormodel.message.IncomingActorMessage;
+import org.cafienne.actormodel.message.UserMessage;
 import org.cafienne.actormodel.message.response.ModelResponse;
 
-public interface ModelCommand extends IncomingActorMessage {
+public interface ModelCommand extends UserMessage {
     /**
      * Return the actor handling this command. May return null if setActor() is not yet invoked.
      */
@@ -40,15 +40,5 @@ public interface ModelCommand extends IncomingActorMessage {
 
     default String getCommandDescription() {
         return getDescription();
-    }
-
-    @Override
-    default boolean isCommand() {
-        return true;
-    }
-
-    @Override
-    default ModelCommand asCommand() {
-        return this;
     }
 }

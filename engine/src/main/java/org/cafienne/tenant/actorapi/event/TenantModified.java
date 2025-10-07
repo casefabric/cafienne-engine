@@ -17,7 +17,7 @@
 
 package org.cafienne.tenant.actorapi.event;
 
-import org.cafienne.actormodel.message.IncomingActorMessage;
+import org.cafienne.actormodel.message.command.ModelCommand;
 import org.cafienne.actormodel.message.event.ActorModified;
 import org.cafienne.infrastructure.serialization.Manifest;
 import org.cafienne.json.ValueMap;
@@ -30,7 +30,7 @@ import org.cafienne.tenant.TenantActor;
  */
 @Manifest
 public class TenantModified extends ActorModified<TenantActor> implements TenantEvent {
-    public TenantModified(TenantActor actor, IncomingActorMessage source) {
+    public TenantModified(TenantActor actor, ModelCommand source) {
         super(actor, source);
     }
 
