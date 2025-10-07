@@ -55,21 +55,17 @@ public abstract class ModelActor extends AbstractPersistentActor {
      */
     private final String id;
     /**
-     * The monitor removes this actor from memory after it has been idle for a certain period
-     */
-    private final ModelActorMonitor monitor = new ModelActorMonitor(this);
-    /**
-     * Storage area for the ModelActor, keeps track of state changes
-     */
-    private final BackOffice backOffice = new BackOffice(this, monitor);
-    /**
      * Front door knows ModelActor state, and determines whether visitors can pass.
      */
-    private final Reception reception = new Reception(this, backOffice);
+    private final Reception reception = new Reception(this);
     /**
      * If ModelActors send messages to each other, the state of that is handled in the ModelActorCommunication class
      */
     private final ModelActorCommunication actorCommunication = new ModelActorCommunication(this);
+    /**
+     * Contains the context for the currently message being handled (whether from recovery or while being live)
+     */
+    private MessageTransaction transaction;
     /**
      * User context of current message
      */
@@ -114,7 +110,7 @@ public abstract class ModelActor extends AbstractPersistentActor {
 
     @Override
     public void postStop() throws Exception {
-        monitor.cancelTimer(); // Clear in mem scheduler to stop the actor after idle time
+        reception.close();
         super.postStop();
     }
 
@@ -182,18 +178,18 @@ public abstract class ModelActor extends AbstractPersistentActor {
      * Returns the user context of the current command, event or response
      */
     public UserIdentity getCurrentUser() {
-        return currentUser;
+        return transaction.getUser();
+    }
+
+    void setCurrentTransaction(MessageTransaction transaction) {
+        this.transaction = transaction;
     }
 
     /**
      * Returns the transaction that is currently being handled. Can only be invoked after recovery completed.
      */
-    public ModelActorTransaction getCurrentTransaction() {
-        return backOffice.getCurrentTransaction();
-    }
-
-    public final void setCurrentUser(UserIdentity user) {
-        this.currentUser = user;
+    public MessageTransaction getCurrentTransaction() {
+        return transaction;
     }
 
     /**
@@ -255,7 +251,7 @@ public abstract class ModelActor extends AbstractPersistentActor {
      * Adds an event to the current message handling context
      */
     public <E extends ModelEvent> E addEvent(E event) {
-        backOffice.storeEvent(event);
+        transaction.addEvent(event);
         return event;
     }
 
@@ -327,7 +323,7 @@ public abstract class ModelActor extends AbstractPersistentActor {
         // Inform the HealthMonitor
         HealthMonitor.writeJournal().hasFailed(cause);
         // Optionally send a reply (in the CommandHandler). If persistence fails, also sending a reply may fail, hence first logging the issue.
-        backOffice.handlePersistFailure(cause, event, seqNr);
+        getCurrentTransaction().handlePersistFailure(cause, event, seqNr);
         // Stop the actor
         context().stop(self());
     }
@@ -366,7 +362,7 @@ public abstract class ModelActor extends AbstractPersistentActor {
      * @param additionalInfo Additional objects to be logged. Typically, pointers to existing objects.
      */
     public void addDebugInfo(Logger logger, DebugInfoAppender appender, Object... additionalInfo) {
-        backOffice.addDebugInfo(logger, appender, additionalInfo);
+        getCurrentTransaction().addDebugInfo(logger, appender, additionalInfo);
     }
 
     /**
@@ -411,20 +407,7 @@ public abstract class ModelActor extends AbstractPersistentActor {
     /**
      * This method is invoked when handling of the source message completed and
      * resulting state changes are to be persisted in the event journal.
-     * It can be used by e.g. ModelCommands and ModelResponses to add a {@link org.cafienne.actormodel.message.event.ActorModified} event.
-     */
-    protected void completeMessageHandling(ModelCommand source, ModelActorTransaction modelActorTransaction) {
-        if (modelActorTransaction.needsCommitEvent()) {
-            addCommitEvent(source);
-        } else {
-            notModified(source);
-        }
-    }
-
-    /**
-     * This method is invoked when handling of the source message completed and
-     * resulting state changes are to be persisted in the event journal.
-     * It can be used by e.g. ModelCommands and ModelResponses to add a {@link org.cafienne.actormodel.message.event.ActorModified} event.
+     * It can be used by the actor to add an {@link org.cafienne.actormodel.message.event.ActorModified} event.
      */
     protected void addCommitEvent(ModelCommand message) {
     }

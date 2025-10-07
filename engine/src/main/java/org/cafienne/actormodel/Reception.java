@@ -17,8 +17,6 @@
 
 package org.cafienne.actormodel;
 
-import org.apache.pekko.persistence.JournalProtocol;
-import org.apache.pekko.persistence.SnapshotProtocol;
 import org.cafienne.actormodel.communication.CaseSystemCommunicationMessage;
 import org.cafienne.actormodel.communication.request.command.RequestModelActor;
 import org.cafienne.actormodel.exception.InvalidCommandException;
@@ -37,54 +35,39 @@ import org.cafienne.storage.actormodel.message.StorageEvent;
  * The reception knows whether the ModelActor is capable of handling the incoming traffic,
  * and when applicable creates a {@link ModelActorTransaction} to handle the message.
  */
-class Reception {
-    private boolean bootstrapPending = true;
+public class Reception {
     private final ModelActor actor;
+    private final ModelActorMonitor monitor;
+    private boolean bootstrapPending = true;
     private boolean isBroken = false;
     private String recoveryFailureInformation = "";
     private boolean isInStorageProcess = false;
     private ActorType actorType;
-    private final RecoveryRoom recoveryRoom;
-    private final BackOffice backOffice;
 
-    Reception(ModelActor actor, BackOffice backOffice) {
+    Reception(ModelActor actor) {
         this.actor = actor;
-        this.recoveryRoom = new RecoveryRoom(actor, this);
-        this.backOffice = backOffice;
+        this.monitor = new ModelActorMonitor(actor);
+        if (actor.getLogger().isDebugEnabled()) {
+            actor.getLogger().debug("Opening recovery of {}", actor);
+        }
+//        System.out.println("\n\n============ STARTING RECOVERY IN " + actor);
     }
 
-    void handleRecovery(Object msg) {
+    void handleRecovery(Object message) {
         if (isBroken()) {
             // Something has gone wrong with earlier recovery messages, no need to do further processing.
             return;
         }
-
-        recoveryRoom.handleRecovery(msg);
+        handleMessage(message);
     }
 
     void handleMessage(Object message) {
-        switch (message) {
-            case ModelCommand visitor -> {
-                // ModelResponse is no longer send directly back to a ModelActor, but always wrapped in a CaseSystemCommunicationCommand.
-                //  Therefore, we only have to check on commands
-                if (canPass(visitor)) {
-                    backOffice.performTransaction(visitor);
-                }
-            }
-            case DeserializationFailure failure -> {
-                actor.getLogger().error("%s encountered a system error in deserializing a message".formatted(actor), failure);
-                // These exceptions mean basically a bug while developing new commands/events/responses.
-                // Therefore also log to console.
-                failure.exception.printStackTrace(System.out);
-            }
-            case SnapshotProtocol.Message snapshotMsg -> actor.handleSnapshotProtocolMessage(snapshotMsg); // Weirdly enough snapshotting takes a different route than event persistence...
-            case JournalProtocol.Message journalMsg -> actor.handleJournalProtocolMessage(journalMsg);
-            case null -> actor.getLogger().warn("{} received a null message from {}", actor, actor.sender());
-            default -> actor.getLogger().warn("{} received a message it cannot handle, of type {}", actor, message.getClass().getName());
-        }
+        if (message instanceof ModelEvent event) new RecoveryTransaction(actor, this, event).perform();
+        else if (message instanceof ModelCommand command) new ModelActorTransaction(actor, this, monitor, command).perform();
+        else new SystemMessageTransaction(actor, this, message).perform();
     }
 
-    private boolean canPass(ModelCommand visitor) {
+    boolean canPass(ModelCommand visitor) {
         // Incoming visitors of type model command need the actor for processing and responding.
         visitor.setActor(actor);
 
@@ -159,6 +142,10 @@ class Reception {
 
     void reportDeserializationFailure(DeserializationFailure failure) {
         hideFrontDoor("" + failure);
+        actor.getLogger().error("%s encountered a system error in deserializing a message".formatted(actor), failure);
+        // These exceptions mean basically a bug while developing new commands/events/responses.
+        // Therefore also log to console.
+        failure.exception.printStackTrace(System.out);
     }
 
     void reportInvalidRecoveryEvent(ModelEvent event) {
@@ -183,5 +170,9 @@ class Reception {
 
     void open() {
         actor.informRecoveryCompletion();
+    }
+
+    void close() {
+        monitor.cancelTimer(); // Clear in mem scheduler to stop the actor after idle time
     }
 }
