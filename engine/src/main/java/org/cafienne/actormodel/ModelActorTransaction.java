@@ -26,7 +26,6 @@ import org.cafienne.actormodel.debug.DebugInfoAppender;
 import org.cafienne.actormodel.exception.AuthorizationException;
 import org.cafienne.actormodel.exception.CommandException;
 import org.cafienne.actormodel.exception.InvalidCommandException;
-import org.cafienne.actormodel.message.IncomingActorMessage;
 import org.cafienne.actormodel.message.command.ModelCommand;
 import org.cafienne.actormodel.message.event.CommitEvent;
 import org.cafienne.actormodel.message.event.DebugEvent;
@@ -43,7 +42,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * ModelActorTransaction captures all state changing events upon handling an {@link IncomingActorMessage}
+ * ModelActorTransaction captures all state changing events upon handling an {@link ModelCommand}
  * It also handles failures and sending responses to complete the lifecycle of the message.
  */
 public class ModelActorTransaction {
@@ -51,11 +50,11 @@ public class ModelActorTransaction {
     private final ActorRef sender;
     private final static int avgNumEvents = 30;
     private final List<ModelEvent> events = new ArrayList<>(avgNumEvents);
-    private final IncomingActorMessage message;
+    private final ModelCommand message;
     private ModelResponse response = null;
     private final TransactionLogger logger;
 
-    ModelActorTransaction(ModelActor actor, IncomingActorMessage message) {
+    ModelActorTransaction(ModelActor actor, ModelCommand message) {
         this.actor = actor;
         this.actor.setCurrentUser(message.getUser());
         this.sender = actor.sender();
@@ -67,19 +66,14 @@ public class ModelActorTransaction {
      * Return the message for which this transaction was created.
      * This can be used to e.g. read the user information or the correlation id.
      */
-    public IncomingActorMessage getMessage() {
+    public ModelCommand getMessage() {
         return message;
     }
 
     void perform() {
         actor.addDebugInfo(() -> "---------- User " + message.getUser().id() + " in " + actor + " receives message " + message.getDescription(), message.rawJson());
 
-        if (message.isCommand()) {
-            runCommand(message.asCommand());
-        } else if (message.isResponse()) {
-            // These should no longer be coming in, only commands.
-//            backOffice.handleResponse(message.asResponse());
-        }
+        runCommand(message);
 
         commit();
     }
@@ -240,9 +234,7 @@ public class ModelActorTransaction {
      * Hook to optionally tell the sender about persistence failures
      */
     void handlePersistFailure(Throwable cause, Object event, long seqNr) {
-        if (message.isCommand()) {
-            actor.reply(new EngineChokedFailure(message.asCommand(), new Exception("Handling the request resulted in a system failure. Check the server logs for more information.")), sender);
-        }
+        actor.reply(new EngineChokedFailure(message, new Exception("Handling the request resulted in a system failure. Check the server logs for more information.")), sender);
     }
 
     private boolean hasFailures() {

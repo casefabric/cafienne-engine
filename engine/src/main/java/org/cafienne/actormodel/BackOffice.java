@@ -18,13 +18,13 @@
 package org.cafienne.actormodel;
 
 import org.cafienne.actormodel.debug.DebugInfoAppender;
-import org.cafienne.actormodel.message.IncomingActorMessage;
+import org.cafienne.actormodel.message.command.ModelCommand;
 import org.cafienne.actormodel.message.event.ModelEvent;
 import org.cafienne.infrastructure.enginedeveloper.EngineDeveloperConsole;
 import org.slf4j.Logger;
 
 /**
- * Warehouse creates a new {@link ModelActorTransaction} for each {@link IncomingActorMessage}.
+ * Warehouse creates a new {@link ModelActorTransaction} for each {@link ModelCommand}.
  */
 class BackOffice {
     private final ModelActor actor;
@@ -41,7 +41,7 @@ class BackOffice {
         return currentTransaction;
     }
 
-    void performTransaction(IncomingActorMessage message) {
+    void performTransaction(ModelCommand message) {
         // Tell the actor monitor we're busy
         monitor.setBusy();
 

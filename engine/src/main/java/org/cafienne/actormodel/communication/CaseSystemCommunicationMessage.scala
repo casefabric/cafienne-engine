@@ -1,8 +1,8 @@
 package org.cafienne.actormodel.communication
 
-import org.cafienne.actormodel.message.IncomingActorMessage
+import org.cafienne.actormodel.message.UserMessage
 
-trait CaseSystemCommunicationMessage extends IncomingActorMessage {
+trait CaseSystemCommunicationMessage extends UserMessage {
 
   override def toString: String = getDescription
 }
