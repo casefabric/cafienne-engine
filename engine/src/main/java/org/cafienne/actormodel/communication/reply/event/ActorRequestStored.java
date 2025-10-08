@@ -2,9 +2,9 @@ package org.cafienne.actormodel.communication.reply.event;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import org.cafienne.actormodel.ModelActor;
+import org.cafienne.actormodel.communication.CaseSystemCommitEvent;
 import org.cafienne.actormodel.communication.reply.command.RunActorRequest;
 import org.cafienne.actormodel.communication.request.command.RequestModelActor;
-import org.cafienne.actormodel.message.event.CommitEvent;
 import org.cafienne.infrastructure.serialization.Fields;
 import org.cafienne.infrastructure.serialization.Manifest;
 import org.cafienne.util.json.ValueMap;
@@ -19,7 +19,7 @@ import java.io.IOException;
  * This is done by telling actor.self() about the event - which is done only after the event was persisted.
  */
 @Manifest
-public class ActorRequestStored extends ModelActorRequestEvent implements CommitEvent {
+public class ActorRequestStored extends ModelActorRequestEvent implements CaseSystemCommitEvent {
     public final RequestModelActor request;
 
     public ActorRequestStored(RequestModelActor request) {

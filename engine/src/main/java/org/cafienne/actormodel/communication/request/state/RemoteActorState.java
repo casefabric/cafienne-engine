@@ -41,7 +41,8 @@ public abstract class RemoteActorState<LocalActor extends ModelActor> {
     }
 
     /**
-     * Hook that can be invoked in subclasses of State after request has been acknowledged by the target actor.
+     * Hook that can be invoked in subclasses of State after request has been acknowledged by the target actor
+     * to add additional events (e.g. a non-blocking Task can complete itself).
      */
     public void handleReceipt(ActorRequestDeliveryReceipt receipt) {
         // Hook that can be invoked in State class
