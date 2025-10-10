@@ -388,7 +388,7 @@ public abstract class ModelActor extends AbstractPersistentActor {
         transactionTimestamp = null;
     }
 
-    public void updateState(ActorModified<?> event) {
+    public void updateState(ActorModified<?, ?> event) {
         this.lastModified = event.lastModified;
     }
 

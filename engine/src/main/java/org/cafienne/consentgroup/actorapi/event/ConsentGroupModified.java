@@ -17,6 +17,7 @@
 
 package org.cafienne.consentgroup.actorapi.event;
 
+import org.cafienne.actormodel.identity.ConsentGroupUser;
 import org.cafienne.actormodel.message.command.ModelCommand;
 import org.cafienne.actormodel.message.event.ActorModified;
 import org.cafienne.consentgroup.ConsentGroupActor;
@@ -29,12 +30,17 @@ import org.cafienne.util.json.ValueMap;
  *
  */
 @Manifest
-public class ConsentGroupModified extends ActorModified<ConsentGroupActor> implements ConsentGroupEvent  {
+public class ConsentGroupModified extends ActorModified<ConsentGroupActor, ConsentGroupUser> implements ConsentGroupEvent  {
     public ConsentGroupModified(ConsentGroupActor actor, ModelCommand source) {
         super(actor, source);
     }
 
     public ConsentGroupModified(ValueMap json) {
         super(json);
+    }
+
+    @Override
+    protected ConsentGroupUser readUser(ValueMap json) {
+        return ConsentGroupUser.deserialize(json);
     }
 }

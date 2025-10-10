@@ -33,7 +33,7 @@ import java.time.Instant;
  *
  * @param <M>
  */
-public abstract class ActorModified<M extends ModelActor> extends BaseModelEvent<M, UserIdentity> implements CommitEvent {
+public abstract class ActorModified<M extends ModelActor, U extends UserIdentity> extends BaseModelEvent<M, U> implements CommitEvent {
     public final transient ModelCommand source;
     public final String sourceString;
     public final Instant lastModified;
@@ -50,11 +50,6 @@ public abstract class ActorModified<M extends ModelActor> extends BaseModelEvent
         this.source = null;
         this.lastModified = json.readInstant(Fields.lastModified);
         this.sourceString = json.readString(Fields.source, "unknown message");
-    }
-
-    @Override
-    protected UserIdentity readUser(ValueMap json) {
-        return UserIdentity.deserialize(json);
     }
 
     public Instant lastModified() {
