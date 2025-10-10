@@ -18,6 +18,7 @@
 package org.cafienne.cmmn.actorapi.event;
 
 import com.fasterxml.jackson.core.JsonGenerator;
+import org.cafienne.actormodel.identity.CaseUserIdentity;
 import org.cafienne.actormodel.message.command.ModelCommand;
 import org.cafienne.actormodel.message.event.ActorModified;
 import org.cafienne.cmmn.actorapi.command.CaseCommand;
@@ -36,7 +37,7 @@ import java.io.IOException;
  *
  */
 @Manifest
-public class CaseModified extends ActorModified<Case> implements CaseEvent {
+public class CaseModified extends ActorModified<Case, CaseUserIdentity> implements CaseEvent {
     private final int numFailures;
     private final State state;
 
@@ -50,6 +51,11 @@ public class CaseModified extends ActorModified<Case> implements CaseEvent {
         super(json);
         this.numFailures = json.rawInt(Fields.numFailures);
         this.state = json.readEnum(Fields.state, State.class);
+    }
+
+    @Override
+    protected CaseUserIdentity readUser(ValueMap json) {
+        return CaseUserIdentity.deserialize(json);
     }
 
     /**

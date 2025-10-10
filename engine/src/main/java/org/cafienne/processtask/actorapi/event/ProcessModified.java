@@ -17,6 +17,7 @@
 
 package org.cafienne.processtask.actorapi.event;
 
+import org.cafienne.actormodel.identity.UserIdentity;
 import org.cafienne.actormodel.message.command.ModelCommand;
 import org.cafienne.actormodel.message.event.ActorModified;
 import org.cafienne.infrastructure.serialization.Manifest;
@@ -29,7 +30,7 @@ import org.cafienne.processtask.instance.ProcessTaskActor;
  *
  */
 @Manifest
-public class ProcessModified extends ActorModified<ProcessTaskActor> implements ProcessEvent {
+public class ProcessModified extends ActorModified<ProcessTaskActor, UserIdentity> implements ProcessEvent {
 
     public ProcessModified(ProcessTaskActor actor, ModelCommand source) {
         super(actor, source);
@@ -37,5 +38,10 @@ public class ProcessModified extends ActorModified<ProcessTaskActor> implements 
 
     public ProcessModified(ValueMap json) {
         super(json);
+    }
+
+    @Override
+    protected UserIdentity readUser(ValueMap json) {
+        return UserIdentity.deserialize(json);
     }
 }

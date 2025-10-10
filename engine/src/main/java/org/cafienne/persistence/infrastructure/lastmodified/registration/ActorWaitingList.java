@@ -53,7 +53,7 @@ public class ActorWaitingList {
         return p;
     }
 
-    public void handle(ActorModified<?> event) {
+    public void handle(ActorModified<?, ?> event) {
         ActorUpdate latest = new ActorUpdate(event);
         lastProcessedActorUpdate = latest;
         updates.add(latest);

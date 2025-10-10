@@ -80,7 +80,7 @@ public class LastModifiedRegistration {
         return getWaitingList(actorId).waitForCorrelationId(correlationId);
     }
 
-    public void handle(ActorModified<?> event) {
+    public void handle(ActorModified<?, ?> event) {
         getWaitingList(event.actorId()).handle(event);
     }
 }
