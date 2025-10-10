@@ -18,7 +18,7 @@
 package org.cafienne.processtask.actorapi.command;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import org.cafienne.actormodel.identity.UserIdentity;
+import org.cafienne.actormodel.identity.CaseUserIdentity;
 import org.cafienne.actormodel.message.command.BootstrapMessage;
 import org.cafienne.infrastructure.serialization.Fields;
 import org.cafienne.infrastructure.serialization.Manifest;
@@ -39,7 +39,7 @@ public class StartProcess extends ProcessCommand implements BootstrapMessage {
     private final ProcessDefinition definition;
     private final boolean debugMode;
 
-    public StartProcess(UserIdentity user, String tenant, String id, String name, ProcessDefinition definition, ValueMap inputParameters, String parentActorId, String rootActorId, boolean debugMode) {
+    public StartProcess(CaseUserIdentity user, String tenant, String id, String name, ProcessDefinition definition, ValueMap inputParameters, String parentActorId, String rootActorId, boolean debugMode) {
         super(user, id);
         this.name = name;
         this.tenant = tenant;
