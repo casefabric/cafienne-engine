@@ -15,38 +15,36 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cafienne.json;
+package org.cafienne.util.json;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import org.cafienne.cmmn.definition.casefile.PropertyDefinition;
+import org.cafienne.infrastructure.serialization.CafienneSerializable;
 
 import java.io.IOException;
-import java.time.Instant;
 
-public class InstantValue extends PrimitiveValue<Instant> {
-	public InstantValue(Instant value) {
-		super(value);
-	}
+public class CafienneSerializableValue extends PrimitiveValue<CafienneSerializable> {
+    public CafienneSerializableValue(CafienneSerializable value) {
+        super(value);
+    }
 
-	@Override
-	public InstantValue cloneValueNode() {
-		return new InstantValue(value);
-	}
-	@Override
-	public boolean matches(PropertyDefinition.PropertyType propertyType) {
-		switch (propertyType) {
-		case Date:
-		case Time: // Hmmm, do we really match strings?
-		case DateTime:
-		case Unspecified:
-			return true;
-		default:
-			return baseMatch(propertyType);
-		}
-	}
+    @Override
+    public CafienneSerializableValue cloneValueNode() {
+        return new CafienneSerializableValue(value);
+    }
 
-	@Override
-	public void print(JsonGenerator generator) throws IOException {
-		generator.writeString(value.toString());
-	}
+    @Override
+    public boolean matches(PropertyDefinition.PropertyType propertyType) {
+        return propertyType == PropertyDefinition.PropertyType.Unspecified;
+    }
+
+    @Override
+    public void print(JsonGenerator generator) throws IOException {
+        value.writeThisObject(generator);
+    }
+
+    @Override
+    public boolean isPrimitive() {
+        return false;
+    }
 }

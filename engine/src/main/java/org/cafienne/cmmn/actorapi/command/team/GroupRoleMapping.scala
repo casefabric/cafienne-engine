@@ -18,7 +18,7 @@
 package org.cafienne.cmmn.actorapi.command.team
 
 import org.cafienne.infrastructure.serialization.Fields
-import org.cafienne.json.{CafienneJson, Value, ValueMap}
+import org.cafienne.util.json.{CafienneJson, Value, ValueMap}
 
 import java.util
 import scala.jdk.CollectionConverters.SetHasAsJava

@@ -15,21 +15,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cafienne.json
-
-import com.fasterxml.jackson.core.JsonGenerator
-import org.cafienne.infrastructure.serialization.CafienneSerializable
+package org.cafienne.util.json;
 
 /**
-  * Simple trait that case classes can implement if they can convert themselves into Value[_] objects.
-  * This can be used to make a case class json serializable (for now - better is to use default json serializers of http libraries).
-  */
-trait CafienneJson extends CafienneSerializable {
-  def toValue: Value[_]
-
-  override def toString: String = toValue.toString
-
-  override def write(generator: JsonGenerator): Unit = {
-    toValue.print(generator)
-  }
+ * Supports parsing a ValueMap to an instance of type T
+ * @param <T> The target type of parsing the map.
+ */
+@FunctionalInterface
+public interface ValueMapParser<T> {
+    T convert(ValueMap json);
 }

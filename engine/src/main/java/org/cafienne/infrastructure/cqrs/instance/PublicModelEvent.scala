@@ -3,7 +3,7 @@ package org.cafienne.infrastructure.cqrs.instance
 import org.apache.pekko.persistence.query.Offset
 import org.cafienne.actormodel.message.event.ModelEvent
 import org.cafienne.infrastructure.cqrs.offset.OffsetRecord
-import org.cafienne.json.{CafienneJson, Value, ValueMap}
+import org.cafienne.util.json.{CafienneJson, Value, ValueMap}
 
 case class PublicModelEvent(sequenceNr: Long, offset: Offset, event: ModelEvent) extends CafienneJson {
   val eventType: String = event.getClass.getSimpleName

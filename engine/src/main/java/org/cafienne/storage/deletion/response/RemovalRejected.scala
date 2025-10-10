@@ -18,7 +18,7 @@
 package org.cafienne.storage.deletion.response
 
 import org.cafienne.infrastructure.serialization.{Fields, Manifest}
-import org.cafienne.json.ValueMap
+import org.cafienne.util.json.ValueMap
 import org.cafienne.storage.actormodel.ActorMetadata
 import org.cafienne.storage.actormodel.message.StorageActionRejected
 

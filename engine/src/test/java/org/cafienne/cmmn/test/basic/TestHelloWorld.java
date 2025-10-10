@@ -8,7 +8,7 @@ import org.cafienne.cmmn.test.TestScript;
 import org.cafienne.humantask.actorapi.command.CompleteHumanTask;
 import org.cafienne.humantask.actorapi.event.HumanTaskAssigned;
 import org.cafienne.humantask.actorapi.event.HumanTaskDueDateFilled;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 import org.junit.Test;
 
 import static org.cafienne.cmmn.test.TestScript.*;

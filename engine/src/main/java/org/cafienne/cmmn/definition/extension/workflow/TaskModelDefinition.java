@@ -23,10 +23,10 @@ import org.cafienne.cmmn.definition.expression.ResolverDefinition;
 import org.cafienne.cmmn.definition.parameter.InputParameterDefinition;
 import org.cafienne.cmmn.expression.spel.api.cmmn.mapping.TaskInputRoot;
 import org.cafienne.cmmn.instance.task.humantask.HumanTask;
-import org.cafienne.json.JSONParseFailure;
-import org.cafienne.json.JSONReader;
-import org.cafienne.json.StringValue;
-import org.cafienne.json.Value;
+import org.cafienne.util.json.JSONParseFailure;
+import org.cafienne.util.json.JSONReader;
+import org.cafienne.util.json.StringValue;
+import org.cafienne.util.json.Value;
 import org.w3c.dom.Element;
 
 import java.io.IOException;

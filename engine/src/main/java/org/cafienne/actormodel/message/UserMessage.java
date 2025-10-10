@@ -21,7 +21,7 @@ import org.cafienne.actormodel.ActorType;
 import org.cafienne.actormodel.identity.UserIdentity;
 import org.cafienne.actormodel.message.command.BootstrapMessage;
 import org.cafienne.infrastructure.serialization.CafienneSerializable;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 
 /**
  * A UserMessage carries user information

@@ -20,7 +20,7 @@ package org.cafienne.processtask.actorapi.event;
 import com.fasterxml.jackson.core.JsonGenerator;
 import org.cafienne.actormodel.identity.UserIdentity;
 import org.cafienne.actormodel.message.event.BaseModelEvent;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 import org.cafienne.processtask.instance.ProcessTaskActor;
 
 import java.io.IOException;

@@ -29,7 +29,7 @@ import org.cafienne.cmmn.instance.PlanItem;
 import org.cafienne.cmmn.instance.Transition;
 import org.cafienne.infrastructure.serialization.Fields;
 import org.cafienne.infrastructure.serialization.Manifest;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 
 import java.io.IOException;
 import java.util.ArrayList;

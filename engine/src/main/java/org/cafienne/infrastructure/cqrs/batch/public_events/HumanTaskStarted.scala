@@ -20,7 +20,7 @@ package org.cafienne.infrastructure.cqrs.batch.public_events
 import org.cafienne.cmmn.instance.Path
 import org.cafienne.humantask.actorapi.event.{HumanTaskActivated, HumanTaskEvent, HumanTaskInputSaved}
 import org.cafienne.infrastructure.serialization.{Fields, Manifest}
-import org.cafienne.json.{JSONReader, StringValue, Value, ValueMap}
+import org.cafienne.util.json.{JSONReader, StringValue, Value, ValueMap}
 
 @Manifest
 case class HumanTaskStarted(taskId: String, path: Path, taskName: String, caseInstanceId: String, parentStage: String, inputParameters: ValueMap, form: Value[_]) extends CafiennePublicEventContent {

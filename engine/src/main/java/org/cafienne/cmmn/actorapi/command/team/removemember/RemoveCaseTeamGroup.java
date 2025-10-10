@@ -22,7 +22,7 @@ import org.cafienne.cmmn.actorapi.command.team.CaseTeamGroup;
 import org.cafienne.cmmn.instance.team.MemberType;
 import org.cafienne.cmmn.instance.team.Team;
 import org.cafienne.infrastructure.serialization.Manifest;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 
 /**
  * Command to remove a consent group from the case team

@@ -21,8 +21,8 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import org.cafienne.cmmn.definition.casefile.PropertyDefinition;
 import org.cafienne.cmmn.instance.casefile.CaseFileItem;
 import org.cafienne.infrastructure.serialization.Fields;
-import org.cafienne.json.Value;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.Value;
+import org.cafienne.util.json.ValueMap;
 
 import java.io.IOException;
 

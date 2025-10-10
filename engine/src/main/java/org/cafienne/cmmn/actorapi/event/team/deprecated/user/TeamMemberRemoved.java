@@ -19,7 +19,7 @@ package org.cafienne.cmmn.actorapi.event.team.deprecated.user;
 
 import org.cafienne.cmmn.instance.team.Team;
 import org.cafienne.infrastructure.serialization.Manifest;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 
 /**
  * Event caused when a member is removed from the case team.

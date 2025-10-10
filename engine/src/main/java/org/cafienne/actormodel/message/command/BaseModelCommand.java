@@ -27,10 +27,10 @@ import org.cafienne.actormodel.exception.InvalidCommandException;
 import org.cafienne.actormodel.identity.UserIdentity;
 import org.cafienne.actormodel.message.response.ModelResponse;
 import org.cafienne.infrastructure.serialization.Fields;
-import org.cafienne.json.JSONParseFailure;
-import org.cafienne.json.JSONReader;
-import org.cafienne.json.Value;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.JSONParseFailure;
+import org.cafienne.util.json.JSONReader;
+import org.cafienne.util.json.Value;
+import org.cafienne.util.json.ValueMap;
 import org.cafienne.util.Guid;
 
 import java.io.IOException;

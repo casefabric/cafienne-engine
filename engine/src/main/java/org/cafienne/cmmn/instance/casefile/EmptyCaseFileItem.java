@@ -17,7 +17,7 @@
 
 package org.cafienne.cmmn.instance.casefile;
 
-import org.cafienne.json.Value;
+import org.cafienne.util.json.Value;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

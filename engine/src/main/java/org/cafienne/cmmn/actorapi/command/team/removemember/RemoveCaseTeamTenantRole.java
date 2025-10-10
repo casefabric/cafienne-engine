@@ -22,7 +22,7 @@ import org.cafienne.cmmn.actorapi.command.team.CaseTeamTenantRole;
 import org.cafienne.cmmn.instance.team.MemberType;
 import org.cafienne.cmmn.instance.team.Team;
 import org.cafienne.infrastructure.serialization.Manifest;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 
 /**
  * Command to remove a tenant role from the case team

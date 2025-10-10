@@ -20,7 +20,7 @@ package org.cafienne.cmmn.instance.parameter;
 import org.cafienne.cmmn.definition.parameter.ParameterDefinition;
 import org.cafienne.cmmn.instance.Parameter;
 import org.cafienne.cmmn.instance.Task;
-import org.cafienne.json.Value;
+import org.cafienne.util.json.Value;
 
 /**
  * TaskParameter is specific to {@link Task} input and output

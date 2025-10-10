@@ -20,7 +20,7 @@ package org.cafienne.humantask.actorapi.command;
 import org.cafienne.actormodel.identity.CaseUserIdentity;
 import org.cafienne.humantask.instance.WorkflowTask;
 import org.cafienne.infrastructure.serialization.Manifest;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 
 /**
  * Saves the output in the task. This output is not yet stored back in the case file, since that happens only when the task is completed.

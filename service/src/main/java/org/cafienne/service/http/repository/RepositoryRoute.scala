@@ -30,7 +30,7 @@ import org.cafienne.actormodel.exception.{AuthorizationException, MissingTenantE
 import org.cafienne.actormodel.identity.PlatformUser
 import org.cafienne.cmmn.definition.{DefinitionsDocument, InvalidDefinitionException}
 import org.cafienne.cmmn.repository.{MissingDefinitionException, WriteDefinitionException}
-import org.cafienne.json.ValueMap
+import org.cafienne.util.json.ValueMap
 import org.cafienne.service.http.CaseEngineHttpServer
 import org.cafienne.service.http.cases.CaseAPIFormat.CaseDefinitionFormat
 import org.cafienne.service.http.repository.RepositoryAPIFormat.ModelListResponseFormat

@@ -15,13 +15,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cafienne.json;
+package org.cafienne.util.json;
 
 /**
- * Supports parsing a ValueMap to an instance of type T
- * @param <T> The target type of parsing the map.
+ * Exception thrown when a JSON parsing ran into a failure.
+ * Either due to an IOException or due to an invalid token or empty content.
  */
-@FunctionalInterface
-public interface ValueMapParser<T> {
-    T convert(ValueMap json);
+public class JSONParseFailure extends Exception {
+    JSONParseFailure(String msg) {
+        super(msg);
+    }
 }

@@ -21,7 +21,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import org.cafienne.cmmn.actorapi.event.CaseBaseEvent;
 import org.cafienne.cmmn.instance.Case;
 import org.cafienne.cmmn.instance.team.Team;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 
 import java.io.IOException;
 

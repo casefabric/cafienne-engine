@@ -19,7 +19,7 @@ package org.cafienne.processtask.implementation.mail;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeBodyPart;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 import org.cafienne.processtask.instance.ProcessTaskActor;
 
 /**

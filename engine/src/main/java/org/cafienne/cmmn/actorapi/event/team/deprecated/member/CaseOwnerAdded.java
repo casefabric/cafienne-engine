@@ -20,7 +20,7 @@ package org.cafienne.cmmn.actorapi.event.team.deprecated.member;
 import org.cafienne.cmmn.actorapi.event.team.deprecated.DeprecatedCaseTeamEvent;
 import org.cafienne.cmmn.instance.team.Team;
 import org.cafienne.infrastructure.serialization.Manifest;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 
 /**
  * Event caused when a team member has become owner

@@ -15,34 +15,40 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cafienne.tenant.actorapi.event.user;
+package org.cafienne.util.json;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import org.cafienne.actormodel.identity.TenantUser;
-import org.cafienne.infrastructure.serialization.Manifest;
-import org.cafienne.util.json.ValueMap;
-import org.cafienne.tenant.TenantActor;
+import org.cafienne.cmmn.definition.casefile.PropertyDefinition;
 
 import java.io.IOException;
 
-@Manifest
-public class TenantUserRemoved extends TenantMemberEvent {
-
-    public TenantUserRemoved(TenantActor tenant, TenantUser user) {
-        super(tenant, user);
-    }
-
-    public TenantUserRemoved(ValueMap json) {
-        super(json);
+public class DoubleValue extends NumericValue<Double> {
+    public DoubleValue(double value) {
+        super(value);
     }
 
     @Override
-    public void updateState(TenantActor actor) {
-        actor.updateState(this);
+    public DoubleValue cloneValueNode() {
+        return new DoubleValue(value);
+    }
+    
+    @Override
+    public boolean matches(PropertyDefinition.PropertyType propertyType) {
+        switch (propertyType) {
+        case Double:
+        case Float:
+        case Decimal:
+        case String: // Hmmm, do we really match strings?
+        case Unspecified:
+            return true;
+        default:
+            return baseMatch(propertyType);
+        }
+
     }
 
     @Override
-    public void write(JsonGenerator generator) throws IOException {
-        super.writeTenantUserEvent(generator);
+    public void print(JsonGenerator generator) throws IOException {
+        generator.writeNumber(value);
     }
 }

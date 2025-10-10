@@ -21,7 +21,7 @@ import org.cafienne.cmmn.definition.CMMNElementDefinition;
 import org.cafienne.cmmn.definition.ModelDefinition;
 import org.cafienne.cmmn.definition.casefile.CaseFileError;
 import org.cafienne.cmmn.definition.casefile.CaseFileItemDefinition;
-import org.cafienne.json.Value;
+import org.cafienne.util.json.Value;
 import org.w3c.dom.Element;
 
 public class InputParameterDefinition extends ParameterDefinition {

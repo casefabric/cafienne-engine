@@ -23,7 +23,7 @@ import org.cafienne.actormodel.identity.CaseUserIdentity;
 import org.cafienne.cmmn.actorapi.command.CaseCommand;
 import org.cafienne.cmmn.instance.Case;
 import org.cafienne.cmmn.instance.team.Team;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 
 /**
  * Generic abstraction for commands relating to CaseTeam.

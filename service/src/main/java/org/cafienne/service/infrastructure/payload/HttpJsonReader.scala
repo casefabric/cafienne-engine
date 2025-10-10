@@ -19,7 +19,7 @@ package org.cafienne.service.infrastructure.payload
 
 import org.apache.pekko.http.scaladsl.model._
 import org.apache.pekko.http.scaladsl.unmarshalling.Unmarshaller
-import org.cafienne.json.{JSONReader, Value, ValueList, ValueMap}
+import org.cafienne.util.json.{JSONReader, Value, ValueList, ValueMap}
 
 /**
   * This file contains unmarshallers for various types of Value[_] objects

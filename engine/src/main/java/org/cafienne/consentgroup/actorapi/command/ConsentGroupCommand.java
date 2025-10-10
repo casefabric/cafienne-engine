@@ -25,7 +25,7 @@ import org.cafienne.consentgroup.ConsentGroupActor;
 import org.cafienne.consentgroup.actorapi.ConsentGroupMessage;
 import org.cafienne.consentgroup.actorapi.exception.ConsentGroupException;
 import org.cafienne.consentgroup.actorapi.response.ConsentGroupResponse;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 
 /**
  * Consent Groups can be used to invite users from other tenants to join a case tam

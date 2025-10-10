@@ -20,7 +20,7 @@ package org.cafienne.infrastructure.cqrs.batch.public_events
 import org.cafienne.cmmn.actorapi.event.plan.PlanItemTransitioned
 import org.cafienne.cmmn.instance.{Path, State}
 import org.cafienne.infrastructure.serialization.{Fields, Manifest}
-import org.cafienne.json.{Value, ValueMap}
+import org.cafienne.util.json.{Value, ValueMap}
 
 @Manifest
 case class MilestoneAchieved(milestoneId: String, path: Path, caseInstanceId: String) extends CafiennePublicEventContent {

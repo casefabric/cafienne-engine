@@ -27,8 +27,8 @@ import org.cafienne.cmmn.instance.CasePlan;
 import org.cafienne.cmmn.instance.PlanItem;
 import org.cafienne.cmmn.instance.Stage;
 import org.cafienne.cmmn.instance.casefile.CaseFileItem;
-import org.cafienne.json.ValueList;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueList;
+import org.cafienne.util.json.ValueMap;
 import org.w3c.dom.Element;
 
 import java.util.ArrayList;

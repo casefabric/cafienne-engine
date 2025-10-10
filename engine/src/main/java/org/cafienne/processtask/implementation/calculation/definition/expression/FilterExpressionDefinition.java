@@ -19,8 +19,8 @@ package org.cafienne.processtask.implementation.calculation.definition.expressio
 
 import org.cafienne.cmmn.definition.CMMNElementDefinition;
 import org.cafienne.cmmn.definition.ModelDefinition;
-import org.cafienne.json.Value;
-import org.cafienne.json.ValueList;
+import org.cafienne.util.json.Value;
+import org.cafienne.util.json.ValueList;
 import org.cafienne.processtask.implementation.calculation.Calculation;
 import org.cafienne.processtask.implementation.calculation.Result;
 import org.cafienne.processtask.implementation.calculation.definition.FilterStepDefinition;

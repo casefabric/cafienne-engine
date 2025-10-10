@@ -17,7 +17,7 @@
 
 package org.cafienne.cmmn.definition;
 
-import org.cafienne.json.Value;
+import org.cafienne.util.json.Value;
 import org.cafienne.util.XMLHelper;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

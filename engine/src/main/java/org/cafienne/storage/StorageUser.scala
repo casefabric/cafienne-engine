@@ -19,7 +19,7 @@ package org.cafienne.storage
 
 import org.cafienne.actormodel.identity.UserIdentity
 import org.cafienne.infrastructure.serialization.{Fields, JacksonSerializable}
-import org.cafienne.json.ValueMap
+import org.cafienne.util.json.ValueMap
 
 case class StorageUser(id: String, tenant: String) extends UserIdentity with JacksonSerializable
 

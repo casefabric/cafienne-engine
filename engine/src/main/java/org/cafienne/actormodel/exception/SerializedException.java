@@ -20,7 +20,7 @@ package org.cafienne.actormodel.exception;
 import com.fasterxml.jackson.core.JsonGenerator;
 import org.cafienne.infrastructure.serialization.CafienneSerializable;
 import org.cafienne.infrastructure.serialization.Fields;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 
 import java.io.IOException;
 

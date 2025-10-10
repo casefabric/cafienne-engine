@@ -19,7 +19,7 @@ package org.cafienne.processtask.implementation.calculation.definition;
 
 import org.cafienne.cmmn.definition.CMMNElementDefinition;
 import org.cafienne.cmmn.definition.ModelDefinition;
-import org.cafienne.json.Value;
+import org.cafienne.util.json.Value;
 import org.cafienne.processtask.implementation.calculation.Calculation;
 import org.cafienne.processtask.implementation.calculation.CalculationDefinition;
 import org.cafienne.processtask.implementation.calculation.Result;

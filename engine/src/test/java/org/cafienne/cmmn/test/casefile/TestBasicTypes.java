@@ -16,9 +16,9 @@ import org.cafienne.cmmn.definition.CaseDefinition;
 import org.cafienne.cmmn.definition.casefile.CaseFileError;
 import org.cafienne.cmmn.instance.Path;
 import org.cafienne.cmmn.test.TestScript;
-import org.cafienne.json.Value;
-import org.cafienne.json.ValueList;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.Value;
+import org.cafienne.util.json.ValueList;
+import org.cafienne.util.json.ValueMap;
 import org.cafienne.util.Guid;
 import org.junit.Test;
 

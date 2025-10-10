@@ -22,7 +22,7 @@ import org.cafienne.cmmn.definition.ModelDefinition;
 import org.cafienne.cmmn.definition.TaskDefinition;
 import org.cafienne.cmmn.definition.parameter.OutputParameterDefinition;
 import org.cafienne.cmmn.instance.Case;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 import org.cafienne.processtask.implementation.SubProcess;
 import org.cafienne.processtask.instance.ProcessTaskActor;
 import org.w3c.dom.Element;

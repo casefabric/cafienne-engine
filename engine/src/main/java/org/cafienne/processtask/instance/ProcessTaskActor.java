@@ -24,7 +24,7 @@ import org.cafienne.actormodel.message.command.ModelCommand;
 import org.cafienne.actormodel.message.event.ModelEvent;
 import org.cafienne.cmmn.actorapi.command.plan.task.CompleteTask;
 import org.cafienne.cmmn.actorapi.command.plan.task.FailTask;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 import org.cafienne.processtask.actorapi.command.ProcessCommand;
 import org.cafienne.processtask.actorapi.command.StartProcess;
 import org.cafienne.processtask.actorapi.event.*;

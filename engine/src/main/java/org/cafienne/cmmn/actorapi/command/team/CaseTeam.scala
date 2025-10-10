@@ -21,7 +21,7 @@ import org.cafienne.actormodel.identity.CaseUserIdentity
 import org.cafienne.cmmn.definition.team.CaseTeamDefinition
 import org.cafienne.cmmn.instance.team.Team
 import org.cafienne.infrastructure.serialization.Fields
-import org.cafienne.json.{CafienneJson, Value, ValueMap}
+import org.cafienne.util.json.{CafienneJson, Value, ValueMap}
 
 import scala.jdk.CollectionConverters._
 

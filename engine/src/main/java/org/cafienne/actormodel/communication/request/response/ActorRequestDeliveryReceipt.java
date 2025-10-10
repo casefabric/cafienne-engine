@@ -3,7 +3,7 @@ package org.cafienne.actormodel.communication.request.response;
 import org.cafienne.actormodel.communication.request.state.RemoteActorState;
 import org.cafienne.actormodel.message.command.ModelCommand;
 import org.cafienne.infrastructure.serialization.Manifest;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 
 @Manifest
 public class ActorRequestDeliveryReceipt extends CaseSystemCommunicationResponse {

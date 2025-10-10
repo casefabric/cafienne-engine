@@ -18,7 +18,7 @@
 package org.cafienne.cmmn.actorapi.command.platform
 
 import org.cafienne.actormodel.identity.TenantUser
-import org.cafienne.json.{CafienneJson, Value, ValueList, ValueMap}
+import org.cafienne.util.json.{CafienneJson, Value, ValueList, ValueMap}
 
 import java.util
 

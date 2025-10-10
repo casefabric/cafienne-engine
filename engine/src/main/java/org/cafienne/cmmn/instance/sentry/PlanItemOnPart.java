@@ -21,7 +21,7 @@ import org.cafienne.cmmn.actorapi.event.plan.PlanItemTransitioned;
 import org.cafienne.cmmn.definition.sentry.PlanItemOnPartDefinition;
 import org.cafienne.cmmn.instance.PlanItem;
 import org.cafienne.cmmn.instance.Transition;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 import org.w3c.dom.Element;
 
 import java.util.ArrayList;

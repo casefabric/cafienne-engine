@@ -19,7 +19,7 @@ package org.cafienne.processtask.actorapi.command;
 
 import org.cafienne.actormodel.identity.UserIdentity;
 import org.cafienne.infrastructure.serialization.Manifest;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 import org.cafienne.processtask.actorapi.event.ProcessReactivated;
 import org.cafienne.processtask.definition.ProcessDefinition;
 import org.cafienne.processtask.implementation.SubProcess;

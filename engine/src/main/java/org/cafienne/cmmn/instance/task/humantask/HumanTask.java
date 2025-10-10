@@ -31,7 +31,7 @@ import org.cafienne.humantask.actorapi.event.HumanTaskSuspended;
 import org.cafienne.humantask.actorapi.event.HumanTaskTerminated;
 import org.cafienne.humantask.actorapi.event.migration.HumanTaskDropped;
 import org.cafienne.humantask.instance.WorkflowTask;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 import org.w3c.dom.Element;
 
 import java.util.Collection;

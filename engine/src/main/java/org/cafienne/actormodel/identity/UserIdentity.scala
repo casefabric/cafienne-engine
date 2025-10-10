@@ -19,7 +19,7 @@ package org.cafienne.actormodel.identity
 
 
 import org.cafienne.infrastructure.serialization.{DeserializationError, Fields}
-import org.cafienne.json.{CafienneJson, Value, ValueMap}
+import org.cafienne.util.json.{CafienneJson, Value, ValueMap}
 
 import scala.collection.immutable.HashSet
 

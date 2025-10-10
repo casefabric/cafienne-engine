@@ -17,7 +17,7 @@
 
 package org.cafienne.system.health
 
-import org.cafienne.json.ValueMap
+import org.cafienne.util.json.ValueMap
 
 import java.util
 import scala.collection.mutable.Set

@@ -35,7 +35,7 @@ import org.cafienne.cmmn.instance.PlanItem;
 import org.cafienne.cmmn.instance.Task;
 import org.cafienne.cmmn.instance.parameter.TaskInputParameter;
 import org.cafienne.cmmn.instance.sentry.Criterion;
-import org.cafienne.json.Value;
+import org.cafienne.util.json.Value;
 import org.cafienne.processtask.instance.ProcessTaskActor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

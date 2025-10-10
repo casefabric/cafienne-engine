@@ -21,7 +21,7 @@ import org.cafienne.cmmn.actorapi.event.file.CaseFileItemTransitioned;
 import org.cafienne.cmmn.definition.sentry.CaseFileItemOnPartDefinition;
 import org.cafienne.cmmn.instance.casefile.CaseFileItem;
 import org.cafienne.cmmn.instance.casefile.CaseFileItemTransition;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 import org.w3c.dom.Element;
 
 public class CaseFileItemOnPart extends OnPart<CaseFileItemOnPartDefinition, CaseFileItemTransitioned, CaseFileItem> {

@@ -20,7 +20,7 @@ package org.cafienne.cmmn.actorapi.event.plan.task;
 import org.cafienne.actormodel.message.command.ModelCommand;
 import org.cafienne.cmmn.instance.Task;
 import org.cafienne.infrastructure.serialization.Manifest;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 
 @Manifest
 public class TaskImplementationNotStarted extends TaskCommandRejected {

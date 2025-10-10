@@ -21,7 +21,7 @@ import org.cafienne.actormodel.exception.AuthorizationException;
 import org.cafienne.actormodel.exception.InvalidCommandException;
 import org.cafienne.actormodel.identity.TenantUser;
 import org.cafienne.actormodel.message.command.BaseModelCommand;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 import org.cafienne.tenant.TenantActor;
 import org.cafienne.tenant.actorapi.TenantMessage;
 import org.cafienne.tenant.actorapi.exception.TenantException;

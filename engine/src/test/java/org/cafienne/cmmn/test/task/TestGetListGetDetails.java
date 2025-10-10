@@ -18,7 +18,7 @@ import org.cafienne.cmmn.instance.State;
 import org.cafienne.cmmn.instance.Transition;
 import org.cafienne.cmmn.test.TestScript;
 import org.cafienne.cmmn.test.filter.EventFilter;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 import org.cafienne.processtask.actorapi.event.ProcessCompleted;
 import org.cafienne.processtask.actorapi.event.ProcessFailed;
 import org.junit.Rule;

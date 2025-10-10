@@ -23,7 +23,7 @@ import com.fasterxml.jackson.module.scala.{ClassTagExtensions, DefaultScalaModul
 import org.apache.pekko.http.scaladsl.model.{ContentTypes, HttpEntity}
 import org.apache.pekko.http.scaladsl.unmarshalling.Unmarshaller
 import org.cafienne.infrastructure.serialization.{ValueMapJacksonDeserializer, ValueMapJacksonSerializer}
-import org.cafienne.json.ValueMap
+import org.cafienne.util.json.ValueMap
 
 /**
   * Helper classes to read http entity as an expected type

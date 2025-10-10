@@ -19,7 +19,7 @@ package org.cafienne.cmmn.test.assertions;
 
 import org.cafienne.cmmn.instance.PlanItemType;
 import org.cafienne.cmmn.test.CaseTestCommand;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 
 /**
  * Some assertions for discretionary items.

@@ -26,7 +26,7 @@ import org.cafienne.cmmn.instance.Case;
 import org.cafienne.cmmn.instance.Transition;
 import org.cafienne.cmmn.instance.team.CaseTeamError;
 import org.cafienne.infrastructure.serialization.Manifest;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 
 @Manifest
 public class ReactivateCase extends StartCase {

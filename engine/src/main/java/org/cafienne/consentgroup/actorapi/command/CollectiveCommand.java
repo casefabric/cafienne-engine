@@ -23,7 +23,7 @@ import org.cafienne.consentgroup.actorapi.ConsentGroup;
 import org.cafienne.consentgroup.actorapi.ConsentGroupMember;
 import org.cafienne.consentgroup.actorapi.exception.ConsentGroupException;
 import org.cafienne.infrastructure.serialization.Fields;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 import scala.collection.immutable.Seq;
 
 import java.io.IOException;

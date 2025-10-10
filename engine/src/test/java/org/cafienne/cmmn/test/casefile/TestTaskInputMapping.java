@@ -9,8 +9,8 @@ import org.cafienne.cmmn.instance.Transition;
 import org.cafienne.cmmn.test.TestScript;
 import org.cafienne.cmmn.test.assertions.HumanTaskAssertion;
 import org.cafienne.humantask.actorapi.command.CompleteHumanTask;
-import org.cafienne.json.ValueList;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueList;
+import org.cafienne.util.json.ValueMap;
 import org.cafienne.util.Guid;
 import org.junit.Test;
 

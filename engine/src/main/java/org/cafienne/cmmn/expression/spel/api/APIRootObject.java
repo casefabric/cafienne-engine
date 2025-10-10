@@ -19,8 +19,8 @@ package org.cafienne.cmmn.expression.spel.api;
 
 import org.cafienne.actormodel.ModelActor;
 import org.cafienne.cmmn.instance.Case;
-import org.cafienne.json.ValueList;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueList;
+import org.cafienne.util.json.ValueMap;
 
 /**
  * Base context for SPEL expressions, enabling access to the case and it's public members from any expression.

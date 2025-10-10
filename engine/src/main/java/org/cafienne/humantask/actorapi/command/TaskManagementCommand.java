@@ -19,7 +19,7 @@ package org.cafienne.humantask.actorapi.command;
 
 import org.cafienne.actormodel.identity.CaseUserIdentity;
 import org.cafienne.cmmn.instance.task.humantask.HumanTask;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 
 /**
  * This is the basis for tasks that can be executed during while the task is alive.

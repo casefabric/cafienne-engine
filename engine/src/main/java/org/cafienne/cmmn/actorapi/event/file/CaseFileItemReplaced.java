@@ -21,8 +21,8 @@ import org.cafienne.cmmn.instance.State;
 import org.cafienne.cmmn.instance.casefile.CaseFileItem;
 import org.cafienne.cmmn.instance.casefile.CaseFileItemTransition;
 import org.cafienne.infrastructure.serialization.Manifest;
-import org.cafienne.json.Value;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.Value;
+import org.cafienne.util.json.ValueMap;
 
 /**
  * Event caused by creation of a CaseFileItem

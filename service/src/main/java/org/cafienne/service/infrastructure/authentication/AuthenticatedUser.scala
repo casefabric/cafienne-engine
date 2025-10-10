@@ -19,7 +19,7 @@ package org.cafienne.service.infrastructure.authentication
 
 import org.cafienne.actormodel.identity.UserIdentity
 import org.cafienne.infrastructure.serialization.Fields
-import org.cafienne.json.{Value, ValueMap}
+import org.cafienne.util.json.{Value, ValueMap}
 
 class AuthenticatedUser(override val id: String) extends UserIdentity {
   override def toValue: Value[_] = new ValueMap(Fields.userId, id)

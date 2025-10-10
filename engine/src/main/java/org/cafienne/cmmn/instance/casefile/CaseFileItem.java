@@ -29,8 +29,8 @@ import org.cafienne.cmmn.instance.Path;
 import org.cafienne.cmmn.instance.State;
 import org.cafienne.cmmn.instance.sentry.CaseFileItemOnPart;
 import org.cafienne.cmmn.instance.sentry.TransitionGenerator;
-import org.cafienne.json.Value;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.Value;
+import org.cafienne.util.json.ValueMap;
 import org.w3c.dom.Element;
 
 import java.util.HashMap;

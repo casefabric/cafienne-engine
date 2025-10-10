@@ -14,8 +14,8 @@ import org.cafienne.cmmn.test.TestScript;
 import org.cafienne.cmmn.test.TestUser;
 import org.cafienne.cmmn.test.assertions.event.TaskOutputAssertion;
 import org.cafienne.humantask.actorapi.command.CompleteHumanTask;
-import org.cafienne.json.LongValue;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.LongValue;
+import org.cafienne.util.json.ValueMap;
 import org.junit.Test;
 
 import static org.cafienne.cmmn.test.TestScript.*;

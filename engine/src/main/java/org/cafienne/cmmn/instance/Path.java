@@ -21,9 +21,9 @@ import org.cafienne.cmmn.definition.ItemDefinition;
 import org.cafienne.cmmn.definition.casefile.CaseFileDefinition;
 import org.cafienne.cmmn.definition.casefile.CaseFileItemDefinition;
 import org.cafienne.cmmn.instance.casefile.*;
-import org.cafienne.json.Value;
-import org.cafienne.json.ValueList;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.Value;
+import org.cafienne.util.json.ValueList;
+import org.cafienne.util.json.ValueMap;
 
 import java.io.Serializable;
 

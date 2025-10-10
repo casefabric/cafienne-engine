@@ -5,7 +5,7 @@ import org.cafienne.actormodel.ModelActor;
 import org.cafienne.actormodel.communication.CaseSystemCommunicationEvent;
 import org.cafienne.actormodel.message.command.ModelCommand;
 import org.cafienne.infrastructure.serialization.Fields;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 
 import java.io.IOException;
 

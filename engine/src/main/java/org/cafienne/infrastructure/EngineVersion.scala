@@ -18,7 +18,7 @@
 package org.cafienne.infrastructure
 
 import org.cafienne.BuildInfo
-import org.cafienne.json.{JSONReader, Value, ValueMap}
+import org.cafienne.util.json.{JSONReader, Value, ValueMap}
 
 // Note: json creation is somewhat cumbersome, but it is required in order to have the comparison mechanism work properly.
 class EngineVersion(val json: ValueMap = JSONReader.parse(Value.convert(BuildInfo.toMap).asMap.toString).asInstanceOf[ValueMap]) {

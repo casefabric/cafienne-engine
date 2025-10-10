@@ -19,8 +19,8 @@ package org.cafienne.actormodel.message.response;
 
 import org.cafienne.actormodel.message.UserMessage;
 import org.cafienne.actormodel.message.command.ModelCommand;
-import org.cafienne.json.Value;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.Value;
+import org.cafienne.util.json.ValueMap;
 
 import java.time.Instant;
 

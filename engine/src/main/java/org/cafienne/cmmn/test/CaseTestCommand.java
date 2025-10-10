@@ -25,7 +25,7 @@ import org.cafienne.cmmn.actorapi.response.CaseResponse;
 import org.cafienne.cmmn.instance.Case;
 import org.cafienne.cmmn.test.assertions.PublishedEventsAssertion;
 import org.cafienne.infrastructure.serialization.Manifest;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

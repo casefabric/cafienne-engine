@@ -25,7 +25,7 @@ import org.cafienne.cmmn.actorapi.command.plan.MakePlanItemTransition;
 import org.cafienne.cmmn.actorapi.event.CaseEvent;
 import org.cafienne.cmmn.actorapi.response.CaseResponse;
 import org.cafienne.cmmn.instance.Case;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 
 /**
  * A {@link Case} instance is designed to handle various CaseCommands, such as {@link StartCase}, {@link MakePlanItemTransition}, etc.

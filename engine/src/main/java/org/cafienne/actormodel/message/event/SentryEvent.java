@@ -18,7 +18,7 @@
 package org.cafienne.actormodel.message.event;
 
 import org.cafienne.infrastructure.serialization.Manifest;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 
 @Manifest
 public class SentryEvent extends DebugEvent {

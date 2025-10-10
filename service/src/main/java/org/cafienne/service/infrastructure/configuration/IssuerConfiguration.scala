@@ -25,7 +25,7 @@ import com.nimbusds.openid.connect.sdk.SubjectType
 import com.nimbusds.openid.connect.sdk.op.OIDCProviderMetadata
 import com.typesafe.config.Config
 import org.cafienne.infrastructure.config.util.ConfigReader
-import org.cafienne.json.JSONReader
+import org.cafienne.util.json.JSONReader
 
 import java.net.URI
 import java.util

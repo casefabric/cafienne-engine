@@ -20,7 +20,7 @@ package org.cafienne.tenant.actorapi.event;
 import com.fasterxml.jackson.core.JsonGenerator;
 import org.cafienne.actormodel.identity.TenantUser;
 import org.cafienne.actormodel.message.event.BaseModelEvent;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 import org.cafienne.tenant.TenantActor;
 
 import java.io.IOException;

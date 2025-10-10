@@ -17,7 +17,7 @@
 
 package org.cafienne.cmmn.actorapi.command.team;
 
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 
 /**
  * Simple functional interface to read a typed CaseTeamMember from a ValueMap

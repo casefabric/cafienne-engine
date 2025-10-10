@@ -27,7 +27,7 @@ import jakarta.ws.rs._
 import org.apache.pekko.http.scaladsl.server.Route
 import org.cafienne.cmmn.actorapi.command.casefile.{CreateCaseFileItem, DeleteCaseFileItem, ReplaceCaseFileItem, UpdateCaseFileItem}
 import org.cafienne.cmmn.instance
-import org.cafienne.json.Value
+import org.cafienne.util.json.Value
 import org.cafienne.persistence.infrastructure.lastmodified.Headers
 import org.cafienne.service.http.CaseEngineHttpServer
 import org.cafienne.service.http.cases.CasesRoute

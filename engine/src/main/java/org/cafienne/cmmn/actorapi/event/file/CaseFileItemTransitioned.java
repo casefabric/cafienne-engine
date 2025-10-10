@@ -25,8 +25,8 @@ import org.cafienne.cmmn.instance.casefile.CaseFileItemTransition;
 import org.cafienne.cmmn.instance.sentry.StandardEvent;
 import org.cafienne.infrastructure.serialization.Fields;
 import org.cafienne.infrastructure.serialization.Manifest;
-import org.cafienne.json.Value;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.Value;
+import org.cafienne.util.json.ValueMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

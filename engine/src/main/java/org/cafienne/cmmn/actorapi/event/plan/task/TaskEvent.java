@@ -22,7 +22,7 @@ import org.cafienne.cmmn.actorapi.event.plan.CasePlanEvent;
 import org.cafienne.cmmn.instance.PlanItem;
 import org.cafienne.cmmn.instance.Task;
 import org.cafienne.infrastructure.serialization.Fields;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 
 import java.io.IOException;
 

@@ -1,6 +1,6 @@
 package org.cafienne.persistence.querydb.materializer.cases
 
-import org.cafienne.json.ValueMap
+import org.cafienne.util.json.ValueMap
 import org.cafienne.persistence.querydb.materializer.TestQueryDB
 
 import java.time.Instant
