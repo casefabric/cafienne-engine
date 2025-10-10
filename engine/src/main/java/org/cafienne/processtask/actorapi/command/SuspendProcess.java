@@ -17,7 +17,7 @@
 
 package org.cafienne.processtask.actorapi.command;
 
-import org.cafienne.actormodel.identity.UserIdentity;
+import org.cafienne.actormodel.identity.CaseUserIdentity;
 import org.cafienne.infrastructure.serialization.Manifest;
 import org.cafienne.util.json.ValueMap;
 import org.cafienne.processtask.actorapi.event.ProcessSuspended;
@@ -26,7 +26,7 @@ import org.cafienne.processtask.instance.ProcessTaskActor;
 
 @Manifest
 public class SuspendProcess extends ProcessCommand {
-    public SuspendProcess(UserIdentity user, String id) {
+    public SuspendProcess(CaseUserIdentity user, String id) {
         super(user, id);
     }
 
