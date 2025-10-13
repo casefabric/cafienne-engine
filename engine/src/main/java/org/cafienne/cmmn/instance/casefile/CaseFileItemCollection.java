@@ -24,8 +24,8 @@ import org.cafienne.cmmn.instance.CMMNElement;
 import org.cafienne.cmmn.instance.Case;
 import org.cafienne.cmmn.instance.Path;
 import org.cafienne.cmmn.instance.State;
-import org.cafienne.json.Value;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.Value;
+import org.cafienne.util.json.ValueMap;
 
 import java.util.ArrayList;
 import java.util.List;

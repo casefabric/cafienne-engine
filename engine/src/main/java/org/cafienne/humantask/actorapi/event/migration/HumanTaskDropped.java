@@ -22,7 +22,7 @@ import org.cafienne.cmmn.instance.Case;
 import org.cafienne.cmmn.instance.task.humantask.HumanTask;
 import org.cafienne.humantask.actorapi.event.HumanTaskEvent;
 import org.cafienne.infrastructure.serialization.Manifest;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 
 import java.io.IOException;
 

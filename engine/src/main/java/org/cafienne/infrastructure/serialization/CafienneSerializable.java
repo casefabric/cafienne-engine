@@ -22,8 +22,8 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import org.cafienne.cmmn.definition.CMMNElementDefinition;
 import org.cafienne.cmmn.instance.Path;
-import org.cafienne.json.CafienneJson;
-import org.cafienne.json.Value;
+import org.cafienne.util.json.CafienneJson;
+import org.cafienne.util.json.Value;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

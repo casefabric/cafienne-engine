@@ -19,7 +19,7 @@ package org.cafienne.cmmn.actorapi.event.plan.task;
 
 import org.cafienne.cmmn.instance.Task;
 import org.cafienne.infrastructure.serialization.Manifest;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 
 @Manifest
 public class TaskImplementationStarted extends TaskEvent<Task<?>> {

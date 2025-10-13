@@ -18,7 +18,7 @@
 package org.cafienne.cmmn.definition.casefile;
 
 import org.cafienne.cmmn.definition.casefile.definitiontype.*;
-import org.cafienne.json.Value;
+import org.cafienne.util.json.Value;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

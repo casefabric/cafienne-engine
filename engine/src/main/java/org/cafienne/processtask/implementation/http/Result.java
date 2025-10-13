@@ -17,7 +17,7 @@
 
 package org.cafienne.processtask.implementation.http;
 
-import org.cafienne.json.*;
+import org.cafienne.util.json.*;
 
 import java.io.IOException;
 import java.net.URL;

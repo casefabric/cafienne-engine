@@ -17,17 +17,17 @@
 
 package org.cafienne.actormodel.message.response;
 
-import org.cafienne.actormodel.message.IncomingActorMessage;
+import org.cafienne.actormodel.message.UserMessage;
 import org.cafienne.actormodel.message.command.ModelCommand;
-import org.cafienne.json.Value;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.Value;
+import org.cafienne.util.json.ValueMap;
 
 import java.time.Instant;
 
 /**
  * Interface for creating responses to {@link ModelCommand}
  */
-public interface ModelResponse extends IncomingActorMessage {
+public interface ModelResponse extends UserMessage {
     /**
      * Set the last modified timestamp of the ModelActor.
      */
@@ -39,7 +39,7 @@ public interface ModelResponse extends IncomingActorMessage {
     ActorLastModified lastModifiedContent();
 
     /**
-     * Indicates whether the command created state changes in the actor (without running into failures).
+     * Indicates whether the command that led to this response created state changes in the actor (without running into failures).
      */
     boolean actorChanged();
 
@@ -49,15 +49,5 @@ public interface ModelResponse extends IncomingActorMessage {
      */
     default Value<?> toJson() {
         return new ValueMap();
-    }
-
-    @Override
-    default boolean isResponse() {
-        return true;
-    }
-
-    @Override
-    default ModelResponse asResponse() {
-        return this;
     }
 }

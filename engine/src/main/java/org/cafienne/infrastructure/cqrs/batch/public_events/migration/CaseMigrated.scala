@@ -20,7 +20,7 @@ package org.cafienne.infrastructure.cqrs.batch.public_events.migration
 import org.cafienne.cmmn.actorapi.event.migration.CaseDefinitionMigrated
 import org.cafienne.infrastructure.cqrs.batch.public_events.{CafiennePublicEventContent, PublicCaseEventBatch, PublicEventWrapper}
 import org.cafienne.infrastructure.serialization.{Fields, Manifest}
-import org.cafienne.json.ValueMap
+import org.cafienne.util.json.ValueMap
 
 @Manifest
 case class CaseMigrated(caseInstanceId: String, caseName: String) extends CafiennePublicEventContent {

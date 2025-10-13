@@ -19,10 +19,9 @@ package org.cafienne.actormodel.message.event;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import org.cafienne.actormodel.ModelActor;
-import org.cafienne.actormodel.ModelActorTransaction;
 import org.cafienne.actormodel.identity.UserIdentity;
 import org.cafienne.infrastructure.serialization.Fields;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 
 import java.io.IOException;
 import java.time.Instant;
@@ -46,8 +45,8 @@ public abstract class BaseModelEvent<M extends ModelActor, U extends UserIdentit
         // These events are not added if recovery is running.
         //  Since we're recovering, there is no current transaction.
         //  In that case we set user and correlation id to null (since the event is ignored anyway).
-        this.user = actor.recoveryRunning() ? null : (U) actor.getCurrentTransaction().getMessage().getUser();
-        this.correlationId = actor.recoveryRunning() ? null : actor.getCurrentTransaction().getMessage().getCorrelationId();
+        this.user = (U) actor.getCurrentUser();
+        this.correlationId =  actor.getCurrentTransaction().getMessage().getCorrelationId();
     }
 
     protected BaseModelEvent(ValueMap json) {

@@ -17,7 +17,7 @@
 
 package org.cafienne.infrastructure.cqrs.batch.public_events
 
-import org.cafienne.json.CafienneJson
+import org.cafienne.util.json.CafienneJson
 
 trait CafiennePublicEventContent extends CafienneJson {
   override def toString: String = getClass.getSimpleName

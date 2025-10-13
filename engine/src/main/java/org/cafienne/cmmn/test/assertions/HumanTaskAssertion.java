@@ -21,7 +21,7 @@ import org.cafienne.cmmn.test.CaseTestCommand;
 import org.cafienne.humantask.actorapi.event.*;
 import org.cafienne.humantask.actorapi.response.HumanTaskValidationResponse;
 import org.cafienne.humantask.instance.TaskState;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 
 import java.time.Instant;
 

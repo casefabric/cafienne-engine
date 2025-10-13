@@ -1,18 +1,18 @@
 package org.cafienne.actormodel.communication.reply.event;
 
 import com.fasterxml.jackson.core.JsonGenerator;
+import org.cafienne.actormodel.communication.CaseSystemCommitEvent;
 import org.cafienne.actormodel.communication.reply.command.RunActorRequest;
 import org.cafienne.actormodel.exception.SerializedException;
-import org.cafienne.actormodel.message.event.CommitEvent;
 import org.cafienne.infrastructure.serialization.Fields;
 import org.cafienne.infrastructure.serialization.Manifest;
-import org.cafienne.json.Value;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.Value;
+import org.cafienne.util.json.ValueMap;
 
 import java.io.IOException;
 
 @Manifest
-public class ActorRequestFailed extends ModelActorRequestEvent implements CommitEvent {
+public class ActorRequestFailed extends ModelActorRequestEvent implements CaseSystemCommitEvent {
     private final Throwable exception;
     public final SerializedException serializedException;
     public final ValueMap exceptionAsJSON;

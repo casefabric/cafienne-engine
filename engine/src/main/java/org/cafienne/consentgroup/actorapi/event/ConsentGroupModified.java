@@ -17,11 +17,12 @@
 
 package org.cafienne.consentgroup.actorapi.event;
 
-import org.cafienne.actormodel.message.IncomingActorMessage;
+import org.cafienne.actormodel.identity.ConsentGroupUser;
+import org.cafienne.actormodel.message.command.ModelCommand;
 import org.cafienne.actormodel.message.event.ActorModified;
 import org.cafienne.consentgroup.ConsentGroupActor;
 import org.cafienne.infrastructure.serialization.Manifest;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 
 /**
  * Event that is published after an {@link org.cafienne.consentgroup.actorapi.command.ConsentGroupCommand} has been fully handled by a {@link ConsentGroupActor} instance.
@@ -29,12 +30,17 @@ import org.cafienne.json.ValueMap;
  *
  */
 @Manifest
-public class ConsentGroupModified extends ActorModified<ConsentGroupActor> implements ConsentGroupEvent  {
-    public ConsentGroupModified(ConsentGroupActor actor, IncomingActorMessage source) {
+public class ConsentGroupModified extends ActorModified<ConsentGroupActor, ConsentGroupUser> implements ConsentGroupEvent  {
+    public ConsentGroupModified(ConsentGroupActor actor, ModelCommand source) {
         super(actor, source);
     }
 
     public ConsentGroupModified(ValueMap json) {
         super(json);
+    }
+
+    @Override
+    protected ConsentGroupUser readUser(ValueMap json) {
+        return ConsentGroupUser.deserialize(json);
     }
 }

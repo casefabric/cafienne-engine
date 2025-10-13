@@ -15,30 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cafienne.json;
+package org.cafienne.util.json;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import org.cafienne.cmmn.definition.casefile.PropertyDefinition;
-
-import java.io.IOException;
-
-public class SerializableValue extends PrimitiveValue<Object> {
-    public SerializableValue(Object value) {
+public abstract class NumericValue<T extends Number> extends PrimitiveValue<T> {
+    public NumericValue(T value) {
         super(value);
-    }
-
-    @Override
-    public SerializableValue cloneValueNode() {
-        return new SerializableValue(value);
-    }
-
-    @Override
-    public boolean matches(PropertyDefinition.PropertyType propertyType) {
-        return propertyType == PropertyDefinition.PropertyType.Unspecified;
-    }
-
-    @Override
-    public void print(JsonGenerator generator) throws IOException {
-        generator.writeObject(String.valueOf(value));
     }
 }

@@ -19,8 +19,8 @@ package org.cafienne.processtask.implementation;
 
 import org.cafienne.cmmn.instance.State;
 import org.cafienne.cmmn.instance.Transition;
-import org.cafienne.json.Value;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.Value;
+import org.cafienne.util.json.ValueMap;
 import org.cafienne.processtask.definition.SubProcessDefinition;
 import org.cafienne.processtask.definition.SubProcessOutputMappingDefinition;
 import org.cafienne.processtask.instance.ProcessTaskActor;

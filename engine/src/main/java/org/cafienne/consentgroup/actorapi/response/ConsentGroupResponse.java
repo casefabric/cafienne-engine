@@ -21,7 +21,7 @@ import org.cafienne.actormodel.message.response.BaseModelResponse;
 import org.cafienne.consentgroup.actorapi.ConsentGroupMessage;
 import org.cafienne.consentgroup.actorapi.command.ConsentGroupCommand;
 import org.cafienne.infrastructure.serialization.Manifest;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 
 @Manifest
 public class ConsentGroupResponse extends BaseModelResponse implements ConsentGroupMessage {

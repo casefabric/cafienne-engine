@@ -18,15 +18,16 @@
 package org.cafienne.cmmn.actorapi.event;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import org.cafienne.actormodel.message.IncomingActorMessage;
+import org.cafienne.actormodel.identity.CaseUserIdentity;
+import org.cafienne.actormodel.message.command.ModelCommand;
 import org.cafienne.actormodel.message.event.ActorModified;
 import org.cafienne.cmmn.actorapi.command.CaseCommand;
 import org.cafienne.cmmn.instance.Case;
 import org.cafienne.cmmn.instance.State;
 import org.cafienne.infrastructure.serialization.Fields;
 import org.cafienne.infrastructure.serialization.Manifest;
-import org.cafienne.json.LongValue;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.LongValue;
+import org.cafienne.util.json.ValueMap;
 
 import java.io.IOException;
 
@@ -36,11 +37,11 @@ import java.io.IOException;
  *
  */
 @Manifest
-public class CaseModified extends ActorModified<Case> implements CaseEvent {
+public class CaseModified extends ActorModified<Case, CaseUserIdentity> implements CaseEvent {
     private final int numFailures;
     private final State state;
 
-    public CaseModified(Case caseInstance, IncomingActorMessage source, int numFailures) {
+    public CaseModified(Case caseInstance, ModelCommand source, int numFailures) {
         super(caseInstance, source);
         this.numFailures = numFailures;
         this.state = caseInstance.getCasePlan().getState();
@@ -50,6 +51,11 @@ public class CaseModified extends ActorModified<Case> implements CaseEvent {
         super(json);
         this.numFailures = json.rawInt(Fields.numFailures);
         this.state = json.readEnum(Fields.state, State.class);
+    }
+
+    @Override
+    protected CaseUserIdentity readUser(ValueMap json) {
+        return CaseUserIdentity.deserialize(json);
     }
 
     /**

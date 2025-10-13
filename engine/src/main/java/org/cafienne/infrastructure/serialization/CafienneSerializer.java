@@ -23,9 +23,9 @@ import org.cafienne.infrastructure.serialization.serializers.CommandSerializers;
 import org.cafienne.infrastructure.serialization.serializers.EventSerializers;
 import org.cafienne.infrastructure.serialization.serializers.ResponseSerializers;
 import org.cafienne.infrastructure.serialization.serializers.StorageSerializers;
-import org.cafienne.json.JSONParseFailure;
-import org.cafienne.json.JSONReader;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.JSONParseFailure;
+import org.cafienne.util.json.JSONReader;
+import org.cafienne.util.json.ValueMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

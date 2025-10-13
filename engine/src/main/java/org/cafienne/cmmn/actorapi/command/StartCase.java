@@ -30,8 +30,8 @@ import org.cafienne.cmmn.instance.Case;
 import org.cafienne.cmmn.instance.team.CaseTeamError;
 import org.cafienne.infrastructure.serialization.Fields;
 import org.cafienne.infrastructure.serialization.Manifest;
-import org.cafienne.json.StringValue;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.StringValue;
+import org.cafienne.util.json.ValueMap;
 
 import java.io.IOException;
 

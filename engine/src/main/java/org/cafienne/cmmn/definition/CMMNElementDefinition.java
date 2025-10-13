@@ -20,7 +20,7 @@ package org.cafienne.cmmn.definition;
 import org.cafienne.infrastructure.serialization.CafienneSerializer;
 import org.cafienne.infrastructure.serialization.DeserializationError;
 import org.cafienne.infrastructure.serialization.Fields;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 import org.cafienne.util.XMLHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

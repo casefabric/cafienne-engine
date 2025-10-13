@@ -22,7 +22,7 @@ import org.cafienne.actormodel.message.command.BootstrapMessage;
 import org.cafienne.infrastructure.EngineVersion;
 import org.cafienne.infrastructure.serialization.Fields;
 import org.cafienne.infrastructure.serialization.Manifest;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 import org.cafienne.processtask.actorapi.command.StartProcess;
 import org.cafienne.processtask.definition.ProcessDefinition;
 import org.cafienne.processtask.instance.ProcessTaskActor;

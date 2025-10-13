@@ -20,7 +20,7 @@ package org.cafienne.cmmn.instance;
 import org.cafienne.cmmn.definition.DiscretionaryItemDefinition;
 import org.cafienne.cmmn.definition.team.CaseRoleDefinition;
 import org.cafienne.infrastructure.serialization.Fields;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 
 import java.util.Collection;
 

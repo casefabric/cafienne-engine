@@ -23,8 +23,8 @@ import org.cafienne.humantask.instance.TaskAction;
 import org.cafienne.humantask.instance.TaskState;
 import org.cafienne.infrastructure.serialization.Fields;
 import org.cafienne.infrastructure.serialization.Manifest;
-import org.cafienne.json.Value;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.Value;
+import org.cafienne.util.json.ValueMap;
 
 import java.io.IOException;
 import java.time.Instant;

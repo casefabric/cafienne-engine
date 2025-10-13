@@ -14,7 +14,7 @@ import org.cafienne.cmmn.test.TestScript.{loadCaseDefinition, testUser}
 import org.cafienne.humantask.actorapi.command.CompleteHumanTask
 import org.cafienne.infrastructure.config.TestConfig
 import org.cafienne.infrastructure.cqrs.batch.public_events.{CaseCompleted, HumanTaskCompleted, HumanTaskStarted, PublicCaseEventBatch}
-import org.cafienne.json.ValueMap
+import org.cafienne.util.json.ValueMap
 import org.cafienne.util.Guid
 import org.scalatest.BeforeAndAfterAll
 import org.scalatest.concurrent.{Eventually, ScalaFutures}

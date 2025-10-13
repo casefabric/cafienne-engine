@@ -17,7 +17,7 @@
 
 package org.cafienne.persistence.querydb.query.result
 
-import org.cafienne.json.{CafienneJson, Value, ValueMap}
+import org.cafienne.util.json.{CafienneJson, Value, ValueMap}
 
 final case class CaseList(caseName: String = "",
                           totalInstances: Long = 0,

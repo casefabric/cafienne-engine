@@ -17,7 +17,7 @@
 
 package org.cafienne.persistence.querydb.query.result
 
-import org.cafienne.json.{CafienneJson, Value, ValueMap}
+import org.cafienne.util.json.{CafienneJson, Value, ValueMap}
 import org.cafienne.persistence.querydb.record._
 
 final case class FullCase(caseInstance: CaseRecord, file: Option[CaseFileRecord], team: CaseTeamResponse, planitems: Seq[PlanItemRecord], identifiers: Seq[CaseBusinessIdentifierRecord]) extends CafienneJson {

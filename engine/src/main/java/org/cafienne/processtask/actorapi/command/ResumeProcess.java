@@ -17,16 +17,16 @@
 
 package org.cafienne.processtask.actorapi.command;
 
-import org.cafienne.actormodel.identity.UserIdentity;
+import org.cafienne.actormodel.identity.CaseUserIdentity;
 import org.cafienne.infrastructure.serialization.Manifest;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 import org.cafienne.processtask.actorapi.event.ProcessResumed;
 import org.cafienne.processtask.implementation.SubProcess;
 import org.cafienne.processtask.instance.ProcessTaskActor;
 
 @Manifest
 public class ResumeProcess extends ProcessCommand {
-    public ResumeProcess(UserIdentity user, String id) {
+    public ResumeProcess(CaseUserIdentity user, String id) {
         super(user, id);
     }
 

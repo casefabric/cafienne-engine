@@ -25,7 +25,7 @@ import org.cafienne.cmmn.instance.task.humantask.HumanTask;
 import org.cafienne.humantask.instance.WorkflowTask;
 import org.cafienne.infrastructure.serialization.Fields;
 import org.cafienne.infrastructure.serialization.Manifest;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 
 import java.io.IOException;
 

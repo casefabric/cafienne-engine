@@ -9,7 +9,7 @@ import org.cafienne.actormodel.exception.InvalidCommandException;
 import org.cafienne.actormodel.message.response.ModelResponse;
 import org.cafienne.infrastructure.serialization.Fields;
 import org.cafienne.infrastructure.serialization.Manifest;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 
 import java.io.IOException;
 

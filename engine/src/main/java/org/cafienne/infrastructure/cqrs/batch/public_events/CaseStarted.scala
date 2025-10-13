@@ -20,7 +20,7 @@ package org.cafienne.infrastructure.cqrs.batch.public_events
 import org.cafienne.cmmn.actorapi.event.CaseDefinitionApplied
 import org.cafienne.cmmn.actorapi.event.file.CaseFileItemTransitioned
 import org.cafienne.infrastructure.serialization.{Fields, Manifest}
-import org.cafienne.json.ValueMap
+import org.cafienne.util.json.ValueMap
 import org.cafienne.persistence.querydb.materializer.cases.file.CaseFileMerger
 
 @Manifest

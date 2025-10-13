@@ -17,7 +17,7 @@
 
 package org.cafienne.cmmn.instance.task.validation;
 
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 
 /**
  * Validation errors can occur if the TaskOutputValidator ran into some networking error and the like.

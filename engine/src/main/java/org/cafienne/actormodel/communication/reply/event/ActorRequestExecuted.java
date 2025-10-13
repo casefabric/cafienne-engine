@@ -2,7 +2,7 @@ package org.cafienne.actormodel.communication.reply.event;
 
 import org.cafienne.actormodel.message.command.ModelCommand;
 import org.cafienne.infrastructure.serialization.Manifest;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 
 @Manifest
 public class ActorRequestExecuted extends ModelActorRequestEvent {

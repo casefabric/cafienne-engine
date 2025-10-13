@@ -23,7 +23,7 @@ import org.cafienne.actormodel.identity.ConsentGroupUser;
 import org.cafienne.consentgroup.ConsentGroupActor;
 import org.cafienne.infrastructure.serialization.Fields;
 import org.cafienne.infrastructure.serialization.Manifest;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 
 import java.io.IOException;
 

@@ -15,40 +15,38 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cafienne.json;
+package org.cafienne.util.json;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import org.cafienne.cmmn.definition.casefile.PropertyDefinition;
 
 import java.io.IOException;
+import java.time.Instant;
 
-public class DoubleValue extends NumericValue<Double> {
-    public DoubleValue(double value) {
-        super(value);
-    }
+public class InstantValue extends PrimitiveValue<Instant> {
+	public InstantValue(Instant value) {
+		super(value);
+	}
 
-    @Override
-    public DoubleValue cloneValueNode() {
-        return new DoubleValue(value);
-    }
-    
-    @Override
-    public boolean matches(PropertyDefinition.PropertyType propertyType) {
-        switch (propertyType) {
-        case Double:
-        case Float:
-        case Decimal:
-        case String: // Hmmm, do we really match strings?
-        case Unspecified:
-            return true;
-        default:
-            return baseMatch(propertyType);
-        }
+	@Override
+	public InstantValue cloneValueNode() {
+		return new InstantValue(value);
+	}
+	@Override
+	public boolean matches(PropertyDefinition.PropertyType propertyType) {
+		switch (propertyType) {
+		case Date:
+		case Time: // Hmmm, do we really match strings?
+		case DateTime:
+		case Unspecified:
+			return true;
+		default:
+			return baseMatch(propertyType);
+		}
+	}
 
-    }
-
-    @Override
-    public void print(JsonGenerator generator) throws IOException {
-        generator.writeNumber(value);
-    }
+	@Override
+	public void print(JsonGenerator generator) throws IOException {
+		generator.writeString(value.toString());
+	}
 }

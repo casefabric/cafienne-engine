@@ -17,7 +17,7 @@
 
 package org.cafienne.infrastructure.cqrs.batch.public_events
 
-import org.cafienne.json.{CafienneJson, Value, ValueMap}
+import org.cafienne.util.json.{CafienneJson, Value, ValueMap}
 
 import java.time.Instant
 

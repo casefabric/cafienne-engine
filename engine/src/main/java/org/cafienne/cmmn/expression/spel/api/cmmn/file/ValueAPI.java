@@ -21,7 +21,7 @@ import org.cafienne.cmmn.expression.spel.SpelPropertyValueProvider;
 import org.cafienne.cmmn.expression.spel.api.APIObject;
 import org.cafienne.cmmn.instance.Case;
 import org.cafienne.cmmn.instance.casefile.CaseFileItem;
-import org.cafienne.json.Value;
+import org.cafienne.util.json.Value;
 
 /**
  */

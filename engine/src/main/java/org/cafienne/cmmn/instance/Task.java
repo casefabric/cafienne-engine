@@ -28,8 +28,8 @@ import org.cafienne.cmmn.definition.parameter.TaskOutputParameterDefinition;
 import org.cafienne.cmmn.instance.parameter.TaskInputParameter;
 import org.cafienne.cmmn.instance.parameter.TaskOutputParameter;
 import org.cafienne.cmmn.instance.task.validation.ValidationResponse;
-import org.cafienne.json.Value;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.Value;
+import org.cafienne.util.json.ValueMap;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 

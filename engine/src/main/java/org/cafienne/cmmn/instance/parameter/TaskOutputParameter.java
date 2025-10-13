@@ -23,7 +23,7 @@ import org.cafienne.cmmn.definition.parameter.TaskOutputParameterDefinition;
 import org.cafienne.cmmn.instance.Task;
 import org.cafienne.cmmn.instance.TransitionDeniedException;
 import org.cafienne.cmmn.instance.casefile.CaseFileItem;
-import org.cafienne.json.Value;
+import org.cafienne.util.json.Value;
 
 /**
  * A TaskOutputParameter is created right before a task completes.

@@ -21,7 +21,7 @@ import org.cafienne.cmmn.definition.sentry.OnPartDefinition;
 import org.cafienne.cmmn.instance.CMMNElement;
 import org.cafienne.cmmn.instance.PlanItem;
 import org.cafienne.cmmn.instance.casefile.CaseFileItem;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 import org.w3c.dom.Element;
 
 import java.util.ArrayList;

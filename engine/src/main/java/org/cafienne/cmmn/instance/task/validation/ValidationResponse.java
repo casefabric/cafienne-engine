@@ -17,7 +17,7 @@
 
 package org.cafienne.cmmn.instance.task.validation;
 
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 
 public class ValidationResponse {
     private final ValueMap content;

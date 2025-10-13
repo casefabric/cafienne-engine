@@ -20,7 +20,7 @@ package org.cafienne.cmmn.actorapi.event.team.deprecated.member;
 import com.fasterxml.jackson.core.JsonGenerator;
 import org.cafienne.cmmn.actorapi.event.team.deprecated.DeprecatedCaseTeamEvent;
 import org.cafienne.infrastructure.serialization.Fields;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 
 import java.io.IOException;
 

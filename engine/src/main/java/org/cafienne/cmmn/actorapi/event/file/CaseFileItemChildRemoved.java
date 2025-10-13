@@ -26,8 +26,8 @@ import org.cafienne.cmmn.instance.casefile.CaseFileItemTransition;
 import org.cafienne.cmmn.instance.casefile.InvalidPathException;
 import org.cafienne.infrastructure.serialization.Fields;
 import org.cafienne.infrastructure.serialization.Manifest;
-import org.cafienne.json.Value;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.Value;
+import org.cafienne.util.json.ValueMap;
 
 import java.io.IOException;
 

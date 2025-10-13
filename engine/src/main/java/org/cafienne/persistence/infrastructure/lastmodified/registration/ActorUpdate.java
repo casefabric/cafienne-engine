@@ -9,7 +9,7 @@ class ActorUpdate {
     final Instant lastModified;
     final String correlationId;
 
-    ActorUpdate(ActorModified<?> event) {
+    ActorUpdate(ActorModified<?, ?> event) {
         this.lastModified = event.lastModified;
         this.correlationId = event.correlationId();
     }

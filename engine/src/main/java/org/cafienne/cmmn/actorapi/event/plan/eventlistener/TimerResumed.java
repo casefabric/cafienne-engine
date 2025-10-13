@@ -19,7 +19,7 @@ package org.cafienne.cmmn.actorapi.event.plan.eventlistener;
 
 import org.cafienne.cmmn.instance.TimerEvent;
 import org.cafienne.infrastructure.serialization.Manifest;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 
 @Manifest
 public class TimerResumed extends TimerSet {

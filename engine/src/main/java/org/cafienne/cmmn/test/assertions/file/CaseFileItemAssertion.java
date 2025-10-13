@@ -23,8 +23,8 @@ import org.cafienne.cmmn.instance.State;
 import org.cafienne.cmmn.test.CaseTestCommand;
 import org.cafienne.cmmn.test.assertions.ModelTestCommandAssertion;
 import org.cafienne.cmmn.test.assertions.PublishedEventsAssertion;
-import org.cafienne.json.Value;
-import org.cafienne.json.ValueList;
+import org.cafienne.util.json.Value;
+import org.cafienne.util.json.ValueList;
 
 import java.util.ArrayList;
 import java.util.List;

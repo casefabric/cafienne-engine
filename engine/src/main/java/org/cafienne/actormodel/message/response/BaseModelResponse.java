@@ -21,7 +21,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import org.cafienne.actormodel.identity.UserIdentity;
 import org.cafienne.actormodel.message.command.ModelCommand;
 import org.cafienne.infrastructure.serialization.Fields;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 
 import java.io.IOException;
 import java.time.Instant;

@@ -23,7 +23,7 @@ import org.cafienne.actormodel.identity.CaseUserIdentity;
 import org.cafienne.cmmn.instance.team.Team;
 import org.cafienne.infrastructure.serialization.Fields;
 import org.cafienne.infrastructure.serialization.Manifest;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 
 import java.io.IOException;
 

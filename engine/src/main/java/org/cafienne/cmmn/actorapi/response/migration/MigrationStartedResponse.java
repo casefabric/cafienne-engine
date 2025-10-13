@@ -20,7 +20,7 @@ package org.cafienne.cmmn.actorapi.response.migration;
 import org.cafienne.cmmn.actorapi.command.CaseCommand;
 import org.cafienne.cmmn.actorapi.response.CaseResponse;
 import org.cafienne.infrastructure.serialization.Manifest;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 
 /**
  * Response when a StartCase command is sent

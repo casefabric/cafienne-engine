@@ -22,8 +22,8 @@ import org.cafienne.cmmn.actorapi.event.file.BusinessIdentifierEvent;
 import org.cafienne.cmmn.actorapi.event.file.BusinessIdentifierSet;
 import org.cafienne.cmmn.definition.casefile.PropertyDefinition;
 import org.cafienne.cmmn.instance.CMMNElement;
-import org.cafienne.json.Value;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.Value;
+import org.cafienne.util.json.ValueMap;
 
 class BusinessIdentifier extends CMMNElement<PropertyDefinition> {
     private final CaseFileItem item;

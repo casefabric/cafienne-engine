@@ -20,12 +20,11 @@ package org.cafienne.processtask.instance;
 import org.cafienne.actormodel.ModelActor;
 import org.cafienne.actormodel.communication.request.response.ActorRequestFailure;
 import org.cafienne.actormodel.communication.request.state.RemoteActorState;
-import org.cafienne.actormodel.message.IncomingActorMessage;
 import org.cafienne.actormodel.message.command.ModelCommand;
 import org.cafienne.actormodel.message.event.ModelEvent;
 import org.cafienne.cmmn.actorapi.command.plan.task.CompleteTask;
 import org.cafienne.cmmn.actorapi.command.plan.task.FailTask;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 import org.cafienne.processtask.actorapi.command.ProcessCommand;
 import org.cafienne.processtask.actorapi.command.StartProcess;
 import org.cafienne.processtask.actorapi.event.*;
@@ -192,7 +191,7 @@ public class ProcessTaskActor extends ModelActor {
     }
 
     @Override
-    protected void addCommitEvent(IncomingActorMessage message) {
+    protected void addCommitEvent(ModelCommand message) {
         addEvent(new ProcessModified(this, message));
     }
 

@@ -20,7 +20,7 @@ package org.cafienne.infrastructure.cqrs.batch.public_events.migration
 import org.cafienne.cmmn.instance.Path
 import org.cafienne.infrastructure.cqrs.batch.public_events.{CafiennePublicEventContent, PublicCaseEventBatch, PublicEventWrapper}
 import org.cafienne.infrastructure.serialization.{Fields, Manifest}
-import org.cafienne.json.ValueMap
+import org.cafienne.util.json.ValueMap
 
 @Manifest
 case class HumanTaskDropped(taskId: String, path: Path, taskName: String, caseInstanceId: String, parentStage: String) extends CafiennePublicEventContent {

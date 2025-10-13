@@ -25,7 +25,7 @@ import org.cafienne.cmmn.instance.casefile.CaseFileItem;
 import org.cafienne.cmmn.instance.casefile.CaseFileItemCollection;
 import org.cafienne.cmmn.instance.casefile.InvalidPathException;
 import org.cafienne.infrastructure.serialization.Fields;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

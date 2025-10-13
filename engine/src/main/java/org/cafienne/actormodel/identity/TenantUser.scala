@@ -20,7 +20,7 @@ package org.cafienne.actormodel.identity
 import com.fasterxml.jackson.core.JsonGenerator
 import com.typesafe.scalalogging.LazyLogging
 import org.cafienne.infrastructure.serialization.Fields
-import org.cafienne.json.{Value, ValueMap}
+import org.cafienne.util.json.{Value, ValueMap}
 import org.cafienne.tenant.actorapi.event.deprecated._
 
 import java.util

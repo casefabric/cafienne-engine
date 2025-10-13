@@ -15,18 +15,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cafienne.journal.jdbc
-
-import com.typesafe.scalalogging.LazyLogging
-import org.apache.pekko.actor.ActorSystem
-import org.apache.pekko.persistence.jdbc.db.DefaultSlickDatabaseProvider
+package org.cafienne.util.json;
 
 /**
-  * This class is no longer needed, but it may still be configured in existing installations.
-  *
-  * @deprecated This class is no longer in use
-  *
-  */
-class EventDatabaseProvider(system: ActorSystem) extends DefaultSlickDatabaseProvider(system) with LazyLogging {
-  logger.warn("Kindly remove the configuration property 'database-provider-fqcn = \"org.cafienne.journal.jdbc.EventDatabaseProvider\n' as this is no longer supported and will be dropped in a future release")
+ * Exception thrown when a JSON parsing ran into a failure.
+ * Either due to an IOException or due to an invalid token or empty content.
+ */
+public class JSONParseFailure extends Exception {
+    JSONParseFailure(String msg) {
+        super(msg);
+    }
 }

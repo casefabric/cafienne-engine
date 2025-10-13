@@ -17,10 +17,11 @@
 
 package org.cafienne.tenant.actorapi.event;
 
-import org.cafienne.actormodel.message.IncomingActorMessage;
+import org.cafienne.actormodel.identity.TenantUser;
+import org.cafienne.actormodel.message.command.ModelCommand;
 import org.cafienne.actormodel.message.event.ActorModified;
 import org.cafienne.infrastructure.serialization.Manifest;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 import org.cafienne.tenant.TenantActor;
 
 /**
@@ -29,12 +30,17 @@ import org.cafienne.tenant.TenantActor;
  *
  */
 @Manifest
-public class TenantModified extends ActorModified<TenantActor> implements TenantEvent {
-    public TenantModified(TenantActor actor, IncomingActorMessage source) {
+public class TenantModified extends ActorModified<TenantActor, TenantUser> implements TenantEvent {
+    public TenantModified(TenantActor actor, ModelCommand source) {
         super(actor, source);
     }
 
     public TenantModified(ValueMap json) {
         super(json);
+    }
+
+    @Override
+    protected TenantUser readUser(ValueMap json) {
+        return TenantUser.deserialize(json);
     }
 }

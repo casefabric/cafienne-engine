@@ -26,7 +26,7 @@ import org.cafienne.cmmn.definition.CaseDefinition;
 import org.cafienne.cmmn.definition.CaseTaskDefinition;
 import org.cafienne.cmmn.definition.ItemDefinition;
 import org.cafienne.cmmn.instance.*;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

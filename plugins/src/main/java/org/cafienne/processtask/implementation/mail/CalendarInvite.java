@@ -30,9 +30,9 @@ import net.fortuna.ical4j.model.component.VEvent;
 import net.fortuna.ical4j.model.parameter.Role;
 import net.fortuna.ical4j.model.property.*;
 import net.fortuna.ical4j.util.RandomUidGenerator;
-import org.cafienne.json.Value;
-import org.cafienne.json.ValueList;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.Value;
+import org.cafienne.util.json.ValueList;
+import org.cafienne.util.json.ValueMap;
 
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;

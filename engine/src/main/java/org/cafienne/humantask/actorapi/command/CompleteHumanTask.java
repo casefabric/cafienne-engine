@@ -21,7 +21,7 @@ import org.cafienne.actormodel.identity.CaseUserIdentity;
 import org.cafienne.cmmn.instance.Task;
 import org.cafienne.humantask.instance.WorkflowTask;
 import org.cafienne.infrastructure.serialization.Manifest;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 
 /**
  * This command must be used to complete a human task with additional task output parameters.

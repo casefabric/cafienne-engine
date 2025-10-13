@@ -20,7 +20,7 @@ package org.cafienne.cmmn.actorapi.command.plan.task;
 import org.cafienne.actormodel.ModelActor;
 import org.cafienne.cmmn.instance.Case;
 import org.cafienne.infrastructure.serialization.Manifest;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 
 @Manifest
 public class FailTask extends CompleteTask {

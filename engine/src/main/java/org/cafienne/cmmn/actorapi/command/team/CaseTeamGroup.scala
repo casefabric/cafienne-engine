@@ -20,7 +20,7 @@ package org.cafienne.cmmn.actorapi.command.team
 import org.cafienne.cmmn.definition.team.CaseTeamDefinition
 import org.cafienne.cmmn.instance.team.{CaseTeamError, MemberType, Team}
 import org.cafienne.infrastructure.serialization.Fields
-import org.cafienne.json._
+import org.cafienne.util.json._
 
 import java.util
 import scala.jdk.CollectionConverters._

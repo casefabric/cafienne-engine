@@ -21,7 +21,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import org.cafienne.actormodel.identity.ConsentGroupUser;
 import org.cafienne.actormodel.message.event.BaseModelEvent;
 import org.cafienne.consentgroup.ConsentGroupActor;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 
 import java.io.IOException;
 

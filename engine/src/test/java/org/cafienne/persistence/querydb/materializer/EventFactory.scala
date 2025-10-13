@@ -8,7 +8,7 @@ import org.cafienne.cmmn.definition.CaseDefinition
 import org.cafienne.cmmn.instance.casefile.CaseFileItemTransition
 import org.cafienne.cmmn.instance.{PlanItemType, State, Transition}
 import org.cafienne.infrastructure.serialization.Fields
-import org.cafienne.json.ValueMap
+import org.cafienne.util.json.ValueMap
 import org.cafienne.system.CaseSystem
 
 import java.time.Instant

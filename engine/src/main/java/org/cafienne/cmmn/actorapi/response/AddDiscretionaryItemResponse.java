@@ -20,7 +20,7 @@ package org.cafienne.cmmn.actorapi.response;
 import org.cafienne.cmmn.actorapi.command.plan.AddDiscretionaryItem;
 import org.cafienne.cmmn.actorapi.command.plan.GetDiscretionaryItems;
 import org.cafienne.infrastructure.serialization.Manifest;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 
 /**
  * Response to a {@link GetDiscretionaryItems} command

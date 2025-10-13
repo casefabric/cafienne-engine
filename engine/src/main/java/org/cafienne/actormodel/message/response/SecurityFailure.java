@@ -20,7 +20,7 @@ package org.cafienne.actormodel.message.response;
 import org.cafienne.actormodel.exception.AuthorizationException;
 import org.cafienne.actormodel.message.command.ModelCommand;
 import org.cafienne.infrastructure.serialization.Manifest;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 
 /**
  * Can be used to return an exception to the sender of the command.

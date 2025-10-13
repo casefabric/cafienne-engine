@@ -20,9 +20,9 @@ package org.cafienne.actormodel.message.event;
 import com.fasterxml.jackson.core.JsonGenerator;
 import org.cafienne.actormodel.ModelActor;
 import org.cafienne.actormodel.identity.UserIdentity;
-import org.cafienne.actormodel.message.IncomingActorMessage;
+import org.cafienne.actormodel.message.command.ModelCommand;
 import org.cafienne.infrastructure.serialization.Fields;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 
 import java.io.IOException;
 import java.time.Instant;
@@ -33,12 +33,12 @@ import java.time.Instant;
  *
  * @param <M>
  */
-public abstract class ActorModified<M extends ModelActor> extends BaseModelEvent<M, UserIdentity> implements CommitEvent {
-    public final transient IncomingActorMessage source;
+public abstract class ActorModified<M extends ModelActor, U extends UserIdentity> extends BaseModelEvent<M, U> implements CommitEvent {
+    public final transient ModelCommand source;
     public final String sourceString;
     public final Instant lastModified;
 
-    protected ActorModified(M actor, IncomingActorMessage source) {
+    protected ActorModified(M actor, ModelCommand source) {
         super(actor);
         this.source = source;
         this.sourceString = source.getDescription();
@@ -50,11 +50,6 @@ public abstract class ActorModified<M extends ModelActor> extends BaseModelEvent
         this.source = null;
         this.lastModified = json.readInstant(Fields.lastModified);
         this.sourceString = json.readString(Fields.source, "unknown message");
-    }
-
-    @Override
-    protected UserIdentity readUser(ValueMap json) {
-        return UserIdentity.deserialize(json);
     }
 
     public Instant lastModified() {

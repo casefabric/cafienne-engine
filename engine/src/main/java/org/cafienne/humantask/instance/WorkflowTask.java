@@ -34,9 +34,9 @@ import org.cafienne.cmmn.instance.task.validation.ValidationError;
 import org.cafienne.cmmn.instance.task.validation.ValidationResponse;
 import org.cafienne.humantask.actorapi.event.*;
 import org.cafienne.humantask.actorapi.event.migration.HumanTaskMigrated;
-import org.cafienne.json.StringValue;
-import org.cafienne.json.Value;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.StringValue;
+import org.cafienne.util.json.Value;
+import org.cafienne.util.json.ValueMap;
 
 import java.time.Instant;
 import java.util.Objects;

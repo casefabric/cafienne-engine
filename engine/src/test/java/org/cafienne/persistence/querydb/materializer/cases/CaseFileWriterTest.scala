@@ -2,7 +2,7 @@ package org.cafienne.persistence.querydb.materializer.cases
 
 import org.cafienne.cmmn.actorapi.event.file.CaseFileItemTransitioned
 import org.cafienne.cmmn.instance.casefile.CaseFileItemTransition
-import org.cafienne.json.ValueMap
+import org.cafienne.util.json.ValueMap
 import org.cafienne.persistence.querydb.materializer.TestQueryDB
 
 import java.time.Instant

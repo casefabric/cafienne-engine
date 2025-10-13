@@ -21,7 +21,7 @@ import org.cafienne.cmmn.actorapi.command.team.CaseTeamGroup;
 import org.cafienne.cmmn.actorapi.event.team.CaseTeamMemberRemoved;
 import org.cafienne.cmmn.instance.team.Team;
 import org.cafienne.infrastructure.serialization.Manifest;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 
 /**
  * Event caused when a consent group access to the case is removed.

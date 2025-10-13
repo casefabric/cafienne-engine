@@ -15,36 +15,36 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cafienne.json;
+package org.cafienne.util.json;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import org.cafienne.cmmn.definition.casefile.PropertyDefinition;
-import org.cafienne.infrastructure.serialization.CafienneSerializable;
 
 import java.io.IOException;
 
-public class CafienneSerializableValue extends PrimitiveValue<CafienneSerializable> {
-    public CafienneSerializableValue(CafienneSerializable value) {
+public class LongValue extends NumericValue<Long> {
+    public LongValue(long value) {
         super(value);
     }
-
+    
     @Override
-    public CafienneSerializableValue cloneValueNode() {
-        return new CafienneSerializableValue(value);
+    public LongValue cloneValueNode() {
+        return new LongValue(value);
     }
-
     @Override
     public boolean matches(PropertyDefinition.PropertyType propertyType) {
-        return propertyType == PropertyDefinition.PropertyType.Unspecified;
+        switch (propertyType) {
+        case Integer:
+        case String: // Hmmm, do we really match strings?
+        case Unspecified:
+            return true;
+        default:
+            return baseMatch(propertyType);
+        }
     }
 
     @Override
     public void print(JsonGenerator generator) throws IOException {
-        value.writeThisObject(generator);
-    }
-
-    @Override
-    public boolean isPrimitive() {
-        return false;
+        generator.writeNumber(value);
     }
 }

@@ -9,9 +9,9 @@ import org.cafienne.cmmn.test.TestUser;
 import org.cafienne.cmmn.test.assertions.HumanTaskAssertion;
 import org.cafienne.humantask.actorapi.command.*;
 import org.cafienne.humantask.instance.TaskState;
-import org.cafienne.json.StringValue;
-import org.cafienne.json.Value;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.StringValue;
+import org.cafienne.util.json.Value;
+import org.cafienne.util.json.ValueMap;
 import org.junit.Test;
 
 import java.time.Instant;

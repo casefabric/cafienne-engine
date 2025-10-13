@@ -17,7 +17,7 @@
 
 package org.cafienne.service.http.cases.history
 
-import org.cafienne.json.{CafienneJson, Value}
+import org.cafienne.util.json.{CafienneJson, Value}
 import org.cafienne.persistence.querydb.record.PlanItemHistoryRecord
 
 final case class PlanItemHistory(records: Seq[PlanItemHistoryRecord]) extends CafienneJson {

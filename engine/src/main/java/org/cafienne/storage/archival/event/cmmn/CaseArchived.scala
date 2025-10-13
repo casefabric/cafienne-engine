@@ -18,7 +18,7 @@
 package org.cafienne.storage.archival.event.cmmn
 
 import org.cafienne.infrastructure.serialization.Manifest
-import org.cafienne.json.ValueMap
+import org.cafienne.util.json.ValueMap
 import org.cafienne.storage.actormodel.ActorMetadata
 
 @Manifest

@@ -21,7 +21,7 @@ import org.cafienne.actormodel.identity.ConsentGroupUser;
 import org.cafienne.consentgroup.ConsentGroupActor;
 import org.cafienne.consentgroup.actorapi.ConsentGroup;
 import org.cafienne.infrastructure.serialization.Manifest;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 
 @Manifest
 public class ReplaceConsentGroup extends CollectiveCommand {

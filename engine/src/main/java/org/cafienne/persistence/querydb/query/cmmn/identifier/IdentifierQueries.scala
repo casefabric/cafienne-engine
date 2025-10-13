@@ -18,7 +18,7 @@
 package org.cafienne.persistence.querydb.query.cmmn.identifier
 
 import org.cafienne.actormodel.identity.UserIdentity
-import org.cafienne.json.{CafienneJson, StringValue, Value}
+import org.cafienne.util.json.{CafienneJson, StringValue, Value}
 import org.cafienne.persistence.infrastructure.jdbc.query.{Area, Sort}
 import org.cafienne.persistence.querydb.query.cmmn.filter.IdentifierFilter
 

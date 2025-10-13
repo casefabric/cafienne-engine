@@ -33,7 +33,7 @@ import org.cafienne.cmmn.repository.MissingDefinitionException;
 import org.cafienne.cmmn.test.assertions.CaseAssertion;
 import org.cafienne.cmmn.test.assertions.FailureAssertion;
 import org.cafienne.infrastructure.config.util.SystemConfig;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 import org.cafienne.system.CaseSystem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

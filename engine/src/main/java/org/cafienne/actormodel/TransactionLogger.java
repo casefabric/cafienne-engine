@@ -3,7 +3,7 @@ package org.cafienne.actormodel;
 import org.cafienne.actormodel.debug.DebugInfoAppender;
 import org.cafienne.actormodel.message.event.DebugEvent;
 import org.cafienne.infrastructure.enginedeveloper.EngineDeveloperConsole;
-import org.cafienne.json.Value;
+import org.cafienne.util.json.Value;
 import org.slf4j.Logger;
 
 class TransactionLogger {

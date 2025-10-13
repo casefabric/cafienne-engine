@@ -21,7 +21,7 @@ import org.cafienne.cmmn.instance.task.humantask.HumanTask;
 import org.cafienne.humantask.instance.TaskAction;
 import org.cafienne.humantask.instance.TaskState;
 import org.cafienne.infrastructure.serialization.Manifest;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 
 @Manifest
 public class HumanTaskDelegated extends HumanTaskAssigned {

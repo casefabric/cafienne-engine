@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cafienne.json;
+package org.cafienne.util.json;
 
 import com.fasterxml.jackson.core.*;
 

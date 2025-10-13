@@ -29,7 +29,7 @@ import org.cafienne.cmmn.instance.TimerEvent;
 import org.cafienne.cmmn.instance.parameter.TaskInputParameter;
 import org.cafienne.cmmn.instance.sentry.Criterion;
 import org.cafienne.cmmn.instance.task.humantask.HumanTask;
-import org.cafienne.json.Value;
+import org.cafienne.util.json.Value;
 import org.cafienne.processtask.instance.ProcessTaskActor;
 
 import java.time.Duration;

@@ -3,8 +3,9 @@ package org.cafienne.actormodel.communication;
 import com.fasterxml.jackson.core.JsonGenerator;
 import org.cafienne.actormodel.ModelActor;
 import org.cafienne.actormodel.message.event.CaseSystemEvent;
+import org.cafienne.actormodel.message.event.CommitEvent;
 import org.cafienne.infrastructure.serialization.Fields;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 
 import java.io.IOException;
 
@@ -40,3 +41,4 @@ public abstract class CaseSystemCommunicationEvent extends CaseSystemEvent imple
         writeField(generator, Fields.correlationId, messageId);
     }
 }
+

@@ -22,8 +22,8 @@ import org.cafienne.cmmn.definition.ExpressionDefinition;
 import org.cafienne.cmmn.definition.ModelDefinition;
 import org.cafienne.cmmn.definition.ParameterMappingDefinition;
 import org.cafienne.cmmn.definition.parameter.ParameterDefinition;
-import org.cafienne.json.Value;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.Value;
+import org.cafienne.util.json.ValueMap;
 import org.cafienne.processtask.instance.ProcessTaskActor;
 import org.w3c.dom.Element;
 

@@ -18,7 +18,7 @@
 package org.cafienne.storage.archival.state
 
 import org.cafienne.actormodel.message.event.ModelEvent
-import org.cafienne.json.{ValueList, ValueMap}
+import org.cafienne.util.json.{ValueList, ValueMap}
 import org.cafienne.storage.actormodel.message.{StorageActionStarted, StorageActionUpdated, StorageEvent}
 import org.cafienne.storage.actormodel.state.StorageActorState
 import org.cafienne.storage.archival.event._

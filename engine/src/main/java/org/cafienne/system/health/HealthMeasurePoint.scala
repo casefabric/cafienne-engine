@@ -18,7 +18,7 @@
 package org.cafienne.system.health
 
 import com.typesafe.scalalogging.LazyLogging
-import org.cafienne.json.ValueMap
+import org.cafienne.util.json.ValueMap
 
 import java.time.Instant
 

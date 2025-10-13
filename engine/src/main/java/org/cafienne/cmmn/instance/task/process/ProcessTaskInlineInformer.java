@@ -18,7 +18,7 @@
 package org.cafienne.cmmn.instance.task.process;
 
 import org.cafienne.cmmn.definition.ProcessTaskDefinition;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 import org.cafienne.processtask.implementation.InlineSubProcess;
 
 class ProcessTaskInlineInformer extends ProcessInformer {

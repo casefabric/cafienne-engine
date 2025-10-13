@@ -25,7 +25,7 @@ import org.cafienne.consentgroup.actorapi.ConsentGroup;
 import org.cafienne.consentgroup.actorapi.exception.ConsentGroupException;
 import org.cafienne.consentgroup.actorapi.response.ConsentGroupCreatedResponse;
 import org.cafienne.infrastructure.serialization.Manifest;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 
 @Manifest
 public class CreateConsentGroup extends CollectiveCommand implements BootstrapMessage {

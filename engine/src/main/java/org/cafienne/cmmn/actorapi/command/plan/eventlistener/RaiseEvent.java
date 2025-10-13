@@ -23,7 +23,7 @@ import org.cafienne.cmmn.actorapi.command.plan.MakePlanItemTransition;
 import org.cafienne.cmmn.instance.Case;
 import org.cafienne.cmmn.instance.Transition;
 import org.cafienne.infrastructure.serialization.Manifest;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 
 /**
  * A command to have a plan item make a certain transition. E.g. complete a task in a case, or suspend a subprocess.

@@ -12,8 +12,8 @@ import org.cafienne.cmmn.actorapi.command.StartCase;
 import org.cafienne.cmmn.definition.CaseDefinition;
 import org.cafienne.cmmn.instance.State;
 import org.cafienne.cmmn.test.TestScript;
-import org.cafienne.json.ValueList;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueList;
+import org.cafienne.util.json.ValueMap;
 import org.junit.Rule;
 import org.junit.Test;
 

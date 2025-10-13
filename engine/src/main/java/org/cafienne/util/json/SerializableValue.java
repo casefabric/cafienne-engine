@@ -15,37 +15,30 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cafienne.json;
+package org.cafienne.util.json;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import org.cafienne.cmmn.definition.casefile.PropertyDefinition;
 
 import java.io.IOException;
 
-public class BinaryValue extends PrimitiveValue<byte[]> {
-    BinaryValue(byte[] bytes) {
-        super(bytes);
+public class SerializableValue extends PrimitiveValue<Object> {
+    public SerializableValue(Object value) {
+        super(value);
+    }
+
+    @Override
+    public SerializableValue cloneValueNode() {
+        return new SerializableValue(value);
     }
 
     @Override
     public boolean matches(PropertyDefinition.PropertyType propertyType) {
-        switch (propertyType) {
-        case Base64Binary:
-        case String: // Hmmm, do we really match strings?
-        case Unspecified:
-            return true;
-        default:
-            return baseMatch(propertyType);
-        }
-    }
-
-    @Override
-    public BinaryValue cloneValueNode() {
-        return new BinaryValue(value); // Or ... should we also copy/clone the bytearry?
+        return propertyType == PropertyDefinition.PropertyType.Unspecified;
     }
 
     @Override
     public void print(JsonGenerator generator) throws IOException {
-        generator.writeBinary(value);
+        generator.writeObject(String.valueOf(value));
     }
 }

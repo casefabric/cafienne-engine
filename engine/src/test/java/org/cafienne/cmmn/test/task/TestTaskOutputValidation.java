@@ -16,7 +16,7 @@ import org.cafienne.humantask.actorapi.command.CompleteHumanTask;
 import org.cafienne.humantask.actorapi.command.SaveTaskOutput;
 import org.cafienne.humantask.actorapi.command.ValidateTaskOutput;
 import org.cafienne.humantask.actorapi.event.HumanTaskOutputSaved;
-import org.cafienne.json.*;
+import org.cafienne.util.json.*;
 import org.junit.Rule;
 import org.junit.Test;
 

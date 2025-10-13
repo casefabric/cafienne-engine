@@ -18,7 +18,7 @@
 package org.cafienne.storage.actormodel.event
 
 import org.cafienne.infrastructure.serialization.Manifest
-import org.cafienne.json.ValueMap
+import org.cafienne.util.json.ValueMap
 import org.cafienne.storage.actormodel.ActorMetadata
 import org.cafienne.storage.actormodel.message.StorageActionUpdated
 

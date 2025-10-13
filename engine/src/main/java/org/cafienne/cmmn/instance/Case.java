@@ -19,7 +19,7 @@ package org.cafienne.cmmn.instance;
 
 import org.cafienne.actormodel.ModelActor;
 import org.cafienne.actormodel.identity.CaseUserIdentity;
-import org.cafienne.actormodel.message.IncomingActorMessage;
+import org.cafienne.actormodel.message.command.ModelCommand;
 import org.cafienne.actormodel.message.event.ModelEvent;
 import org.cafienne.cmmn.actorapi.command.CaseCommand;
 import org.cafienne.cmmn.actorapi.command.platform.PlatformUpdate;
@@ -38,8 +38,8 @@ import org.cafienne.cmmn.instance.parameter.CaseInputParameter;
 import org.cafienne.cmmn.instance.parameter.CaseOutputParameter;
 import org.cafienne.cmmn.instance.sentry.SentryNetwork;
 import org.cafienne.cmmn.instance.team.Team;
-import org.cafienne.json.ValueList;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueList;
+import org.cafienne.util.json.ValueMap;
 import org.cafienne.system.CaseSystem;
 import org.cafienne.util.XMLHelper;
 import org.slf4j.Logger;
@@ -462,7 +462,7 @@ public class Case extends ModelActor {
     }
 
     @Override
-    protected void addCommitEvent(IncomingActorMessage message) {
+    protected void addCommitEvent(ModelCommand message) {
         int numFailedPlanItems = Long.valueOf(getPlanItems().stream().filter(p -> p.getState().isFailed()).count()).intValue();
         this.addEvent(new CaseModified(this, message, numFailedPlanItems));
     }

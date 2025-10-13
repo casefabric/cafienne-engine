@@ -21,7 +21,7 @@ import com.typesafe.scalalogging.LazyLogging
 import org.cafienne.cmmn.actorapi.event.file.{CaseFileItemChildRemoved, CaseFileItemTransitioned}
 import org.cafienne.cmmn.instance.Path
 import org.cafienne.cmmn.instance.casefile.CaseFileItemTransition
-import org.cafienne.json.{Value, ValueMap}
+import org.cafienne.util.json.{Value, ValueMap}
 
 object CaseFileMerger extends LazyLogging {
 

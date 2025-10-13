@@ -17,10 +17,11 @@
 
 package org.cafienne.processtask.actorapi.event;
 
-import org.cafienne.actormodel.message.IncomingActorMessage;
+import org.cafienne.actormodel.identity.CaseUserIdentity;
+import org.cafienne.actormodel.message.command.ModelCommand;
 import org.cafienne.actormodel.message.event.ActorModified;
 import org.cafienne.infrastructure.serialization.Manifest;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 import org.cafienne.processtask.instance.ProcessTaskActor;
 
 /**
@@ -29,13 +30,18 @@ import org.cafienne.processtask.instance.ProcessTaskActor;
  *
  */
 @Manifest
-public class ProcessModified extends ActorModified<ProcessTaskActor> implements ProcessEvent {
+public class ProcessModified extends ActorModified<ProcessTaskActor, CaseUserIdentity> implements ProcessEvent {
 
-    public ProcessModified(ProcessTaskActor actor, IncomingActorMessage source) {
+    public ProcessModified(ProcessTaskActor actor, ModelCommand source) {
         super(actor, source);
     }
 
     public ProcessModified(ValueMap json) {
         super(json);
+    }
+
+    @Override
+    protected CaseUserIdentity readUser(ValueMap json) {
+        return CaseUserIdentity.deserialize(json);
     }
 }

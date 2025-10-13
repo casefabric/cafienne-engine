@@ -21,7 +21,7 @@ import org.cafienne.cmmn.actorapi.event.migration.PlanItemDropped
 import org.cafienne.cmmn.instance.Path
 import org.cafienne.infrastructure.cqrs.batch.public_events.{CafiennePublicEventContent, PublicCaseEventBatch, PublicEventWrapper}
 import org.cafienne.infrastructure.serialization.{Fields, Manifest}
-import org.cafienne.json.{Value, ValueMap}
+import org.cafienne.util.json.{Value, ValueMap}
 
 @Manifest
 case class MilestoneDropped(milestoneId: String, parentStage: String, path: Path, name: String, caseInstanceId: String) extends CafiennePublicEventContent {

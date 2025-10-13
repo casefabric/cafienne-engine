@@ -18,16 +18,16 @@
 package org.cafienne.processtask.actorapi.command;
 
 import org.cafienne.actormodel.exception.InvalidCommandException;
-import org.cafienne.actormodel.identity.UserIdentity;
+import org.cafienne.actormodel.identity.CaseUserIdentity;
 import org.cafienne.actormodel.message.command.BaseModelCommand;
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 import org.cafienne.processtask.actorapi.ProcessActorMessage;
 import org.cafienne.processtask.actorapi.response.ProcessResponse;
 import org.cafienne.processtask.implementation.SubProcess;
 import org.cafienne.processtask.instance.ProcessTaskActor;
 
-public abstract class ProcessCommand extends BaseModelCommand<ProcessTaskActor, UserIdentity> implements ProcessActorMessage {
-    protected ProcessCommand(UserIdentity user, String id) {
+public abstract class ProcessCommand extends BaseModelCommand<ProcessTaskActor, CaseUserIdentity> implements ProcessActorMessage {
+    protected ProcessCommand(CaseUserIdentity user, String id) {
         super(user, id);
     }
 
@@ -36,8 +36,8 @@ public abstract class ProcessCommand extends BaseModelCommand<ProcessTaskActor, 
     }
 
     @Override
-    protected UserIdentity readUser(ValueMap json) {
-        return UserIdentity.deserialize(json);
+    protected CaseUserIdentity readUser(ValueMap json) {
+        return CaseUserIdentity.deserialize(json);
     }
 
     @Override

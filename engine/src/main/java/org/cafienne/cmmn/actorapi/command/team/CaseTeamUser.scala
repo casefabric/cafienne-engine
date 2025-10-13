@@ -25,7 +25,7 @@ import org.cafienne.cmmn.actorapi.event.team.deprecated.user.{TeamMemberAdded, T
 import org.cafienne.cmmn.definition.team.CaseRoleDefinition
 import org.cafienne.cmmn.instance.team.{MemberType, Team}
 import org.cafienne.infrastructure.serialization.Fields
-import org.cafienne.json._
+import org.cafienne.util.json._
 
 import java.util
 import scala.jdk.CollectionConverters._

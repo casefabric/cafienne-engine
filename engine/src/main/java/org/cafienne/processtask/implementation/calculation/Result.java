@@ -17,7 +17,7 @@
 
 package org.cafienne.processtask.implementation.calculation;
 
-import org.cafienne.json.Value;
+import org.cafienne.util.json.Value;
 import org.cafienne.processtask.implementation.calculation.operation.Source;
 
 public class Result {

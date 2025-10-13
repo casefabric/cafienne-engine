@@ -18,7 +18,7 @@
 package org.cafienne.consentgroup.actorapi
 
 import org.cafienne.infrastructure.serialization.Fields
-import org.cafienne.json.{CafienneJson, Value, ValueMap}
+import org.cafienne.util.json.{CafienneJson, Value, ValueMap}
 
 import scala.jdk.CollectionConverters.SetHasAsJava
 

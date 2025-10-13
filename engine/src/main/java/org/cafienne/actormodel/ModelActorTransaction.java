@@ -26,7 +26,6 @@ import org.cafienne.actormodel.debug.DebugInfoAppender;
 import org.cafienne.actormodel.exception.AuthorizationException;
 import org.cafienne.actormodel.exception.CommandException;
 import org.cafienne.actormodel.exception.InvalidCommandException;
-import org.cafienne.actormodel.message.IncomingActorMessage;
 import org.cafienne.actormodel.message.command.ModelCommand;
 import org.cafienne.actormodel.message.event.CommitEvent;
 import org.cafienne.actormodel.message.event.DebugEvent;
@@ -43,72 +42,54 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * ModelActorTransaction captures all state changing events upon handling an {@link IncomingActorMessage}
+ * ModelActorTransaction captures all state changing events upon handling an {@link ModelCommand}
  * It also handles failures and sending responses to complete the lifecycle of the message.
  */
-public class ModelActorTransaction {
-    private final ModelActor actor;
+public class ModelActorTransaction extends MessageTransaction<ModelCommand> {
     private final ActorRef sender;
     private final static int avgNumEvents = 30;
     private final List<ModelEvent> events = new ArrayList<>(avgNumEvents);
-    private final IncomingActorMessage message;
     private ModelResponse response = null;
     private final TransactionLogger logger;
+    private final ModelActorMonitor monitor;
 
-    ModelActorTransaction(ModelActor actor, IncomingActorMessage message) {
-        this.actor = actor;
-        this.actor.setCurrentUser(message.getUser());
+    ModelActorTransaction(ModelActor actor, Reception reception, ModelActorMonitor monitor, ModelCommand command) {
+        super(actor, reception, command);
+        this.monitor = monitor;
+        // Tell the actor monitor we're busy
+        monitor.setBusy();
         this.sender = actor.sender();
-        this.message = message;
         this.logger = new TransactionLogger(this, actor);
-    }
-
-    /**
-     * Return the message for which this transaction was created.
-     * This can be used to e.g. read the user information or the correlation id.
-     */
-    public IncomingActorMessage getMessage() {
-        return message;
     }
 
     void perform() {
         actor.addDebugInfo(() -> "---------- User " + message.getUser().id() + " in " + actor + " receives message " + message.getDescription(), message.rawJson());
+        if (reception.canPass(message)) {
+            // First check the engine version, potentially leading to an extra event.
+            this.checkEngineVersion();
 
-        if (message.isCommand()) {
-            runCommand(message.asCommand());
-        } else if (message.isResponse()) {
-            // These should no longer be coming in, only commands.
-//            backOffice.handleResponse(message.asResponse());
+            try {
+                // First, simple, validation
+                message.validateCommand(actor);
+                // Then, do actual work of processing in the command itself.
+                message.processCommand(actor);
+                setResponse(message.getResponse());
+            } catch (AuthorizationException e) {
+                reportFailure(e, new SecurityFailure(message, e), "");
+            } catch (InvalidCommandException e) {
+                reportFailure(message, e, "===== Command was invalid ======");
+            } catch (CommandException e) {
+                reportFailure(message, e, "---------- User " + message.getUser().id() + " in " + this.actor + " failed to complete command " + message + "\nwith exception");
+            } catch (Throwable e) {
+                reportFailure(e, new ActorChokedFailure(message, e), "---------- Engine choked during validation of command with type " + message.getClass().getSimpleName() + " from user " + message.getUser().id() + " in " + this.actor + "\nwith exception");
+            }
+            commit();
         }
-
-        commit();
+        // Tell the actor monitor we're free again
+        monitor.setFree();
     }
 
-    public boolean hasState() {
-        return !hasFailures() && hasStatefulEvents();
-    }
-
-    void runCommand(ModelCommand command) {
-//        actor.addDebugInfo(() -> "---------- User " + command.getUser().id() + " in " + actor + " starts command " + command.getDescription() , command.rawJson());
-
-        try {
-            // First, simple, validation
-            command.validateCommand(actor);
-            // Then, do actual work of processing in the command itself.
-            command.processCommand(actor);
-            setResponse(command.getResponse());
-        } catch (AuthorizationException e) {
-            reportFailure(e, new SecurityFailure(command, e), "");
-        } catch (InvalidCommandException e) {
-            reportFailure(command, e, "===== Command was invalid ======");
-        } catch (CommandException e) {
-            reportFailure(command, e, "---------- User " + command.getUser().id() + " in " + this.actor + " failed to complete command " + command + "\nwith exception");
-        } catch (Throwable e) {
-            reportFailure(e, new ActorChokedFailure(command, e),"---------- Engine choked during validation of command with type " + command.getClass().getSimpleName() + " from user " + command.getUser().id() + " in " + this.actor + "\nwith exception");
-        }
-    }
-
-    void checkEngineVersion() {
+    private void checkEngineVersion() {
         // First check whether the engine version has changed or not; this may lead to an EngineVersionChanged event
         EngineVersion actorVersion = actor.getEngineVersion();
         EngineVersion currentEngineVersion = actor.caseSystem.version();
@@ -121,6 +102,7 @@ public class ModelActorTransaction {
     /**
      * Add an event and update the actor state for it.
      */
+    @Override
     void addEvent(ModelEvent event) {
         events.add(event);
         addDebugInfo(getLogger(), () -> "Updating actor state for new event " + event.getDescription());
@@ -129,6 +111,10 @@ public class ModelActorTransaction {
 
     private Logger getLogger() {
         return actor.getLogger();
+    }
+
+    public boolean hasState() {
+        return !hasFailures() && hasStatefulEvents();
     }
 
     /**
@@ -156,10 +142,13 @@ public class ModelActorTransaction {
         } else {
             // If there are only debug events, first respond and then persist the events (for performance).
             // Otherwise, only send a response upon successful persisting the events.
-            actor.completeMessageHandling(message, this);
             if (hasStatefulEvents()) {
+                if (!(events.getLast() instanceof CommitEvent)) {
+                    actor.addCommitEvent(message);
+                }
                 persistEventsAndThenReply(response);
             } else {
+                actor.notModified(message);
                 replyAndPersistDebugEvent(response);
             }
         }
@@ -239,10 +228,9 @@ public class ModelActorTransaction {
     /**
      * Hook to optionally tell the sender about persistence failures
      */
-    void handlePersistFailure(Throwable cause, Object event, long seqNr) {
-        if (message.isCommand()) {
-            actor.reply(new EngineChokedFailure(message.asCommand(), new Exception("Handling the request resulted in a system failure. Check the server logs for more information.")), sender);
-        }
+    @Override
+    public void handlePersistFailure(Throwable cause, Object event, long seqNr) {
+        actor.reply(new EngineChokedFailure(message, new Exception("Handling the request resulted in a system failure. Check the server logs for more information.")), sender);
     }
 
     private boolean hasFailures() {
@@ -257,13 +245,6 @@ public class ModelActorTransaction {
     }
 
     /**
-     * If the last event is not a CommitEvent we need one.
-     */
-    boolean needsCommitEvent() {
-        return hasStatefulEvents() && !(events.getLast() instanceof CommitEvent);
-    }
-
-    /**
      * Add debug info to the ModelActor if debug is enabled.
      * If the actor runs in debug mode (or if slf4j has debug enabled for this logger),
      * then the appender.debugInfo(...) method will be invoked to store a string in the log.
@@ -274,7 +255,8 @@ public class ModelActorTransaction {
      *                       returns a String that is only created upon demand (in order to speed up a bit)
      * @param additionalInfo Additional objects to be logged. Typically, pointers to existing objects.
      */
-    void addDebugInfo(Logger logger, DebugInfoAppender appender, Object... additionalInfo) {
+    @Override
+    public void addDebugInfo(Logger logger, DebugInfoAppender appender, Object... additionalInfo) {
         this.logger.addDebugInfo(logger, appender, additionalInfo);
     }
 }

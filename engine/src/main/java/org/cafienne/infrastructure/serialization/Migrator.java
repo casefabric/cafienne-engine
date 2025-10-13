@@ -17,7 +17,7 @@
 
 package org.cafienne.infrastructure.serialization;
 
-import org.cafienne.json.ValueMap;
+import org.cafienne.util.json.ValueMap;
 
 /**
  * A {@link Migrator} can migrate a json AST (see {@link ValueMap}) to one newer version.

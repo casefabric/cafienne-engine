@@ -18,7 +18,7 @@
 package org.cafienne.actormodel.identity
 
 import org.cafienne.infrastructure.serialization.Fields
-import org.cafienne.json.{Value, ValueMap}
+import org.cafienne.util.json.{Value, ValueMap}
 
 import scala.jdk.CollectionConverters.CollectionHasAsScala
 

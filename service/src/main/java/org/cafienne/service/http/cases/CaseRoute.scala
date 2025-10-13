@@ -37,8 +37,8 @@ import org.cafienne.persistence.querydb.query.cmmn.filter.CaseFilter
 import org.cafienne.service.http.CaseEngineHttpServer
 import org.cafienne.service.http.cases.CaseAPIFormat._
 import org.cafienne.service.infrastructure.route.CaseTeamValidator
+import org.cafienne.util.Guid
 
-import java.util.UUID
 import scala.util.{Failure, Success}
 
 @SecurityRequirement(name = "oauth2", scopes = Array("openid"))
@@ -185,7 +185,7 @@ class CaseRoute(override val httpService: CaseEngineHttpServer) extends CasesRou
                 val definitionsDocument = caseSystem.config.repository.DefinitionProvider.read(user, tenant, payload.definition)
                 val caseDefinition = definitionsDocument.getFirstCase
 
-                val newCaseId = payload.caseInstanceId.fold(UUID.randomUUID().toString.replace("-", "_"))(cid => cid)
+                val newCaseId = payload.caseInstanceId.fold(new Guid().toString)(cid => cid)
                 val inputParameters = payload.inputs
                 val caseTeam: CaseTeam = payload.caseTeam.asTeam
                 val debugMode = payload.debug.getOrElse(caseSystem.config.actor.debugEnabled)
