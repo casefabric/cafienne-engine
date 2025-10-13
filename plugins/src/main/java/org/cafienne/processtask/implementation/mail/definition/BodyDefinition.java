@@ -15,13 +15,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cafienne.processtask.implementation.mail.definition;
+package org.cafienne.model.processtask.implementation.mail.definition;
 
-import org.cafienne.cmmn.definition.CMMNElementDefinition;
-import org.cafienne.cmmn.definition.ModelDefinition;
-import org.cafienne.cmmn.expression.spel.Resolver;
-import org.cafienne.processtask.definition.ProcessInputResolver;
-import org.cafienne.processtask.instance.ProcessTaskActor;
+import org.cafienne.model.cmmn.definition.CMMNElementDefinition;
+import org.cafienne.model.cmmn.definition.ModelDefinition;
+import org.cafienne.model.cmmn.expression.spel.Resolver;
+import org.cafienne.model.processtask.definition.ProcessInputResolver;
+import org.cafienne.model.processtask.instance.ProcessTaskActor;
 import org.w3c.dom.Element;
 
 public class BodyDefinition extends ProcessInputResolver {

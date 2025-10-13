@@ -15,16 +15,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cafienne.processtask.implementation.mail;
+package org.cafienne.model.processtask.implementation.mail;
 
-import org.cafienne.cmmn.definition.CMMNElementDefinition;
-import org.cafienne.cmmn.definition.ModelDefinition;
-import org.cafienne.processtask.definition.SubProcessDefinition;
-import org.cafienne.processtask.implementation.mail.definition.AddressDefinition;
-import org.cafienne.processtask.implementation.mail.definition.AttachmentDefinition;
-import org.cafienne.processtask.implementation.mail.definition.BodyDefinition;
-import org.cafienne.processtask.implementation.mail.definition.SubjectDefinition;
-import org.cafienne.processtask.instance.ProcessTaskActor;
+import org.cafienne.model.cmmn.definition.CMMNElementDefinition;
+import org.cafienne.model.cmmn.definition.ModelDefinition;
+import org.cafienne.model.processtask.definition.SubProcessDefinition;
+import org.cafienne.model.processtask.implementation.mail.definition.AddressDefinition;
+import org.cafienne.model.processtask.implementation.mail.definition.AttachmentDefinition;
+import org.cafienne.model.processtask.implementation.mail.definition.BodyDefinition;
+import org.cafienne.model.processtask.implementation.mail.definition.SubjectDefinition;
+import org.cafienne.model.processtask.instance.ProcessTaskActor;
 import org.w3c.dom.Element;
 
 import java.util.ArrayList;

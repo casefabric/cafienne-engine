@@ -15,12 +15,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cafienne.processtask.implementation.smtp;
+package org.cafienne.model.processtask.implementation.smtp;
 
-import org.cafienne.cmmn.definition.CMMNElementDefinition;
-import org.cafienne.cmmn.definition.ModelDefinition;
-import org.cafienne.processtask.implementation.mail.MailDefinition;
-import org.cafienne.processtask.instance.ProcessTaskActor;
+import org.cafienne.model.cmmn.definition.CMMNElementDefinition;
+import org.cafienne.model.cmmn.definition.ModelDefinition;
+import org.cafienne.model.processtask.implementation.mail.MailDefinition;
+import org.cafienne.model.processtask.instance.ProcessTaskActor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
@@ -43,7 +43,7 @@ public class SMTPCallDefinition extends MailDefinition {
     }
 
     public Properties getMailProperties(ProcessTaskActor processTaskActor) {
-        logger.warn("Using deprecated class to send emails. Please use org.cafienne.processtask.implementation.mail.MailDefinition");
+        logger.warn("Using deprecated class to send emails. Please use org.cafienne.model.processtask.implementation.mail.MailDefinition");
 
         Properties defaultProperties = super.getMailProperties(processTaskActor);
         Properties properties = new Properties();

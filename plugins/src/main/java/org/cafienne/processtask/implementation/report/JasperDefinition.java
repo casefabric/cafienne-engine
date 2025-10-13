@@ -15,13 +15,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cafienne.processtask.implementation.report;
+package org.cafienne.model.processtask.implementation.report;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperReport;
-import org.cafienne.cmmn.definition.CMMNElementDefinition;
-import org.cafienne.cmmn.definition.ModelDefinition;
+import org.cafienne.model.cmmn.definition.CMMNElementDefinition;
+import org.cafienne.model.cmmn.definition.ModelDefinition;
 import org.cafienne.util.XMLHelper;
 import org.cafienne.util.json.StringValue;
 import org.cafienne.util.json.Value;

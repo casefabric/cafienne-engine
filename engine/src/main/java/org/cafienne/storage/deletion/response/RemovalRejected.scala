@@ -18,9 +18,9 @@
 package org.cafienne.storage.deletion.response
 
 import org.cafienne.infrastructure.serialization.{Fields, Manifest}
-import org.cafienne.util.json.ValueMap
 import org.cafienne.storage.actormodel.ActorMetadata
 import org.cafienne.storage.actormodel.message.StorageActionRejected
+import org.cafienne.util.json.ValueMap
 
 @Manifest
 case class RemovalRejected(metadata: ActorMetadata, msg: String, override val optionalJson: Option[ValueMap] = None) extends StorageActionRejected

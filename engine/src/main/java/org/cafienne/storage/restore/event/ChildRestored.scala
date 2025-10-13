@@ -18,8 +18,8 @@
 package org.cafienne.storage.restore.event
 
 import org.cafienne.infrastructure.serialization.Manifest
-import org.cafienne.util.json.ValueMap
 import org.cafienne.storage.actormodel.ActorMetadata
+import org.cafienne.util.json.ValueMap
 
 @Manifest
 case class ChildRestored(metadata: ActorMetadata, override val optionalJson: Option[ValueMap] = None) extends RestoreEvent

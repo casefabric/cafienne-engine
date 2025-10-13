@@ -19,9 +19,9 @@ package org.cafienne.storage.archival.event
 
 import com.fasterxml.jackson.core.JsonGenerator
 import org.cafienne.infrastructure.serialization.{Fields, Manifest}
-import org.cafienne.util.json.ValueMap
 import org.cafienne.storage.actormodel.ActorMetadata
 import org.cafienne.storage.archival.Archive
+import org.cafienne.util.json.ValueMap
 
 @Manifest
 case class ArchiveCreated(metadata: ActorMetadata, archive: Archive, override val optionalJson: Option[ValueMap] = None) extends ArchivalEvent {

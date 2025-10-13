@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cafienne.processtask.implementation.report;
+package org.cafienne.model.processtask.implementation.report;
 
 import org.cafienne.actormodel.exception.InvalidCommandException;
 

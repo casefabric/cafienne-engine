@@ -15,12 +15,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cafienne.processtask.implementation.report;
+package org.cafienne.model.processtask.implementation.report;
 
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.query.JsonQueryExecuterFactory;
-import org.cafienne.processtask.implementation.SubProcess;
-import org.cafienne.processtask.instance.ProcessTaskActor;
+import org.cafienne.model.processtask.implementation.SubProcess;
+import org.cafienne.model.processtask.instance.ProcessTaskActor;
 import org.cafienne.util.json.StringValue;
 import org.cafienne.util.json.ValueMap;
 

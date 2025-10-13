@@ -22,9 +22,9 @@ import org.cafienne.actormodel.identity.UserIdentity
 import org.cafienne.actormodel.message.event.ModelEvent
 import org.cafienne.actormodel.{ActorType, ModelActor}
 import org.cafienne.infrastructure.serialization.Fields
-import org.cafienne.util.json.{CafienneJson, Value, ValueMap}
 import org.cafienne.storage.StorageUser
 import org.cafienne.storage.actormodel.ActorMetadata
+import org.cafienne.util.json.{CafienneJson, Value, ValueMap}
 
 import java.time.Instant
 

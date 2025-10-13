@@ -19,10 +19,10 @@ package org.cafienne.storage.restore.command
 
 import com.fasterxml.jackson.core.JsonGenerator
 import org.cafienne.infrastructure.serialization.{Fields, Manifest}
-import org.cafienne.util.json.ValueMap
 import org.cafienne.storage.actormodel.ActorMetadata
 import org.cafienne.storage.actormodel.message.StorageEvent
 import org.cafienne.storage.archival.Archive
+import org.cafienne.util.json.ValueMap
 
 @Manifest
 case class RestoreArchive(metadata: ActorMetadata, archive: Archive, override val optionalJson: Option[ValueMap] = None) extends StorageEvent {

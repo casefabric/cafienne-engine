@@ -15,14 +15,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cafienne.processtask.implementation.mail;
+package org.cafienne.model.processtask.implementation.mail;
 
 import jakarta.mail.internet.InternetAddress;
 import net.fortuna.ical4j.model.parameter.Cn;
 import net.fortuna.ical4j.model.property.Attendee;
 import org.cafienne.infrastructure.serialization.Fields;
-import org.cafienne.processtask.implementation.mail.definition.AddressDefinition;
-import org.cafienne.processtask.instance.ProcessTaskActor;
+import org.cafienne.model.processtask.implementation.mail.definition.AddressDefinition;
+import org.cafienne.model.processtask.instance.ProcessTaskActor;
 import org.cafienne.util.json.StringValue;
 import org.cafienne.util.json.Value;
 

@@ -18,12 +18,12 @@
 package org.cafienne.storage.archival.state
 
 import org.cafienne.actormodel.message.event.ModelEvent
-import org.cafienne.util.json.{ValueList, ValueMap}
 import org.cafienne.storage.actormodel.message.{StorageActionStarted, StorageActionUpdated, StorageEvent}
 import org.cafienne.storage.actormodel.state.StorageActorState
 import org.cafienne.storage.archival.event._
 import org.cafienne.storage.archival.event.cmmn.ModelActorArchived
 import org.cafienne.storage.archival.{ActorDataArchiver, Archive, ModelEventSerializer}
+import org.cafienne.util.json.{ValueList, ValueMap}
 
 trait ArchivalState extends StorageActorState {
   override val actor: ActorDataArchiver

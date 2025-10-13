@@ -18,10 +18,10 @@
 package org.cafienne.storage.actormodel
 
 import org.cafienne.actormodel.ActorType
-import org.cafienne.cmmn.instance.Path
 import org.cafienne.infrastructure.serialization.{Fields, JacksonSerializable}
-import org.cafienne.util.json.{CafienneJson, Value, ValueList, ValueMap}
+import org.cafienne.model.cmmn.instance.Path
 import org.cafienne.storage.StorageUser
+import org.cafienne.util.json.{CafienneJson, Value, ValueList, ValueMap}
 
 case class ActorMetadata(user: StorageUser, actorType: ActorType, actorId: String, parent: ActorMetadata = null) extends JacksonSerializable with CafienneJson {
   override def toValue: Value[_] = new ValueMap(Fields.actor, toString(), Fields.path, path)

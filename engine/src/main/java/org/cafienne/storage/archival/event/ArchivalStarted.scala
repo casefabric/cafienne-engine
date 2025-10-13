@@ -18,9 +18,9 @@
 package org.cafienne.storage.archival.event
 
 import org.cafienne.infrastructure.serialization.{Fields, Manifest}
-import org.cafienne.util.json.ValueMap
 import org.cafienne.storage.actormodel.ActorMetadata
 import org.cafienne.storage.actormodel.message.StorageActionStarted
+import org.cafienne.util.json.ValueMap
 
 @Manifest
 case class ArchivalStarted(metadata: ActorMetadata, children: Seq[ActorMetadata], override val optionalJson: Option[ValueMap] = None) extends ArchivalEvent with StorageActionStarted

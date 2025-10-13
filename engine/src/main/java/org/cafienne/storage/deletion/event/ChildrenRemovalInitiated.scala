@@ -19,8 +19,8 @@ package org.cafienne.storage.deletion.event
 
 import com.fasterxml.jackson.core.JsonGenerator
 import org.cafienne.infrastructure.serialization.{Fields, Manifest}
-import org.cafienne.util.json.ValueMap
 import org.cafienne.storage.actormodel.ActorMetadata
+import org.cafienne.util.json.ValueMap
 
 import scala.jdk.CollectionConverters.SeqHasAsJava
 
