@@ -3,12 +3,12 @@ package org.cafienne.actormodel;
 import org.cafienne.actormodel.message.event.ModelEvent;
 import org.cafienne.cmmn.actorapi.event.CaseEvent;
 import org.cafienne.cmmn.instance.Case;
-import org.cafienne.consentgroup.ConsentGroupActor;
-import org.cafienne.consentgroup.actorapi.event.ConsentGroupEvent;
+import org.cafienne.usermanagement.consentgroup.ConsentGroupActor;
+import org.cafienne.usermanagement.consentgroup.actorapi.event.ConsentGroupEvent;
 import org.cafienne.processtask.actorapi.event.ProcessEvent;
 import org.cafienne.processtask.instance.ProcessTaskActor;
-import org.cafienne.tenant.TenantActor;
-import org.cafienne.tenant.actorapi.event.TenantEvent;
+import org.cafienne.usermanagement.tenant.TenantActor;
+import org.cafienne.usermanagement.tenant.actorapi.event.TenantEvent;
 
 public enum ActorType {
     ModelActor(ModelActor.class, ModelEvent.class),
